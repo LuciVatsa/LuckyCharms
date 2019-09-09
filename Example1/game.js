@@ -7,7 +7,7 @@ var config = {
             default: 'arcade',
             
             arcade: {
-                gravity: { y: 200 },
+                gravity: { y: 0},
                 debug: false
             }
         },
@@ -49,7 +49,7 @@ function create ()
 
         player = this.physics.add.sprite(100,100,'dude');
         //collision 
-        player.setBounce(0.2);
+        //player.setBounce(0.2);
         player.setCollideWorldBounds(true);
         
     
@@ -82,25 +82,51 @@ function create ()
 function update ()
 {
    
-    if(cursors.left.isDown)
+    if(this.input.keyboard.checkDown(cursors.left, 250))
     {
+        player.x -= 32;
+    }
+    else if(this.input.keyboard.checkDown(cursors.right, 250))
+    {
+        player.x += 32;
+    }
+    if(this.input.keyboard.checkDown(cursors.up, 250))
+    {
+        player.y -= 32;
+    }
+    if(this.input.keyboard.checkDown(cursors.down, 250))
+    {
+        player.y += 32;
+    }
+//     if(cursors.left.isDown)
+//     {
     
-        player.setVelocityX(-160);
-        player.anims.play('left', true);
-    }
-    else if(cursors.right.isDown)
-    {
-        player.setVelocityX(160);
-        player.anims.play('right', true);
+//         player.setVelocityX(-160);
+//         player.anims.play('left', true);
+//     }
+//    else if(cursors.right.isDown)
+//     {
+//         player.setVelocityX(160);
+//         player.anims.play('right', true);
 
-    }
-    else{
-        player.setVelocityX(0);
-        player.anims.play('turn');
-    }
-    if (cursors.up.isDown && player.body.touching.down)
-    {
-        player.setVelocityY(-330);
-    }
+//     }
+//     else if(cursors.up.isDown)
+//     {
+//         player.setVelocityY(-160);
+//         player.anims.play('right', true);
+
+//     }
+//     else if(cursors.down.isDown)
+//     {
+//         player.setVelocityY(160);
+//         player.anims.play('right', true);
+
+//     }
+//     else{
+//         player.setVelocityX(0);
+//         player.setVelocityY(0);
+//         player.anims.play('turn');
+//     }
+    
 	
 }
