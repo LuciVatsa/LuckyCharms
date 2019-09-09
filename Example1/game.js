@@ -1,14 +1,14 @@
 
 var config = {
         type: Phaser.AUTO,
-        width: 800,
-        height: 600,
+        width: 600,
+        height: 800,
         physics: {
             default: 'arcade',
             
             arcade: {
                 gravity: { y: 0},
-                debug: false
+                debug: true
             }
         },
         scene: {
@@ -42,14 +42,14 @@ function create ()
         
         this.add.image(400,300,'sky');
         
-        platform =this.physics.add.staticGroup();
-        
-        platform.create(600,400,'platform').setScale(2).refreshBody();
-        platform.create(100,400,'platform');
+        //platform =this.physics.add.group();
+        platform = this.physics.add.image(100,300,'platform').setScale(.2);
+        //platform.create(100,300,'platform').setScale(.2);
+       
 
         player = this.physics.add.sprite(100,100,'dude');
         //collision 
-        //player.setBounce(0.2);
+       // platform.setBounce(0.2);
         player.setCollideWorldBounds(true);
         
     
@@ -73,8 +73,9 @@ function create ()
             repeat: -1
         });
             cursors = this.input.keyboard.createCursorKeys();
+        
         this.physics.add.collider(player, platform);
-
+        this.physics.add.collider(player, platform, hitWall, null, null);
         //Collision with the player
         
     }
@@ -84,49 +85,44 @@ function update ()
    
     if(this.input.keyboard.checkDown(cursors.left, 250))
     {
-        player.x -= 32;
+        player.x -= 16;
+        player.anims.play('left', true);
     }
     else if(this.input.keyboard.checkDown(cursors.right, 250))
     {
-        player.x += 32;
+        player.x += 16;
+        player.anims.play('right', true);
     }
-    if(this.input.keyboard.checkDown(cursors.up, 250))
+   else if(this.input.keyboard.checkDown(cursors.up, 250))
     {
-        player.y -= 32;
+        player.y -= 16;
     }
-    if(this.input.keyboard.checkDown(cursors.down, 250))
+    else if(this.input.keyboard.checkDown(cursors.down, 250))
     {
-        player.y += 32;
+        player.y += 16;
     }
-//     if(cursors.left.isDown)
-//     {
-    
-//         player.setVelocityX(-160);
-//         player.anims.play('left', true);
-//     }
-//    else if(cursors.right.isDown)
-//     {
-//         player.setVelocityX(160);
-//         player.anims.play('right', true);
-
-//     }
-//     else if(cursors.up.isDown)
-//     {
-//         player.setVelocityY(-160);
-//         player.anims.play('right', true);
-
-//     }
-//     else if(cursors.down.isDown)
-//     {
-//         player.setVelocityY(160);
-//         player.anims.play('right', true);
-
-//     }
-//     else{
-//         player.setVelocityX(0);
-//         player.setVelocityY(0);
-//         player.anims.play('turn');
-//     }
-    
+    else{
+                player.setVelocityX(0);
+              player.setVelocityY(0);
+                player.anims.play('turn');
+         }
+             
 	
+}
+function hitWall(player , platform)
+{
+    	
+this.game.debug.cameraInfo(this.game.camera, 32, 32);
+   var diff = 0;
+   if(player.x < platform.x)
+   {
+       diff= platform.x - player.x;
+       player.setVelocityX(-50);
+   }
+  else if(player.x > platform.x)
+   {
+       diff= player.x - platform.x ;
+       player.setVelocityX(50);
+   }
+
 }
