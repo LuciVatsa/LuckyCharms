@@ -22,17 +22,23 @@ var config = {
     var player;
     var platform;
     var cursors;
-    var text;
-	var game = new Phaser.Game(config);
+    var score = 0;
+    var scoreText;
+    var enemy;
+    var X= 100;
+    var Y= 500;
+    var follower;
+var path;
+var bounds;
+var graphics;
+	 var game = new Phaser.Game(config);
 function preload ()
 {
 	
-       // this.load.image('logo', 'assets/sprites/phaser3-logo.png');
-       // this.load.image('red', 'assets/particles/red.png');
-       //image loading
-      // this.load.image('Player', 'Cowboy_man.png');
+
        this.load.image('sky','sky.png');
-       this.load.image('platform', 'platform.png');
+       this.load.image('platform', 'block.png');
+       this.load.image('enemy', 'Cowboy_man.png');
        //spirte loading
        this.load.spritesheet('dude', 'dude.png',{ frameWidth:32, frameHeight:48});
 }
@@ -40,18 +46,47 @@ function preload ()
 function create ()
     {
         
-        this.add.image(400,300,'sky');
-        
-        //platform =this.physics.add.group();
-        platform = this.physics.add.image(100,300,'platform').setScale(.2);
-        //platform.create(100,300,'platform').setScale(.2);
+        this.add.image(400,300,'sky').setScale(1.7);
+        //enemy collision
+        enemy= this.physics.add.group();
+        enemy.create(100,600,'enemy');
+        enemy.create(X,Y , 'enemy');
+//platform collision
+        platform =this.physics.add.group(); 
+        platform.create(100,300,'platform');
+        platform.create(300,500,'platform');
        
+        //enemy movement
+      //enemyMovement();
+    // var path = new Phaser.Curves.Path(50, 500);
 
+    // path.splineTo([ 164, 446, 274, 542, 412, 457, 522, 541, 664, 464 ]);
+    // path.lineTo(700, 300);
+    // path.lineTo(600, 350);
+    // path.ellipseTo(200, 100, 100, 250, false, 0);
+    // path.cubicBezierTo(222, 119, 308, 107, 208, 368);
+    // path.ellipseTo(60, 60, 0, 360, true);
+
+    // var graphics = this.add.graphics();
+
+    // graphics.lineStyle(1, 0xffffff, 1);
+
+    // path.draw(graphics, 128);
+
+    // var lemming = this.add.follower(path, 50, 500, enemy);
+
+    // lemming.startFollow({
+    //     duration: 10000,
+    //     yoyo: true,
+    //     repeat: -1,
+    //     rotateToPath: true,
+    //     verticalAdjust: true
+    // });
+        // playercollision 
         player = this.physics.add.sprite(100,100,'dude');
-        //collision 
-       // platform.setBounce(0.2);
         player.setCollideWorldBounds(true);
-        
+        //player score text
+       scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
     
         this.anims.create({
             key: 'left',
@@ -75,7 +110,8 @@ function create ()
             cursors = this.input.keyboard.createCursorKeys();
         
         this.physics.add.collider(player, platform);
-        this.physics.add.collider(player, platform, hitWall, null, null);
+        this.physics.add.collider(player, platform, blockPush, null, null);
+        this.physics.add.overlap(enemy, platform, killEnemy, null , null);
         //Collision with the player
         
     }
@@ -107,22 +143,75 @@ function update ()
                 player.anims.play('turn');
          }
              
+
+
 	
 }
-function hitWall(player , platform)
+function blockPush(player , platform)
 {
-    	
-this.game.debug.cameraInfo(this.game.camera, 32, 32);
-   var diff = 0;
-   if(player.x < platform.x)
-   {
-       diff= platform.x - player.x;
-       player.setVelocityX(-50);
-   }
-  else if(player.x > platform.x)
-   {
-       diff= player.x - platform.x ;
-       player.setVelocityX(50);
-   }
+    	 platform.setCollideWorldBounds(true);
 
+   var diff = 0;
+   var maxDiff= 50;
+   if(player.x < platform.x )
+    {
+       
+        platform.setVelocityX(160);
+   }
+  else if(player.x > platform.x )
+  {
+      
+        platform.setVelocityX(-160);
+   }
+   else if(player.y < platform.y )
+    {
+      // platform.setActiveCollision();
+        platform.setVelocityY(160);
+   }
+  else if(player.y > platform.y )
+  {
+       
+        platform.setVelocityY(160);
+   }
+}
+function killEnemy(enemy, platform)
+{
+ enemy.disableBody(true, true);
+  //enemy.destory();
+  
+     score += 10;
+    scoreText.setText('Score: ' + score);
+}
+function enemyMovement()
+{
+  graphics = this.add.graphics();
+
+    follower = { t: 0, vec: new Phaser.Math.Vector2() };
+
+    path = new Phaser.Curves.Path(50, 500);
+
+    path.splineTo([ 164, 446, 274, 542, 412, 457, 522, 541, 664, 464 ]);
+
+    path.lineTo(700, 300);
+
+    path.lineTo(600, 350);
+
+    path.ellipseTo(200, 100, 100, 250, false, 0);
+
+    path.cubicBezierTo(222, 119, 308, 107, 208, 368);
+
+    path.ellipseTo(60, 60, 0, 360, true);
+
+    bounds = new Phaser.Geom.Rectangle();
+
+    path.getBounds(bounds);
+
+    this.tweens.add({
+        targets: follower,
+        t: 1,
+        ease: 'Sine.easeInOut',
+        duration: 4000,
+        yoyo: true,
+        repeat: -1
+    });
 }
