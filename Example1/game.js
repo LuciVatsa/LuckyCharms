@@ -60,7 +60,9 @@ function create ()
         slime.create(100,400,'slime').setCollideWorldBounds(true).setImmovable(true);
         slime.create(300,500,'slime').setCollideWorldBounds(true).setImmovable(true);
        
-       //
+       //portal
+       portal = this.physics.add.staticGroup();
+       portal.create(400,400,'portal');
  
         // playercollision 
         player = this.physics.add.sprite(100,100,'dude');
@@ -95,6 +97,7 @@ function create ()
         //Collision bet block and enemy
         this.physics.add.overlap(enemy, slime, killEnemy, null , null);
        this.physics.add.collider(slime , slime);
+       this.physics.add.collider(slime, portal , portalShift ,null , null);
         
     }
 
@@ -129,6 +132,8 @@ function update ()
 
 	
 }
+
+//block movement
 function blockPush(player , slime)
 {
     	 slime.setImmovable(false);
@@ -136,27 +141,30 @@ function blockPush(player , slime)
    var diff = 0;
    var maxDiff= 50;
     if(player.x < slime.x )
-
     {
        
         slime.setVelocityX(160);
    }
-  else if(player.x > slime.x )
+  else if(player.body.touching.up)
   {
       
         slime.setVelocityX(-160);
    }
    else if(player.y < slime.y )
     {
+      
       // slime.setActiveCollision();
-        slime.setVelocityY(160);
+       slime.setVelocityY(160);
    }
+   //up to down
   else if(player.y > slime.y )
   {
-       
+  
         slime.setVelocityY(160);
    }
 }
+
+//Kill Function
 function killEnemy(enemy, slime)
 {
  enemy.disableBody(true, true);
@@ -165,6 +173,8 @@ function killEnemy(enemy, slime)
      score += 10;
     scoreText.setText('Score: ' + score);
 }
+
+//optional code.
 function enemyMovement()
 {
   graphics = this.add.graphics();
@@ -201,34 +211,13 @@ function enemyMovement()
 
 
 
+function portalShift(slime, portal)
+{
+    
+     slime.x = 100;
+     slime.y = 100;
+
+}
 
 
 
-
-
-//        enemy movement
-//       enemyMovement();
-//     var path = new Phaser.Curves.Path(50, 500);
-
-//     path.splineTo([ 164, 446, 274, 542, 412, 457, 522, 541, 664, 464 ]);
-//     path.lineTo(700, 300);
-//     path.lineTo(600, 350);
-//     path.ellipseTo(200, 100, 100, 250, false, 0);
-//     path.cubicBezierTo(222, 119, 308, 107, 208, 368);
-//     path.ellipseTo(60, 60, 0, 360, true);
-
-//     var graphics = this.add.graphics();
-
-//     //graphics.lineStyle(1, 0xffffff, 1);
-
-//     //path.draw(graphics, 128);
-
-//  enemy = this.add.follower(path, 50, 500, 'enemy');
-
-//     enemy.startFollow({
-//         duration: 10000,
-//         yoyo: true,
-//         repeat: -1,
-//         rotateToPath: true,
-//         verticalAdjust: true
-//     });
