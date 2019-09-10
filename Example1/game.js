@@ -57,6 +57,7 @@ function create ()
         //slime collision
         slime =this.physics.add.group(); 
         slime.create(100,300,'slime');
+        slime.create(100,400,'slime');
         slime.create(300,500,'slime');
        //
  
