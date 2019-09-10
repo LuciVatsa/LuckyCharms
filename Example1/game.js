@@ -62,7 +62,12 @@ function create ()
         slime.create(100,300,'slime').setCollideWorldBounds(true).setImmovable(true);
         slime.create(100,400,'slime').setCollideWorldBounds(true).setImmovable(true);
         slime.create(300,500,'slime').setCollideWorldBounds(true).setImmovable(true);
- 
+
+       
+       //portal
+       portal = this.physics.add.staticGroup();
+       portal.create(400,400,'portal');
+
  
         // playercollision 
         player = this.physics.add.sprite(288,320,'dude');
@@ -97,6 +102,7 @@ function create ()
         //Collision bet block and enemy
         this.physics.add.overlap(enemy, slime, killEnemy, null , null);
        this.physics.add.collider(slime , slime);
+       this.physics.add.collider(slime, portal , portalShift ,null , null);
         
     }
 
@@ -131,6 +137,8 @@ function update ()
 
 	
 }
+
+//block movement
 function blockPush(player , slime)
 {
     	 slime.setImmovable(false);
@@ -138,27 +146,30 @@ function blockPush(player , slime)
    var diff = 0;
    var maxDiff= 50;
     if(player.x < slime.x )
-
     {
        
         slime.setVelocityX(160);
    }
-  else if(player.x > slime.x )
+  else if(player.body.touching.up)
   {
       
         slime.setVelocityX(-160);
    }
    else if(player.y < slime.y )
     {
+      
       // slime.setActiveCollision();
-        slime.setVelocityY(160);
+       slime.setVelocityY(160);
    }
+   //up to down
   else if(player.y > slime.y )
   {
-       
+  
         slime.setVelocityY(160);
    }
 }
+
+//Kill Function
 function killEnemy(enemy, slime)
 {
  enemy.disableBody(true, true);
@@ -167,6 +178,8 @@ function killEnemy(enemy, slime)
      score += 10;
     scoreText.setText('Score: ' + score);
 }
+
+//optional code.
 function enemyMovement()
 {
   graphics = this.add.graphics();
@@ -200,4 +213,18 @@ function enemyMovement()
         repeat: -1
     });
 }
+
+
+
+
+function portalShift(slime, portal)
+{
+    
+     slime.x = 100;
+     slime.y = 100;
+
+}
+
+
+
 
