@@ -2,7 +2,7 @@
 var config = {
         type: Phaser.AUTO,
         width: 608,
-        height: 800,
+        height: 704,
         physics: {
             default: 'arcade',
             
@@ -18,6 +18,7 @@ var config = {
             
         }
     };
+	
 	
     var player;
     var slime;
@@ -48,20 +49,37 @@ function preload ()
 
 function create ()
     {
+    	//19 width boxes, 22 height boxes
         
         this.add.image(304,400,'sky');
         //enemy collision
         enemy= this.physics.add.group();
-        enemy.create(100,600,'enemy');
-        enemy.create(X,Y , 'enemy');
-        //slime collision
+        enemy.create(48,208,'enemy');
+        enemy.create(240,608 , 'enemy');
+        //slime collision 
         slime =this.physics.add.group(); 
-        slime.create(100,300,'slime');
-        slime.create(300,500,'slime');
+        slime.create(48,48,'slime');
+        slime.create(48,80,'slime');
+        slime.create(48,112,'slime');
+        slime.create(48,144,'slime');
+        slime.create(48,176,'slime');
+        slime.create(80,176,'slime');
+        slime.create(112,240,'slime');
+        slime.create(144,304,'slime');
+        slime.create(176,16,'slime');
+        slime.create(240,80,'slime');
+        // slime.create(48,16,'slime');
+        // slime.create(48,16,'slime');
+        // slime.create(48,16,'slime');
+        // slime.create(48,16,'slime');
+        // slime.create(48,16,'slime');
+        // slime.create(48,16,'slime');
+        // slime.create(48,16,'slime');
+        slime.create(48,608,'slime');
        //
  
         // playercollision 
-        player = this.physics.add.sprite(100,100,'dude');
+        player = this.physics.add.sprite(288,320,'dude');
         player.setCollideWorldBounds(true);
         //player score text
        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
@@ -100,21 +118,21 @@ function update ()
    
     if(this.input.keyboard.checkDown(cursors.left, 250))
     {
-        player.x -= 16;
+        player.x -= 32;
        // player.anims.play('left', true);
     }
     else if(this.input.keyboard.checkDown(cursors.right, 250))
     {
-        player.x += 16;
+        player.x += 32;
        // player.anims.play('right', true);
     }
    else if(this.input.keyboard.checkDown(cursors.up, 250))
     {
-        player.y -= 16;
+        player.y -= 32;
     }
     else if(this.input.keyboard.checkDown(cursors.down, 250))
     {
-        player.y += 16;
+        player.y += 32;
     }
     else{
                 player.setVelocityX(0);
@@ -202,29 +220,29 @@ function enemyMovement()
 
 
 
-       enemy movement
-      enemyMovement();
-    var path = new Phaser.Curves.Path(50, 500);
+ //       enemy movement
+ //      enemyMovement();
+ //    var path = new Phaser.Curves.Path(50, 500);
 
-    path.splineTo([ 164, 446, 274, 542, 412, 457, 522, 541, 664, 464 ]);
-    path.lineTo(700, 300);
-    path.lineTo(600, 350);
-    path.ellipseTo(200, 100, 100, 250, false, 0);
-    path.cubicBezierTo(222, 119, 308, 107, 208, 368);
-    path.ellipseTo(60, 60, 0, 360, true);
+ //    path.splineTo([ 164, 446, 274, 542, 412, 457, 522, 541, 664, 464 ]);
+ //    path.lineTo(700, 300);
+ //    path.lineTo(600, 350);
+ //    path.ellipseTo(200, 100, 100, 250, false, 0);
+ //    path.cubicBezierTo(222, 119, 308, 107, 208, 368);
+ //    path.ellipseTo(60, 60, 0, 360, true);
 
-    var graphics = this.add.graphics();
+ //    var graphics = this.add.graphics();
 
-    //graphics.lineStyle(1, 0xffffff, 1);
+ //    //graphics.lineStyle(1, 0xffffff, 1);
 
-    //path.draw(graphics, 128);
+ //    //path.draw(graphics, 128);
 
- enemy = this.add.follower(path, 50, 500, 'enemy');
+ // enemy = this.add.follower(path, 50, 500, 'enemy');
 
-    enemy.startFollow({
-        duration: 10000,
-        yoyo: true,
-        repeat: -1,
-        rotateToPath: true,
-        verticalAdjust: true
-    });
+ //    enemy.startFollow({
+ //        duration: 10000,
+ //        yoyo: true,
+ //        repeat: -1,
+ //        rotateToPath: true,
+ //        verticalAdjust: true
+ //    });
