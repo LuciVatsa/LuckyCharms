@@ -38,7 +38,7 @@ function preload ()
 	
 
        this.load.image('sky','background.png');
-       this.load.image('slime', 'slime.png');
+       this.load.image('slime', 'trail.png');
        this.load.image('enemy', 'enemySkeleton.png');
        this.load.image('portal', 'tempPortal.png');
        //spirte loading
@@ -56,9 +56,10 @@ function create ()
         enemy.create(X,Y , 'enemy');
         //slime collision
         slime =this.physics.add.group(); 
-        slime.create(100,300,'slime');
-        slime.create(100,400,'slime');
-        slime.create(300,500,'slime');
+        slime.create(100,300,'slime').setCollideWorldBounds(true).setImmovable(true);
+        slime.create(100,400,'slime').setCollideWorldBounds(true).setImmovable(true);
+        slime.create(300,500,'slime').setCollideWorldBounds(true).setImmovable(true);
+       
        //
  
         // playercollision 
@@ -93,6 +94,7 @@ function create ()
         this.physics.add.collider(player, slime, blockPush, null, null);
         //Collision bet block and enemy
         this.physics.add.overlap(enemy, slime, killEnemy, null , null);
+       this.physics.add.collider(slime , slime);
         
     }
 
@@ -129,11 +131,12 @@ function update ()
 }
 function blockPush(player , slime)
 {
-    	 slime.setCollideWorldBounds(true);
+    	 slime.setImmovable(false);
 
    var diff = 0;
    var maxDiff= 50;
-   if(player.x < slime.x )
+    if(player.x < slime.x )
+
     {
        
         slime.setVelocityX(160);
@@ -203,29 +206,29 @@ function enemyMovement()
 
 
 
-       enemy movement
-      enemyMovement();
-    var path = new Phaser.Curves.Path(50, 500);
+//        enemy movement
+//       enemyMovement();
+//     var path = new Phaser.Curves.Path(50, 500);
 
-    path.splineTo([ 164, 446, 274, 542, 412, 457, 522, 541, 664, 464 ]);
-    path.lineTo(700, 300);
-    path.lineTo(600, 350);
-    path.ellipseTo(200, 100, 100, 250, false, 0);
-    path.cubicBezierTo(222, 119, 308, 107, 208, 368);
-    path.ellipseTo(60, 60, 0, 360, true);
+//     path.splineTo([ 164, 446, 274, 542, 412, 457, 522, 541, 664, 464 ]);
+//     path.lineTo(700, 300);
+//     path.lineTo(600, 350);
+//     path.ellipseTo(200, 100, 100, 250, false, 0);
+//     path.cubicBezierTo(222, 119, 308, 107, 208, 368);
+//     path.ellipseTo(60, 60, 0, 360, true);
 
-    var graphics = this.add.graphics();
+//     var graphics = this.add.graphics();
 
-    //graphics.lineStyle(1, 0xffffff, 1);
+//     //graphics.lineStyle(1, 0xffffff, 1);
 
-    //path.draw(graphics, 128);
+//     //path.draw(graphics, 128);
 
- enemy = this.add.follower(path, 50, 500, 'enemy');
+//  enemy = this.add.follower(path, 50, 500, 'enemy');
 
-    enemy.startFollow({
-        duration: 10000,
-        yoyo: true,
-        repeat: -1,
-        rotateToPath: true,
-        verticalAdjust: true
-    });
+//     enemy.startFollow({
+//         duration: 10000,
+//         yoyo: true,
+//         repeat: -1,
+//         rotateToPath: true,
+//         verticalAdjust: true
+//     });
