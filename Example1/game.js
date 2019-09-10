@@ -30,6 +30,7 @@ var config = {
     var Y= 500;
     var follower;
     var portal;
+    var isRight = false;
 var path;
 var bounds;
 var graphics;
@@ -59,7 +60,7 @@ function create ()
         //slime collision 
         slime =this.physics.add.group(); 
 
-        slime.create(100,300,'slime').setCollideWorldBounds(true).setImmovable(true);
+        slime.create(300,300,'slime').setCollideWorldBounds(true).setImmovable(true);
         slime.create(100,400,'slime').setCollideWorldBounds(true).setImmovable(true);
         slime.create(300,500,'slime').setCollideWorldBounds(true).setImmovable(true);
 
@@ -70,7 +71,7 @@ function create ()
 
  
         // playercollision 
-        player = this.physics.add.sprite(288,320,'dude');
+        player = this.physics.add.sprite(100,100,'dude');
         player.setCollideWorldBounds(true);
         //player score text
        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
@@ -130,7 +131,7 @@ function update ()
     else{
                 player.setVelocityX(0);
               player.setVelocityY(0);
-                player.anims.play('turn');
+               // player.anims.play('turn');
          }
              
 
@@ -142,31 +143,40 @@ function update ()
 function blockPush(player , slime)
 {
     	 slime.setImmovable(false);
-
-   var diff = 0;
-   var maxDiff= 50;
-    if(player.x < slime.x )
+         
+   
+   //left to right
+    if(player.x < slime.x && player.y == slime.y)
     {
        
         slime.setVelocityX(160);
+        slime.setVelocityY(0);
+        isRight = true;
    }
-  else if(player.body.touching.up)
-  {
+  if(player.x > slime.x)
+   {
       
-        slime.setVelocityX(-160);
+      slime.setVelocityX(-160);
+      slime.setVelocityY(0);
+      isRight = false;
    }
-   else if(player.y < slime.y )
+   //down to top
+   if(player.y < slime.y )
     {
       
       // slime.setActiveCollision();
-       slime.setVelocityY(160);
+      slime.setVelocityY(160);
+      slime.setVelocityX(0);
    }
    //up to down
-  else if(player.y > slime.y )
+   if( player.y> slime.y)
+
   {
   
-        slime.setVelocityY(160);
+        slime.setVelocityY(-160);
+        slime.setVelocityX(0);
    }
+  
 }
 
 //Kill Function
@@ -179,49 +189,20 @@ function killEnemy(enemy, slime)
     scoreText.setText('Score: ' + score);
 }
 
-//optional code.
-function enemyMovement()
-{
-  graphics = this.add.graphics();
-
-    follower = { t: 0, vec: new Phaser.Math.Vector2() };
-
-    path = new Phaser.Curves.Path(50, 500);
-
-    path.splineTo([ 164, 446, 274, 542, 412, 457, 522, 541, 664, 464 ]);
-
-    path.lineTo(700, 300);
-
-    path.lineTo(600, 350);
-
-    path.ellipseTo(200, 100, 100, 250, false, 0);
-
-    path.cubicBezierTo(222, 119, 308, 107, 208, 368);
-
-    path.ellipseTo(60, 60, 0, 360, true);
-
-    bounds = new Phaser.Geom.Rectangle();
-
-    path.getBounds(bounds);
-
-    this.tweens.add({
-        targets: follower,
-        t: 1,
-        ease: 'Sine.easeInOut',
-        duration: 4000,
-        yoyo: true,
-        repeat: -1
-    });
-}
-
-
-
-
 function portalShift(slime, portal)
 {
     
      slime.x = 100;
      slime.y = 100;
+     if(isRight == true)
+     {
+         
+        slime.setVelocityX(160);
+     }
+     else
+     {
+        slime.setVelocityX(-160);
+     }
 
 }
 
