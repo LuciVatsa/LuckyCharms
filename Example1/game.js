@@ -1,175 +1,161 @@
 
 var config = {
-        type: Phaser.AUTO,
-        width: 608,
-        height: 800,
-        physics: {
-            default: 'arcade',
-            
-            arcade: {
-                gravity: { y: 0},
-                debug: true
-            }
-        },
-        scene: {
-            preload: preload,
-            create: create,
-            update: update
-            
+    type: Phaser.AUTO,
+    width: 608,
+    height: 800,
+    physics: {
+        default: 'arcade',
+
+        arcade: {
+            gravity: { y: 0 },
+            debug: true
         }
-    };
-	
-    var player;
-    var slime;
-    var cursors;
-    var score = 0;
-    var scoreText;
-    var enemy;
-    var X= 100;
-    var Y= 500;
-    var follower;
-    var portal;
+    },
+    scene: {
+        preload: preload,
+        create: create,
+        update: update
+
+    }
+};
+
+var player;
+var slime;
+var cursors;
+var score = 0;
+var scoreText;
+var enemy;
+var X = 100;
+var Y = 500;
+var follower;
+var portal;
 var path;
 var bounds;
 var graphics;
-	 var game = new Phaser.Game(config);
-function preload ()
-{
-	
+var game = new Phaser.Game(config);
+function preload() {
 
-       this.load.image('sky','background.png');
-       this.load.image('slime', 'slime.png');
-       this.load.image('enemy', 'enemySkeleton.png');
-       this.load.image('portal', 'tempPortal.png');
-       //spirte loading
-     //  this.load.spritesheet('dude', 'dude.png',{ frameWidth:32, frameHeight:48});
-     this.load.image('dude', 'Player.png');
+
+    this.load.image('sky', 'background.png');
+    this.load.image('slime', 'slime.png');
+    this.load.image('enemy', 'enemySkeleton.png');
+    this.load.image('portal', 'tempPortal.png');
+    //spirte loading
+    //  this.load.spritesheet('dude', 'dude.png',{ frameWidth:32, frameHeight:48});
+    this.load.image('dude', 'Player.png');
 }
 
-function create ()
-    {
-        
-        this.add.image(304,400,'sky');
-        //enemy collision
-        enemy= this.physics.add.group();
-        enemy.create(100,600,'enemy');
-        enemy.create(X,Y , 'enemy');
-        //slime collision
-        slime =this.physics.add.group(); 
-        slime.create(100,300,'slime');
-        slime.create(300,500,'slime');
-       //
- 
-        // playercollision 
-        player = this.physics.add.sprite(100,100,'dude');
-        player.setCollideWorldBounds(true);
-        //player score text
-       scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
-    
-        this.anims.create({
-            key: 'left',
-            frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
-            frameRate: 10,
-            repeat: -1
-        });
-    
-        this.anims.create({
-            key: 'turn',
-            frames: [ { key: 'dude', frame: 4 } ],
-            frameRate: 20
-        });
-    
-        this.anims.create({
-            key: 'right',
-            frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
-            frameRate: 10,
-            repeat: -1
-        });
-            cursors = this.input.keyboard.createCursorKeys();
-        
-            this.physics.add.collider(player, slime);
-            //Collision with the player
-        this.physics.add.collider(player, slime, blockPush, null, null);
-        //Collision bet block and enemy
-        this.physics.add.overlap(enemy, slime, killEnemy, null , null);
-        
-    }
+function create() {
 
-function update ()
-{
-   
-    if(this.input.keyboard.checkDown(cursors.left, 250))
-    {
+    this.add.image(304, 400, 'sky');
+    //enemy collision
+    enemy = this.physics.add.group();
+    enemy.create(100, 600, 'enemy');
+    enemy.create(X, Y, 'enemy');
+    //slime collision
+    slime = this.physics.add.group();
+    slime.create(100, 300, 'slime');
+    slime.create(300, 500, 'slime');
+    //
+
+    // playercollision 
+    player = this.physics.add.sprite(100, 100, 'dude');
+    player.setCollideWorldBounds(true);
+    //player score text
+    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+
+    this.anims.create({
+        key: 'left',
+        frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
+    this.anims.create({
+        key: 'turn',
+        frames: [{ key: 'dude', frame: 4 }],
+        frameRate: 20
+    });
+
+    this.anims.create({
+        key: 'right',
+        frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
+        frameRate: 10,
+        repeat: -1
+    });
+    cursors = this.input.keyboard.createCursorKeys();
+
+    this.physics.add.collider(player, slime);
+    //Collision with the player
+    this.physics.add.collider(player, slime, blockPush, null, null);
+    //Collision bet block and enemy
+    this.physics.add.overlap(enemy, slime, killEnemy, null, null);
+
+}
+
+function update() {
+
+    if (this.input.keyboard.checkDown(cursors.left, 250)) {
         player.x -= 16;
-       // player.anims.play('left', true);
+        // player.anims.play('left', true);
     }
-    else if(this.input.keyboard.checkDown(cursors.right, 250))
-    {
+    else if (this.input.keyboard.checkDown(cursors.right, 250)) {
         player.x += 16;
-       // player.anims.play('right', true);
+        // player.anims.play('right', true);
     }
-   else if(this.input.keyboard.checkDown(cursors.up, 250))
-    {
+    else if (this.input.keyboard.checkDown(cursors.up, 250)) {
         player.y -= 16;
     }
-    else if(this.input.keyboard.checkDown(cursors.down, 250))
-    {
+    else if (this.input.keyboard.checkDown(cursors.down, 250)) {
         player.y += 16;
     }
-    else{
-                player.setVelocityX(0);
-              player.setVelocityY(0);
-                player.anims.play('turn');
-         }
-             
+    else {
+        player.setVelocityX(0);
+        player.setVelocityY(0);
+        player.anims.play('turn');
+    }
 
 
-	
+
+
 }
-function blockPush(player , slime)
-{
-    	 slime.setCollideWorldBounds(true);
+function blockPush(player, slime) {
+    slime.setCollideWorldBounds(true);
 
-   var diff = 0;
-   var maxDiff= 50;
-   if(player.x < slime.x )
-    {
-       
+    var diff = 0;
+    var maxDiff = 50;
+    if (player.x < slime.x) {
+
         slime.setVelocityX(160);
-   }
-  else if(player.x > slime.x )
-  {
-      
+    }
+    else if (player.x > slime.x) {
+
         slime.setVelocityX(-160);
-   }
-   else if(player.y < slime.y )
-    {
-      // slime.setActiveCollision();
+    }
+    else if (player.y < slime.y) {
+        // slime.setActiveCollision();
         slime.setVelocityY(160);
-   }
-  else if(player.y > slime.y )
-  {
-       
+    }
+    else if (player.y > slime.y) {
+
         slime.setVelocityY(160);
-   }
+    }
 }
-function killEnemy(enemy, slime)
-{
- enemy.disableBody(true, true);
-  //enemy.destory();
-  
-     score += 10;
+function killEnemy(enemy, slime) {
+    enemy.disableBody(true, true);
+    //enemy.destory();
+
+    score += 10;
     scoreText.setText('Score: ' + score);
 }
-function enemyMovement()
-{
-  graphics = this.add.graphics();
+function enemyMovement() {
+    graphics = this.add.graphics();
 
     follower = { t: 0, vec: new Phaser.Math.Vector2() };
 
     path = new Phaser.Curves.Path(50, 500);
 
-    path.splineTo([ 164, 446, 274, 542, 412, 457, 522, 541, 664, 464 ]);
+    path.splineTo([164, 446, 274, 542, 412, 457, 522, 541, 664, 464]);
 
     path.lineTo(700, 300);
 
