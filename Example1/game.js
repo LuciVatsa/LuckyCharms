@@ -137,8 +137,9 @@ function update ()
               player.setVelocityX(0);
               player.setVelocityY(0);
         }
-    if(this.input.keyboard.checkDown(cursors., 250))
+    if(this.key.isDown)
     {
+    	console.log('Key Pressed');
          if(player.x < slime.x || player.x > slime.x)
          {
          	DestroyBlock(this.player,this.slime);
