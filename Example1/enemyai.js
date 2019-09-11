@@ -32,7 +32,7 @@ var astar = {
             // Grab the lowest f(x) to process next.  Heap keeps this sorted for us.
             var currentNode = openHeap.pop();
 
-            // End case -- result has been found, return the traced path.
+            // End case -- result found, return the traced path.
             if(currentNode === end) {
                 var curr = currentNode;
                 var ret = [];

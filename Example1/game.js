@@ -22,6 +22,7 @@ var config = {
 	
     var player;
     var slime;
+    var block;
     var cursors;
     var score = 0;
     var scoreText;
@@ -32,10 +33,10 @@ var config = {
     var portal;
     var isRight =-1;
     var isUp = -1;
-var path;
-var bounds;
-var graphics;
-	 var game = new Phaser.Game(config);
+    var path;
+    var bounds;
+    var graphics;
+	var game = new Phaser.Game(config);
 function preload ()
 {
 	
@@ -44,9 +45,8 @@ function preload ()
        this.load.image('slime', 'slime.png');
        this.load.image('enemy', 'enemySkeleton.png');
        this.load.image('portal', 'tempPortal.png');
-       //spirte loading
-     //  this.load.spritesheet('dude', 'dude.png',{ frameWidth:32, frameHeight:48});
-     this.load.image('dude', 'Player.png');
+       this.load.image('player', 'Player.png');
+       this.load.image('block', 'block.png')
 }
 
 function create ()
@@ -55,66 +55,61 @@ function create ()
         
         this.add.image(304,400,'sky');
         //enemy collision
-        enemy= this.physics.add.group();
-        enemy.create(48,208,'enemy');
-        enemy.create(240,608 , 'enemy');
+        enemy = this.physics.add.group();
+        
+        
         //slime collision 
-        slime =this.physics.add.group(); 
-
-        slime.create(334,334,'slime').setCollideWorldBounds(true).setImmovable(true);
-        //slime.create(366,334'slime').setCollideWorldBounds(true).setImmovable(true);
-        //slime.create(400,500,'slime').setCollideWorldBounds(true).setImmovable(true);
+        slime =this.physics.add.group();
+        block = this.physics.add.group(); 
 
        
-       //portal
-       portal = this.physics.add.staticGroup();
-       portal.create(400,400,'portal');
+		for (var i = 16; i <= 19*32; i+=32) 
+        {
+        	for (var j = 16; j <= 22*32; j+=32) 
+        	{
+        		if((Math.floor(Math.random()*10)%4)==0 && i!=302 && j!=368)
+        		{
+        			if((i+j)%100==0 && Math.floor(Math.random()*2))
+        			{
+        				block.create(i,j,'block').setCollideWorldBounds(true).setImmovable(true);
+        			}
+        			else
+        			{
+        				slime.create(i,j,'slime').setCollideWorldBounds(true).setImmovable(true);
+        			}
+        		}
+        		
+        	}
+       	}
+
 
  
         // playercollision 
-        player = this.physics.add.sprite(302,368,'dude');
+        player = this.physics.add.sprite(302,368,'player');
         player.setCollideWorldBounds(true);
         //player score text
-       scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
-    
-        this.anims.create({
-            key: 'left',
-            frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
-            frameRate: 10,
-            repeat: -1
-        });
-    
-        this.anims.create({
-            key: 'turn',
-            frames: [ { key: 'dude', frame: 4 } ],
-            frameRate: 20
-        });
-    
-        this.anims.create({
-            key: 'right',
-            frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
-            frameRate: 10,
-            repeat: -1
-        });
-            cursors = this.input.keyboard.createCursorKeys();
-        
-            this.physics.add.collider(player, slime);
-            //Collision with the player
+        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+        cursors = this.input.keyboard.createCursorKeys();
+        this.physics.add.collider(player, slime);
+        this.physics.add.collider(slime, player);
+        this.physics.add.collider(player,enemy);
+        this.physics.add.collider(enemy,player);
         this.physics.add.collider(player, slime, blockPush, null, null);
-        //Collision bet block and enemy
         this.physics.add.overlap(enemy, slime, killEnemy, null , null);
-       this.physics.add.collider(slime , slime);
-       this.physics.add.collider(slime, portal , portalShift ,null , null);
+        this.physics.add.collider(slime , slime);
+        this.physics.add.collider(slime, portal , portalShift ,null , null);
         
     }
 
 function update ()
 {
+
    
    
     if(this.input.keyboard.checkDown(cursors.left, 250))
     {
         player.x -= 32;
+        
        // player.anims.play('left', true);
     }
     else if(this.input.keyboard.checkDown(cursors.right, 250))
@@ -131,10 +126,9 @@ function update ()
         player.y += 32;
     }
     else{
-                player.setVelocityX(0);
+              player.setVelocityX(0);
               player.setVelocityY(0);
-               // player.anims.play('turn');
-         }
+        }
              
 
 
@@ -199,7 +193,7 @@ function killEnemy(enemy, slime)
     scoreText.setText('Score: ' + score);
 }
 
-function portalShift(slime, portal)
+/*function portalShift(slime, portal)
 {
     console.log(isRight);
      slime.x = 100;
@@ -229,6 +223,6 @@ function portalShift(slime, portal)
 
 
 
-}
+}*/
 
         
