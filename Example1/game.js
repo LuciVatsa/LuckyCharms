@@ -41,7 +41,7 @@ function preload ()
 	
 
        this.load.image('sky','background.png');
-       this.load.image('slime', 'trail.png');
+       this.load.image('slime', 'slime.png');
        this.load.image('enemy', 'enemySkeleton.png');
        this.load.image('portal', 'tempPortal.png');
        //spirte loading
@@ -62,8 +62,8 @@ function create ()
         slime =this.physics.add.group(); 
 
         slime.create(334,334,'slime').setCollideWorldBounds(true).setImmovable(true);
-        slime.create(366,334'slime').setCollideWorldBounds(true).setImmovable(true);
-        slime.create(400,500,'slime').setCollideWorldBounds(true).setImmovable(true);
+        //slime.create(366,334'slime').setCollideWorldBounds(true).setImmovable(true);
+        //slime.create(400,500,'slime').setCollideWorldBounds(true).setImmovable(true);
 
        
        //portal
