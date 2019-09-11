@@ -61,7 +61,7 @@ function create ()
         //slime collision 
         slime =this.physics.add.group(); 
 
-        slime.create(400,300,'slime').setCollideWorldBounds(true).setImmovable(true);
+        slime.create(334,334,'slime').setCollideWorldBounds(true).setImmovable(true);
         slime.create(100,400,'slime').setCollideWorldBounds(true).setImmovable(true);
         slime.create(400,500,'slime').setCollideWorldBounds(true).setImmovable(true);
 
@@ -72,7 +72,7 @@ function create ()
 
  
         // playercollision 
-        player = this.physics.add.sprite(400,100,'dude');
+        player = this.physics.add.sprite(302,368,'dude');
         player.setCollideWorldBounds(true);
         //player score text
        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
@@ -114,21 +114,21 @@ function update ()
    
     if(this.input.keyboard.checkDown(cursors.left, 250))
     {
-        player.x -= 16;
+        player.x -= 32;
        // player.anims.play('left', true);
     }
     else if(this.input.keyboard.checkDown(cursors.right, 250))
     {
-        player.x +=16;
+        player.x += 32;
        // player.anims.play('right', true);
     }
    else if(this.input.keyboard.checkDown(cursors.up, 250))
     {
-        player.y -= 16;
+        player.y -= 32;
     }
     else if(this.input.keyboard.checkDown(cursors.down, 250))
     {
-        player.y += 16;
+        player.y += 32;
     }
     else{
                 player.setVelocityX(0);
