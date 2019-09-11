@@ -62,7 +62,7 @@ function create ()
         slime =this.physics.add.group(); 
 
         slime.create(334,334,'slime').setCollideWorldBounds(true).setImmovable(true);
-        slime.create(100,400,'slime').setCollideWorldBounds(true).setImmovable(true);
+        slime.create(366,334'slime').setCollideWorldBounds(true).setImmovable(true);
         slime.create(400,500,'slime').setCollideWorldBounds(true).setImmovable(true);
 
        
