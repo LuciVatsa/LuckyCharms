@@ -121,6 +121,15 @@ function create ()
     	{
     		slime.create(i,16+6*32,'slime').setCollideWorldBounds(true).setImmovable(true);
     	}
+    	if(i==16+6*32||i==16+7*32||i==16+8*32||i==16+10*32||i==16+11*32||i==16+12*32||i==16+14*32||i==16+15*32)
+    	{
+    		slime.create(i,16+9*32,'slime').setCollideWorldBounds(true).setImmovable(true);
+    	}
+    	if(i==16+9*32||i==16+10*32||i==16+11*32||i==16+12*32||i==16+13*32)
+    	{
+    		slime.create(i,16+19*32,'slime').setCollideWorldBounds(true).setImmovable(true);
+    	}
+
     }
     // i = 16; i <= 19*32; i+=32
     // i = 16; i <= 22*32; i+=32
