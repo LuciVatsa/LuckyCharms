@@ -211,9 +211,9 @@ function update ()
 //testing
 // console.debug('x'+player.x);
 // console.debug('y'+ player.y)
- if(this.input.keyboard.checkDown(cursors.left, 250))
+    if(this.input.keyboard.checkDown(cursors.left, 250))
     {
-        player.x -= 32;
+        player.setVelocityX(-1600);
 
        // player.anims.play('left', true);
     }
@@ -230,17 +230,18 @@ function update ()
     {
         player.y += 32;
     }
-    else{
+    else
+    {
               player.setVelocityX(0);
               player.setVelocityY(0);
-        }
+    }
+    
+
+
     if(this.key.isDown)
     {
     	console.log('Key Pressed');
-         if(player.x < slime.x || player.x > slime.x)
-         {
-         	DestroyBlock(this.player,this.slime);
-         }
+        DestroyBlock(this.slime);
     }
 
 }
