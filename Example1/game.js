@@ -8,7 +8,7 @@ var config = {
 
             arcade: {
                 gravity: { y: 0},
-                debug: true
+                debug: false
             }
         },
         scene: {
@@ -22,6 +22,7 @@ var config = {
 
     var player;
     var slime;
+    var i;
     var block;
     var cursors;
     var key;
@@ -72,32 +73,66 @@ function create ()
 //testing purpose delete later
 
 
-	slime.create(272,512,'slime').setCollideWorldBounds(true).setImmovable(true);
-		// for (var i = 16; i <= 19*32; i+=32)
-    //     {
-    //     	for (var j = 16; j <= 22*32; j+=32)
-    //     	{
-    //     		if((Math.floor(Math.random()*10)%4)==0 && i!=302 && j!=368)
-    //     		{
-    //     			if((i+j)%100==0 && Math.floor(Math.random()*2))
-    //     			{
-    //     				block.create(i,j,'block').setCollideWorldBounds(true).setImmovable(true);
-    //     			}
-    //     			else
-    //     			{
-    //     				slime.create(i,j,'slime').setCollideWorldBounds(true).setImmovable(true);
-    //     			}
-    //     		}
-    //
-    //     	}
-    //    	}
-        enemy= this.physics.add.group();
-        enemy.create(48,208,'enemy');
-        enemy.create(240,608 , 'enemy');
+	//slime.create(272,512,'slime').setCollideWorldBounds(true).setImmovable(true);
+    for(i = 48; i <= 21*32; i+=32)
+    {
+    	if(i != 16 + 15*32)
+    	{
+    		slime.create(16+3*32,i,'slime').setCollideWorldBounds(true).setImmovable(true);
+    	}
+    	if(i != 16 + 1*32&&i != 16 + 2*32&&i != 16 + 3*32&&i != 16 + 4*32&&i != 16 + 5*32&&i != 16 + 6*32&&i != 16 + 7*32&&i != 16 + 8*32&&i != 16 + 9*32&&i != 16 + 10*32&&i != 16 + 19*32&&i != 16 + 20*32)
+    	{
+    		slime.create(16+6*32,i,'slime').setCollideWorldBounds(true).setImmovable(true);
+    	}
+    	if(i != 16 + 1*32&&i!=16+2*32&&i!=16+3*32&&i != 16 + 4*32&&i != 16 + 5*32&&i != 16 + 6*32&&i != 16 + 8*32&&i!=16+7*32&&i!=16+15*32&&i!=16+16*32&&i!=16+17*32&&i!=16+18*32&&i!=16+19*32&&i != 16 + 20*32)
+    	{
+    		slime.create(16+9*32,i,'slime').setCollideWorldBounds(true).setImmovable(true);
+    	}
+        if(i!=16+13*32&&i!=16+14*32)
+        {
+        	slime.create(16+16*32,i,'slime').setCollideWorldBounds(true).setImmovable(true);
+        }
+        if(i!=16+1*32&&i!=16+2*32&&i != 16 + 3*32&&i != 16 + 4*32&&i != 16 + 6*32&&i != 16 + 7*32&&i != 16 + 8*32&&i != 16 + 15*32&&i != 16 + 16*32&&i != 16 + 17*32&&i != 16 + 18*32&&i != 16 + 19*32&&i != 16 + 20*32)
+        {
+        	slime.create(16+13*32,i,'slime').setCollideWorldBounds(true).setImmovable(true);
+        }
+        if(i==16+15*32||i==16+16*32||i==16+17*32||i==16+18*32)
+        {
+        	slime.create(16+11*32,i,'slime').setCollideWorldBounds(true).setImmovable(true);
+
+        }
+        if(i==16+1*32||i==16+2*32)
+        {
+        	slime.create(16+10*32,i,'slime').setCollideWorldBounds(true).setImmovable(true);
+
+        }  
+    }
+    for(i=48; i<=18*32;i+=32)
+    {
+    	if(i==16+7*32||i==16+8*32||i==16+9*32||i==16+9*32||i==16+10*32)
+    	{
+    		slime.create(i,16+3*32,'slime').setCollideWorldBounds(true).setImmovable(true);
+    	}
+    	if(i==16+13*32||i==16+14*32)
+    	{
+    		slime.create(i,16+4*32,'slime').setCollideWorldBounds(true).setImmovable(true);
+    	}
+    	if(i!=16+1*32&&i!=16+2*32&&i!=16+3*32&&i!=16+14*32&&i!=16+15*32&&i!=16+16*32&&i!=16+17*32)
+    	{
+    		slime.create(i,16+6*32,'slime').setCollideWorldBounds(true).setImmovable(true);
+    	}
+    }
+    // i = 16; i <= 19*32; i+=32
+    // i = 16; i <= 22*32; i+=32
+    // block.create(i,j,'block').setCollideWorldBounds(true).setImmovable(true);
+    // slime.create(i,j,'slime').setCollideWorldBounds(true).setImmovable(true);
+    // enemy= this.physics.add.group();
+    // enemy.create(48,208,'enemy');
+    // enemy.create(240,608 , 'enemy');
 
 
         // playercollision
-        player = this.physics.add.sprite(302,368,'player');
+        player = this.physics.add.sprite(16 +10*32,16+10*32,'player');
         player.setCollideWorldBounds(true);
 
         //player score text
@@ -134,12 +169,12 @@ function create ()
             portal = this.physics.add.staticGroup();
 
             //redportal
-            portal.create(400,400,'redPortal').play('turnRed').setName('redPortal1');
-          portal.create(100,100,'redPortal').play('turnRed').setName('redPortal2');
+          //   portal.create(400,400,'redPortal').play('turnRed').setName('redPortal1');
+          // portal.create(100,100,'redPortal').play('turnRed').setName('redPortal2');
 
             //blueportal
-         portal.create(400,600,'bluePortal').play('turnBlue').setName('bluePortal1');
-           portal.create(100,500,'bluePortal').play('turnBlue').setName('bluePortal2');
+         // portal.create(400,600,'bluePortal').play('turnBlue').setName('bluePortal1');
+         //   portal.create(100,500,'bluePortal').play('turnBlue').setName('bluePortal2');
 
            //setting destroy button
                   this.key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -154,7 +189,7 @@ function create ()
         this.physics.add.collider(enemy,player);
        this.physics.add.collider(slime , slime);
 
-     this.physics.add.collider(slime,portal , portalShift ,null , null);
+     //this.physics.add.collider(slime,portal , portalShift ,null , null);
 
 
 
