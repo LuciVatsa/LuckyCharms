@@ -51,6 +51,7 @@ function preload ()
        //this.load.image('redPortal', 'Vortex-red.png');
        //spirte loading
       this.load.spritesheet('redPortal', 'Vortex-Red.png',{ frameWidth:96, frameHeight:64});
+
       this.load.spritesheet('bluePortal', 'Vortex-Blue.png',{ frameWidth:96, frameHeight:64});
       //player loading
      this.load.image('player', 'Player.png');
@@ -68,26 +69,28 @@ function create ()
         //Creating Slimes and blocks
         slime =this.physics.add.group();
         block = this.physics.add.group();
+//testing purpose delete later
 
 
-		for (var i = 16; i <= 19*32; i+=32)
-        {
-        	for (var j = 16; j <= 22*32; j+=32)
-        	{
-        		if((Math.floor(Math.random()*10)%4)==0 && i!=302 && j!=368)
-        		{
-        			if((i+j)%100==0 && Math.floor(Math.random()*2))
-        			{
-        				block.create(i,j,'block').setCollideWorldBounds(true).setImmovable(true);
-        			}
-        			else
-        			{
-        				slime.create(i,j,'slime').setCollideWorldBounds(true).setImmovable(true);
-        			}
-        		}
-
-        	}
-       	}
+	slime.create(272,512,'slime').setCollideWorldBounds(true).setImmovable(true);
+		// for (var i = 16; i <= 19*32; i+=32)
+    //     {
+    //     	for (var j = 16; j <= 22*32; j+=32)
+    //     	{
+    //     		if((Math.floor(Math.random()*10)%4)==0 && i!=302 && j!=368)
+    //     		{
+    //     			if((i+j)%100==0 && Math.floor(Math.random()*2))
+    //     			{
+    //     				block.create(i,j,'block').setCollideWorldBounds(true).setImmovable(true);
+    //     			}
+    //     			else
+    //     			{
+    //     				slime.create(i,j,'slime').setCollideWorldBounds(true).setImmovable(true);
+    //     			}
+    //     		}
+    //
+    //     	}
+    //    	}
         enemy= this.physics.add.group();
         enemy.create(48,208,'enemy');
         enemy.create(240,608 , 'enemy');
@@ -150,7 +153,7 @@ function create ()
         this.physics.add.collider(player,enemy);
         this.physics.add.collider(enemy,player);
        this.physics.add.collider(slime , slime);
-    //   this.physics.add.collider(slime,portal , portalShift ,null , null);
+     this.physics.add.collider(slime,portal , portalShift ,null , null);
 
 
 
@@ -160,6 +163,9 @@ function create ()
 function update ()
 {
 
+//testing
+// console.debug('x'+player.x);
+// console.debug('y'+ player.y)
  if(this.input.keyboard.checkDown(cursors.left, 250))
     {
         player.x -= 32;
@@ -199,7 +205,10 @@ function blockPush(player , slime)
 {
     	 slime.setImmovable(false);
 
-
+console.debug(this.player.body.touching.up);
+console.debug(this.player.body.touching.down);
+console.debug(this.player.body.touching.left);
+console.debug(this.player.body.touching.down);
    //left to right
     if(player.x < slime.x )
     {
@@ -257,7 +266,7 @@ function DestroyBlock(player, slime)
 	this.slime.disableBody(true,true);
 }
 
-/*function portalShift(slime, portal)
+function portalShift(slime, portal)
 {
 
   if(portal.name == 'redPortal1' && isRed !=true  )
@@ -271,7 +280,6 @@ function DestroyBlock(player, slime)
   }
   else if(portal.name == 'redPortal2' && isRed !=true  && isBlue !=true)
   {
-console.debug('asdasdasd')
     slime.x = 400;
     slime.y = 400;
 isRed = true;
@@ -318,4 +326,4 @@ isRed = true;
 
 
 
-}*/
+}
