@@ -28,15 +28,20 @@ var config = {
     var score = 0;
     var scoreText;
     var enemy;
-    var key;
+    var keyA;
+    var keyX;
     var X= 100;
     var Y= 500;
     var follower;
     var portal;
     var isRight =-1;
+    var playerRight =-1;
+    var playerUp= -1;
     var isUp = -1;
     var isRed = false;
     var isBlue = false;
+    var staticslime;
+    var isPressing;
 var path;
 var bounds;
 var graphics;
@@ -65,16 +70,24 @@ function create ()
         //enemy collision
         enemy = this.physics.add.group();
 
+                // playercollision
+                player = this.physics.add.sprite(16,16,'player');
+                player.setBounce(0.1);
+                player.setCollideWorldBounds(true);
+
+
+staticslime = this.physics.add.staticGroup();
+staticslime.create(400,500 ,'slime').setScale(2).refreshBody();
 
         //Creating Slimes and blocks
-        slime =this.physics.add.group();
+      slime =this.physics.add.group();
         block = this.physics.add.group();
 //testing purpose delete later
 
 
 	slime.create(272,512,'slime').setCollideWorldBounds(true).setImmovable(true);
-  slime.create(400,300,'slime').setCollideWorldBounds(true).setImmovable(true);
-  slime.create(400,500,'slime').setCollideWorldBounds(true).setImmovable(true);
+  //slime.create(400,300,'slime').setCollideWorldBounds(true).setImmovable(true);
+  //slime.create(400,500,'slime').setCollideWorldBounds(true).setImmovable(true);
 		// for (var i = 16; i <= 19*32; i+=32)
     //     {
     //     	for (var j = 16; j <= 22*32; j+=32)
@@ -98,9 +111,6 @@ function create ()
         enemy.create(240,608 , 'enemy');
 
 
-        // playercollision
-        player = this.physics.add.sprite(16,16,'player');
-        player.setCollideWorldBounds(true);
 
         //player score text
        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
@@ -144,51 +154,108 @@ function create ()
          //   portal.create(100,500,'bluePortal').play('turnBlue').setName('bluePortal2');
 
            //setting destroy button
-                  this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-
-            this.physics.add.collider(player, slime);
+                  this.keyA = this.input.keyboard.addKey('A');
+            //key for pushing blocks
+            this.keyX = this.input.keyboard.addKey('X');
+            //this.physics.add.collider(player, slime);
             //Collision with the player
         this.physics.add.collider(player, slime, blockPush, null, null);
         this.physics.add.overlap(enemy, slime, killEnemy, null , null);//adding colliders to game objects
-        this.physics.add.collider(player, slime);
-        this.physics.add.collider(slime, player);
-        this.physics.add.collider(player,enemy);
+        this.physics.add.collider(player,slime);
+      //  this.physics.add.collider(slime, player);
+        //this.physics.add.collider(player,enemy);
         this.physics.add.collider(enemy,player);
-       this.physics.add.collider(slime , slime , stopBlock , null , null);
+       this.physics.add.collider(slime , slime );
     // this.physics.add.collider(slime,portal , portalShift ,null , null);
 
+this.physics.add.collider(player, staticslime);
+
+this.input.keyboard.on("keyup_X",  function(event)
+{
+
+    isPressing = !isPressing;
 
 
-
+},this)
+// this.input.keyboard.on("keydown_UP",  function(event)
+// {
+//   player.setVelocityX(32*5);
+// console.debug("hi");
+//       player.setVelocityY(0);
+//
+// },this)
     }
 
 function update ()
 {
 
+
+console.debug(isPressing);
 //testing
 // console.debug('x'+player.x);
 // console.debug('y'+ player.y)
- if(this.input.keyboard.checkDown(cursors.left, 500))
-    {
-        player.x -= 32;
+ // if(this.input.keyboard.checkDown(cursors.left, 500))
+ //    {
+ //      player.x -=32;
+ //        playerRight = 0;
+ //        playerUp = -1;
+ //        //player.setVelocityX(-160);
+ //       // player.anims.play('left', true);
+ //    }
+ //     if(this.input.keyboard.checkDown(cursors.right, 500))
+ //    {
+ //        player.x +=32;
+ //        playerRight = 1;
+ //        playerUp = -1;
+ //      //  player.setVelocityX(160);
+ //       // player.anims.play('right', true);
+ //    }
+ //    if(this.input.keyboard.checkDown(cursors.up, 500))
+ //    {
+ //       player.y -= 16;
+ //        playerRight = -1;
+ //      //  player.setVelocityY(-160);
+ //        playerUp = 0;
+ //    }
+ //     if(this.input.keyboard.checkDown(cursors.down, 500))
+ //    {
+ //        player.y += 16;
+ //        playerRight = -1;
+ //        playerUp = 1;
+ //                //player.setVelocityY(160);
+ //    }
+//  var currentX = player.x;
+//  var n= 0;
+//     //console.debug("x"+currentX);
+var multi = 4;
+    if (cursors.left.isDown)
+ {
 
-       // player.anims.play('left', true);
-    }
-    else if(this.input.keyboard.checkDown(cursors.right, 500))
-    {
-        player.x +=32;
-       // player.anims.play('right', true);
-    }
-   else if(this.input.keyboard.checkDown(cursors.up, 500))
-    {
-        player.y -= 16;
-    }
-    else if(this.input.keyboard.checkDown(cursors.down, 500))
-    {
-        player.y += 16;
-    }
+
+     player.setVelocityX(-32*multi);
+
+     player.setVelocityY(0);
+
+   }
+
+else if (cursors.right.isDown)
+ {
+     player.setVelocityX(32*multi);
+      player.setVelocityY(0);
+ }
+
+ else if (cursors.up.isDown)
+ {
+     player.setVelocityY(-32*multi);
+     player.setVelocityX(0);
+ }
+else if (cursors.down.isDown)
+ {
+     player.setVelocityY(32*multi);
+     player.setVelocityX(0);
+ }
     else{
-              player.setVelocityX(0);
+            player.setVelocityX(0);
               player.setVelocityY(0);
         }
     if(this.keyA.isDown)
@@ -200,16 +267,20 @@ function update ()
          }
     }
 
+
 }
 
 //block movement
 function blockPush(player , slime)
 {
-  //if()
+
+  if(isPressing == true)
   {
+      console.debug('punda'+isPressing);
     slime.setImmovable(false);
+
    //left to right
-    if(player.x < slime.x )
+    if(playerRight == 1)
     {
 
         slime.setVelocityX(160);
@@ -218,7 +289,7 @@ function blockPush(player , slime)
         isUp=-1
 
    }
-    else if(player.x > slime.x)
+    else if(playerRight == 0)
    {
 
       slime.setVelocityX(-160);
@@ -226,8 +297,8 @@ function blockPush(player , slime)
       isRight = 0;
       isUp=-1;
    }
-   //down to top
-    else if(player.y < slime.y )
+  //  //down to top
+    else if(playerUp ==1 )
     {
 
       // slime.setActiveCollision();
@@ -238,7 +309,7 @@ function blockPush(player , slime)
       isRight = -1;
    }
    //up to down
-    else if( player.y > slime.y)
+    else if( playerUp ==0)
   {
 
         slime.setVelocityY(-160);
@@ -246,8 +317,14 @@ function blockPush(player , slime)
         isUp=  1;
         isRight = -1;
    }
+   isPressing =false;
+}
+else
+{
+  slime.setImmovable(true);
 }
 }
+
 
 //Kill Function
 function killEnemy(enemy, slime)
