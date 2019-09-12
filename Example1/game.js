@@ -52,7 +52,7 @@ function preload ()
       this.load.spritesheet('redPortal', 'Vortex-Red.png',{ frameWidth:96, frameHeight:64});
       this.load.spritesheet('bluePortal', 'Vortex-Blue.png',{ frameWidth:96, frameHeight:64});
       //player loading
-     this.load.image('dude', 'Player.png');
+     this.load.image('player', 'Player.png');
 }
 
 function create ()
