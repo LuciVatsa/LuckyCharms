@@ -43,7 +43,7 @@ function preload ()
 
 
        this.load.image('sky','background.png');
-       this.load.image('slime', 'trail.png');
+       this.load.image('slime', 'slime.png');
        this.load.image('enemy', 'enemySkeleton.png');
        //this.load.image('redPortal', 'Vortex-red.png');
        //spirte loading
@@ -122,7 +122,7 @@ function create ()
         //Collision bet block and enemy
         this.physics.add.overlap(enemy, slime, killEnemy, null , null);
        this.physics.add.collider(slime , slime);
-       this.physics.add.collider(slime, portal , portalShift ,null , null);
+       this.physics.add.collider(slime,portal , portalShift ,null , null);
 
 
 
@@ -155,7 +155,7 @@ function update ()
     else{
                 player.setVelocityX(0);
               player.setVelocityY(0);
-               // player.anims.play('turn');
+
          }
 
 
