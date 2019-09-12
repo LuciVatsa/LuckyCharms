@@ -146,7 +146,7 @@ function create ()
         this.physics.add.collider(player,enemy);
         this.physics.add.collider(enemy,player);
        this.physics.add.collider(slime , slime);
-       this.physics.add.collider(slime,portal , portalShift ,null , null);
+       //this.physics.add.collider(slime,portal , portalShift ,null , null);
 
 
 
