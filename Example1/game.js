@@ -24,6 +24,7 @@ var config = {
     var slime;
     var block;
     var cursors;
+    var key;
     var score = 0;
     var scoreText;
     var enemy;
@@ -52,7 +53,7 @@ function preload ()
       this.load.spritesheet('redPortal', 'Vortex-Red.png',{ frameWidth:96, frameHeight:64});
       this.load.spritesheet('bluePortal', 'Vortex-Blue.png',{ frameWidth:96, frameHeight:64});
       //player loading
-     this.load.image('dude', 'Player.png');
+     this.load.image('player', 'Player.png');
 }
 
 function create ()
@@ -137,6 +138,9 @@ function create ()
          portal.create(400,600,'bluePortal').play('turnBlue').setName('bluePortal1');
            portal.create(100,500,'bluePortal').play('turnBlue').setName('bluePortal2');
 
+           //setting destroy button
+                  this.key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+
             this.physics.add.collider(player, slime);
             //Collision with the player
         this.physics.add.collider(player, slime, blockPush, null, null);
@@ -146,7 +150,7 @@ function create ()
         this.physics.add.collider(player,enemy);
         this.physics.add.collider(enemy,player);
        this.physics.add.collider(slime , slime);
-       this.physics.add.collider(slime,portal , portalShift ,null , null);
+    //   this.physics.add.collider(slime,portal , portalShift ,null , null);
 
 
 
