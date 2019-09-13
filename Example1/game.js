@@ -163,7 +163,7 @@ staticslime.create(400,500 ,'slime').setScale(2).refreshBody();
         this.physics.add.overlap(enemy, slime, killEnemy, null , null);//adding colliders to game objects
         this.physics.add.collider(player,slime);
       //  this.physics.add.collider(slime, player);
-        //this.physics.add.collider(player,enemy);
+      //  this.physics.add.collider(player,enemy , killPlayer , null , null);
         this.physics.add.collider(enemy,player);
        this.physics.add.collider(slime , slime );
     // this.physics.add.collider(slime,portal , portalShift ,null , null);
@@ -173,7 +173,7 @@ this.physics.add.collider(player, staticslime);
 this.input.keyboard.on("keyup_X",  function(event)
 {
 
-    isPressing = !isPressing;
+    isPressing = true;
 
 
 },this)
@@ -273,7 +273,13 @@ else if (cursors.down.isDown)
 //block movement
 function blockPush(player , slime)
 {
+  this.input.keyboard.on("keyup_X",  function(event)
+  {
 
+      isPressing = true;
+
+
+  },this)
   if(isPressing == true)
   {
       console.debug('punda'+isPressing);
