@@ -235,6 +235,8 @@ var multi = 4;
      player.setVelocityX(-32*multi);
 
      player.setVelocityY(0);
+     playerRight = 0;
+       playerUp = -1;
 
    }
 
@@ -242,17 +244,23 @@ else if (cursors.right.isDown)
  {
      player.setVelocityX(32*multi);
       player.setVelocityY(0);
+      playerRight = 1;
+          playerUp = -1;
  }
 
  else if (cursors.up.isDown)
  {
      player.setVelocityY(-32*multi);
      player.setVelocityX(0);
+     playerRight = -1;
+     playerUp = 0;
  }
 else if (cursors.down.isDown)
  {
      player.setVelocityY(32*multi);
      player.setVelocityX(0);
+     playerRight = -1;
+     playerUp = 1;
  }
     else{
             player.setVelocityX(0);
@@ -273,20 +281,12 @@ else if (cursors.down.isDown)
 //block movement
 function blockPush(player , slime)
 {
-  this.input.keyboard.on("keyup_X",  function(event)
-  {
-
-      isPressing = true;
 
 
-  },this)
-  if(isPressing == true)
-  {
-      console.debug('punda'+isPressing);
-    slime.setImmovable(false);
-
+  //  slime.setImmovable(false);
+test(slime);
    //left to right
-    if(playerRight == 1)
+    if(playerRight == 1 )
     {
 
         slime.setVelocityX(160);
@@ -304,7 +304,7 @@ function blockPush(player , slime)
       isUp=-1;
    }
   //  //down to top
-    else if(playerUp ==1 )
+    else if(playerUp ==1 &&isPressing == true)
     {
 
       // slime.setActiveCollision();
@@ -315,7 +315,7 @@ function blockPush(player , slime)
       isRight = -1;
    }
    //up to down
-    else if( playerUp ==0)
+    else if( playerUp ==0 && isPressing == true)
   {
 
         slime.setVelocityY(-160);
@@ -325,11 +325,8 @@ function blockPush(player , slime)
    }
    isPressing =false;
 }
-else
-{
-  slime.setImmovable(true);
-}
-}
+
+
 
 
 //Kill Function
@@ -410,3 +407,8 @@ function stopBlock(slime, slime )
 //
 //     }
 // }
+
+function test()
+{
+  console.debug('slime work'+ slime);
+}
