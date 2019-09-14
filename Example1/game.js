@@ -42,6 +42,8 @@ var config = {
     var isBlue = false;
     var staticslime;
     var isPressing;
+    var name = 0;
+    var currentBlockName;
 var path;
 var bounds;
 var graphics;
@@ -85,8 +87,8 @@ staticslime.create(400,500 ,'slime').setScale(2).refreshBody();
 //testing purpose delete later
 
 
-	slime.create(272,512,'slime').setCollideWorldBounds(true).setImmovable(true);
-  //slime.create(400,300,'slime').setCollideWorldBounds(true).setImmovable(true);
+	slime.create(272,512,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block'+name);
+  slime.create(400,300,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block'+name+1);
   //slime.create(400,500,'slime').setCollideWorldBounds(true).setImmovable(true);
 		// for (var i = 16; i <= 19*32; i+=32)
     //     {
@@ -107,7 +109,7 @@ staticslime.create(400,500 ,'slime').setScale(2).refreshBody();
     //     	}
     //    	}
         enemy= this.physics.add.group();
-        enemy.create(48,208,'enemy');
+        enemy.create(400,400,'enemy');
         enemy.create(240,608 , 'enemy');
 
 
@@ -160,10 +162,11 @@ staticslime.create(400,500 ,'slime').setScale(2).refreshBody();
             //this.physics.add.collider(player, slime);
             //Collision with the player
         this.physics.add.collider(player, slime, blockPush, null, null);
+        // this.isTocuhing = this.physics.add.collider(player, slime);
         this.physics.add.overlap(enemy, slime, killEnemy, null , null);//adding colliders to game objects
         this.physics.add.collider(player,slime);
       //  this.physics.add.collider(slime, player);
-      //  this.physics.add.collider(player,enemy , killPlayer , null , null);
+      // this.physics.add.collider(player,enemy , killPlayer , null , null);
         this.physics.add.collider(enemy,player);
        this.physics.add.collider(slime , slime );
     // this.physics.add.collider(slime,portal , portalShift ,null , null);
@@ -176,7 +179,8 @@ this.input.keyboard.on("keyup_X",  function(event)
     isPressing = true;
 
 
-},this)
+},this);
+
 // this.input.keyboard.on("keydown_UP",  function(event)
 // {
 //   player.setVelocityX(32*5);
@@ -184,13 +188,14 @@ this.input.keyboard.on("keyup_X",  function(event)
 //       player.setVelocityY(0);
 //
 // },this)
+
     }
 
 function update ()
 {
 
 
-console.debug(isPressing);
+
 //testing
 // console.debug('x'+player.x);
 // console.debug('y'+ player.y)
@@ -235,6 +240,8 @@ var multi = 4;
      player.setVelocityX(-32*multi);
 
      player.setVelocityY(0);
+     playerRight = 0;
+       playerUp = -1;
 
    }
 
@@ -242,17 +249,23 @@ else if (cursors.right.isDown)
  {
      player.setVelocityX(32*multi);
       player.setVelocityY(0);
+      playerRight = 1;
+          playerUp = -1;
  }
 
  else if (cursors.up.isDown)
  {
      player.setVelocityY(-32*multi);
      player.setVelocityX(0);
+     playerRight = -1;
+     playerUp = 0;
  }
 else if (cursors.down.isDown)
  {
      player.setVelocityY(32*multi);
      player.setVelocityX(0);
+     playerRight = -1;
+     playerUp = 1;
  }
     else{
             player.setVelocityX(0);
@@ -266,72 +279,26 @@ else if (cursors.down.isDown)
          	DestroyBlock(this.player,this.slime);
          }
     }
+  //  console.debug(currentBlockName);
+    slime.children.iterate(function (child)
+    {
+      if(child.name == currentBlockName)
+      {
+         test(child);
 
+      }
+    });
+//console.debug(playerUp);
 
 }
 
 //block movement
 function blockPush(player , slime)
 {
-  this.input.keyboard.on("keyup_X",  function(event)
-  {
-
-      isPressing = true;
-
-
-  },this)
-  if(isPressing == true)
-  {
-      console.debug('punda'+isPressing);
-    slime.setImmovable(false);
-
-   //left to right
-    if(playerRight == 1)
-    {
-
-        slime.setVelocityX(160);
-        slime.setVelocityY(0);
-        isRight = 1;
-        isUp=-1
-
-   }
-    else if(playerRight == 0)
-   {
-
-      slime.setVelocityX(-160);
-      slime.setVelocityY(0);
-      isRight = 0;
-      isUp=-1;
-   }
-  //  //down to top
-    else if(playerUp ==1 )
-    {
-
-      // slime.setActiveCollision();
-
-      slime.setVelocityY(160);
-      slime.setVelocityX(0);
-      isUp=  0;
-      isRight = -1;
-   }
-   //up to down
-    else if( playerUp ==0)
-  {
-
-        slime.setVelocityY(-160);
-        slime.setVelocityX(0);
-        isUp=  1;
-        isRight = -1;
-   }
-   isPressing =false;
+currentBlockName = slime.name;
+  //  slime.setImmovable(false);
+//test(slime);
 }
-else
-{
-  slime.setImmovable(true);
-}
-}
-
-
 //Kill Function
 function killEnemy(enemy, slime)
 {
@@ -410,3 +377,51 @@ function stopBlock(slime, slime )
 //
 //     }
 // }
+
+function test(slime)
+{
+
+    // if(slime.name == currentBlockName)
+    // {
+
+  if(playerRight == 1 &&isPressing == true)
+  {
+
+      slime.setVelocityX(160);
+      slime.setVelocityY(0);
+      isRight = 1;
+      isUp=-1
+
+  }
+  else if(playerRight == 0 && isPressing == true)
+  {
+
+    slime.setVelocityX(-160);
+    slime.setVelocityY(0);
+    isRight = 0;
+    isUp=-1;
+  }
+  //  //down to top
+  else if(playerUp ==1 &&isPressing == true)
+  {
+
+    // slime.setActiveCollision();
+
+    slime.setVelocityY(160);
+    slime.setVelocityX(0);
+    isUp=  0;
+    isRight = -1;
+  }
+  //up to down
+  else if( playerUp ==0 && isPressing == true)
+  {
+
+      slime.setVelocityY(-160);
+      slime.setVelocityX(0);
+      isUp=  1;
+      isRight = -1;
+  }
+  isPressing =false;
+  isTouching = false;
+     //left to right
+  }
