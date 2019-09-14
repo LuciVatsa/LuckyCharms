@@ -317,28 +317,18 @@ else if (cursors.down.isDown)
   //  console.debug(currentBlockName);
     slime.children.iterate(function (child)
     {
-      if(child.name == currentBlockName)
-      {
-      //  console.debug(child.name);
-         test(child);
-      //   child.setImmovable(true);
 
-
-      }
-
-    });
-    slime.children.iterate(function (child)
-    {
       if(child.name == currentBlockName)
       {
         console.debug(child.name);
-      //   test(child);
-      //   child.setImmovable(true);
+         test(child);
+    //  this.physics.add.collider(child, slime);
 
 
       }
 
     });
+
 //console.debug(playerUp);
 
 }
@@ -479,7 +469,7 @@ function test(slime)
 
 
 //slime.setImmovable(true);
-console.debug('hji');
+
     //best feature in the game
 //currentBlockName = null;
   isPressing =false;
