@@ -29,6 +29,7 @@ var config = {
     var score = 0;
     var scoreText;
     var enemy;
+    var blockCount = 0;
     var key;
     var X= 100;
     var Y= 500;
@@ -78,32 +79,32 @@ function create ()
     {
     	if(i != 16 + 15*32)
     	{
-    		slime.create(16+3*32,i,'slime').setCollideWorldBounds(true).setImmovable(true);
+    		slime.create(16+3*32,i,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
     	}
     	if(i != 16 + 1*32&&i != 16 + 2*32&&i != 16 + 3*32&&i != 16 + 4*32&&i != 16 + 5*32&&i != 16 + 6*32&&i != 16 + 7*32&&i != 16 + 8*32&&i != 16 + 9*32&&i != 16 + 10*32&&i != 16 + 19*32&&i != 16 + 20*32)
     	{
-    		slime.create(16+6*32,i,'slime').setCollideWorldBounds(true).setImmovable(true);
+    		slime.create(16+6*32,i,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
     	}
     	if(i != 16 + 1*32&&i!=16+2*32&&i!=16+3*32&&i != 16 + 4*32&&i != 16 + 5*32&&i != 16 + 6*32&&i != 16 + 8*32&&i!=16+7*32&&i!=16+15*32&&i!=16+16*32&&i!=16+17*32&&i!=16+18*32&&i!=16+19*32&&i != 16 + 20*32)
     	{
-    		slime.create(16+9*32,i,'slime').setCollideWorldBounds(true).setImmovable(true);
+    		slime.create(16+9*32,i,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
     	}
         if(i!=16+13*32&&i!=16+14*32)
         {
-        	slime.create(16+16*32,i,'slime').setCollideWorldBounds(true).setImmovable(true);
+        	slime.create(16+16*32,i,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
         }
         if(i!=16+1*32&&i!=16+2*32&&i != 16 + 3*32&&i != 16 + 4*32&&i != 16 + 6*32&&i != 16 + 7*32&&i != 16 + 8*32&&i != 16 + 15*32&&i != 16 + 16*32&&i != 16 + 17*32&&i != 16 + 18*32&&i != 16 + 19*32&&i != 16 + 20*32)
         {
-        	slime.create(16+13*32,i,'slime').setCollideWorldBounds(true).setImmovable(true);
+        	slime.create(16+13*32,i,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
         }
         if(i==16+15*32||i==16+16*32||i==16+17*32||i==16+18*32)
         {
-        	slime.create(16+11*32,i,'slime').setCollideWorldBounds(true).setImmovable(true);
+        	slime.create(16+11*32,i,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
 
         }
         if(i==16+1*32||i==16+2*32)
         {
-        	slime.create(16+10*32,i,'slime').setCollideWorldBounds(true).setImmovable(true);
+        	slime.create(16+10*32,i,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
 
         }  
     }
@@ -111,23 +112,23 @@ function create ()
     {
     	if(i==16+7*32||i==16+8*32||i==16+9*32||i==16+9*32||i==16+10*32)
     	{
-    		slime.create(i,16+3*32,'slime').setCollideWorldBounds(true).setImmovable(true);
+    		slime.create(i,16+3*32,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
     	}
     	if(i==16+13*32||i==16+14*32)
     	{
-    		slime.create(i,16+4*32,'slime').setCollideWorldBounds(true).setImmovable(true);
+    		slime.create(i,16+4*32,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
     	}
     	if(i!=16+1*32&&i!=16+2*32&&i!=16+3*32&&i!=16+14*32&&i!=16+15*32&&i!=16+16*32&&i!=16+17*32)
     	{
-    		slime.create(i,16+6*32,'slime').setCollideWorldBounds(true).setImmovable(true);
+    		slime.create(i,16+6*32,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
     	}
     	if(i==16+6*32||i==16+7*32||i==16+8*32||i==16+10*32||i==16+11*32||i==16+12*32||i==16+14*32||i==16+15*32)
     	{
-    		slime.create(i,16+9*32,'slime').setCollideWorldBounds(true).setImmovable(true);
+    		slime.create(i,16+9*32,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
     	}
     	if(i==16+9*32||i==16+10*32||i==16+11*32||i==16+12*32||i==16+13*32)
     	{
-    		slime.create(i,16+19*32,'slime').setCollideWorldBounds(true).setImmovable(true);
+    		slime.create(i,16+19*32,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
     	}
 
     }
