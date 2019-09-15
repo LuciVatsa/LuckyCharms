@@ -43,6 +43,7 @@ var config = {
     var staticslime;
     var isPressing;
     var name = 0;
+    var blockCount=0;
     var currentBlockName;
 var path;
 var bounds;
@@ -54,6 +55,7 @@ function preload ()
 
        this.load.image('sky','background.png');
        this.load.image('slime', 'slime.png');
+       this.load.image('block', 'trail.png');
        this.load.image('enemy', 'enemySkeleton.png');
        //this.load.image('redPortal', 'Vortex-red.png');
        //spirte loading
@@ -74,40 +76,78 @@ function create ()
 
                 // playercollision
                 player = this.physics.add.sprite(16,16,'player');
-                player.setBounce(0.1);
+                //player.setBounce(0.1);
                 player.setCollideWorldBounds(true);
 
-
-staticslime = this.physics.add.staticGroup();
-staticslime.create(400,500 ,'slime').setScale(2).refreshBody();
+//block
+  block = this.physics.add.sprite(X,Y,'block');
+  block.visible = false;
+  
 
         //Creating Slimes and blocks
       slime =this.physics.add.group();
-        block = this.physics.add.group();
-//testing purpose delete later
 
 
-	slime.create(272,512,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block'+name);
-  slime.create(400,300,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block'+name+1);
-  //slime.create(400,500,'slime').setCollideWorldBounds(true).setImmovable(true);
-		// for (var i = 16; i <= 19*32; i+=32)
-    //     {
-    //     	for (var j = 16; j <= 22*32; j+=32)
-    //     	{
-    //     		if((Math.floor(Math.random()*10)%4)==0 && i!=302 && j!=368)
-    //     		{
-    //     			if((i+j)%100==0 && Math.floor(Math.random()*2))
-    //     			{
-    //     				block.create(i,j,'block').setCollideWorldBounds(true).setImmovable(true);
-    //     			}
-    //     			else
-    //     			{
-    //     				slime.create(i,j,'slime').setCollideWorldBounds(true).setImmovable(true);
-    //     			}
-    //     		}
-    //
-    //     	}
-    //    	}
+
+
+for(i = 48; i <= 21*32; i+=32)
+    {
+    	if(i != 16 + 15*32&&i != 16 + 14*32)
+    	{
+    		slime.create(16+3*32,i,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
+    	}
+    	if(i == 16 + 12*32||i == 16 + 13*32||i == 16 + 14*32||i == 16 + 15*32||i == 16 + 16*32||i == 16 + 17*32||i == 16 + 18*32)
+    	{
+    		slime.create(16+6*32,i,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
+    	}
+    	if(i == 16 + 9*32||i == 16 + 10*32||i == 16 + 11*32||i == 16 + 12*32||i == 16 + 13*32)
+    	{
+    		slime.create(16+9*32,i,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
+    	}
+        if(i!=16+13*32&&i!=16+14*32)
+        {
+        	slime.create(16+16*32,i,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
+        }
+        if(i == 16 + 4*32||i == 16 + 5*32||i == 16 + 9*32||i == 16 + 10*32||i == 16 + 11*32||i == 16 + 12*32||i == 16 + 13*32)
+        {
+        	slime.create(16+13*32,i,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
+        }
+        if(i==16+15*32||i==16+16*32||i==16+17*32||i==16+18*32)
+        {
+        	slime.create(16+11*32,i,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
+
+        }
+        if(i==16+1*32||i==16+2*32)
+        {
+        	slime.create(16+10*32,i,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
+
+        }
+    }
+    for(i=48; i<=18*32;i+=32)
+    {
+    	if(i==16+7*32||i==16+8*32||i==16+9*32||i==16+9*32||i==16+10*32)
+    	{
+    		slime.create(i,16+3*32,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
+
+    	}
+    	if(i==16+13*32)
+    	{
+    		slime.create(i,16+4*32,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
+    	}
+    	if(i!=16+1*32&&i!=16+2*32&&i!=16+3*32&&i!=16+14*32&&i!=16+15*32&&i!=16+16*32&&i!=16+17*32)
+    	{
+    		slime.create(i,16+6*32,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
+    	}
+    	if(i==16+6*32||i==16+7*32||i==16+8*32||i==16+10*32||i==16+11*32||i==16+12*32||i==16+14*32||i==16+15*32)
+    	{
+    		slime.create(i,16+9*32,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
+    	}
+    	if(i==16+9*32||i==16+10*32||i==16+11*32||i==16+12*32||i==16+13*32)
+    	{
+    		slime.create(i,16+19*32,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
+    	}
+
+    }
         enemy= this.physics.add.group();
         enemy.create(400,400,'enemy');
         enemy.create(240,608 , 'enemy');
@@ -131,18 +171,7 @@ staticslime.create(400,500 ,'slime').setScale(2).refreshBody();
             repeat: -1
         });
 
-        // this.anims.create({
-        //     key: 'turn',
-        //     frames: [ { key: 'dude', frame: 4 } ],
-        //     frameRate: 20
-        // });
-
-        // this.anims.create({
-        //     key: 'right',
-        //     frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
-        //     frameRate: 10,
-        //     repeat: -1
-        // });
+      ;
             cursors = this.input.keyboard.createCursorKeys();
             //portal
             portal = this.physics.add.staticGroup();
@@ -163,15 +192,16 @@ staticslime.create(400,500 ,'slime').setScale(2).refreshBody();
             //Collision with the player
         this.physics.add.collider(player, slime, blockPush, null, null);
         // this.isTocuhing = this.physics.add.collider(player, slime);
-        this.physics.add.overlap(enemy, slime, killEnemy, null , null);//adding colliders to game objects
-        this.physics.add.collider(player,slime);
-      //  this.physics.add.collider(slime, player);
+        this.physics.add.overlap(enemy, slime, killEnemy, null , this);//adding colliders to game objects
+
+        this.physics.add.collider(slime, slime);
       // this.physics.add.collider(player,enemy , killPlayer , null , null);
         this.physics.add.collider(enemy,player);
-       this.physics.add.collider(slime , slime );
+       this.physics.add.collider(block , slime);
+
     // this.physics.add.collider(slime,portal , portalShift ,null , null);
 
-this.physics.add.collider(player, staticslime);
+
 
 this.input.keyboard.on("keyup_X",  function(event)
 {
@@ -180,6 +210,7 @@ this.input.keyboard.on("keyup_X",  function(event)
 
 
 },this);
+
 
 // this.input.keyboard.on("keydown_UP",  function(event)
 // {
@@ -193,56 +224,14 @@ this.input.keyboard.on("keyup_X",  function(event)
 
 function update ()
 {
-
-
-
-//testing
-// console.debug('x'+player.x);
-// console.debug('y'+ player.y)
- // if(this.input.keyboard.checkDown(cursors.left, 500))
- //    {
- //      player.x -=32;
- //        playerRight = 0;
- //        playerUp = -1;
- //        //player.setVelocityX(-160);
- //       // player.anims.play('left', true);
- //    }
- //     if(this.input.keyboard.checkDown(cursors.right, 500))
- //    {
- //        player.x +=32;
- //        playerRight = 1;
- //        playerUp = -1;
- //      //  player.setVelocityX(160);
- //       // player.anims.play('right', true);
- //    }
- //    if(this.input.keyboard.checkDown(cursors.up, 500))
- //    {
- //       player.y -= 16;
- //        playerRight = -1;
- //      //  player.setVelocityY(-160);
- //        playerUp = 0;
- //    }
- //     if(this.input.keyboard.checkDown(cursors.down, 500))
- //    {
- //        player.y += 16;
- //        playerRight = -1;
- //        playerUp = 1;
- //                //player.setVelocityY(160);
- //    }
-//  var currentX = player.x;
-//  var n= 0;
-//     //console.debug("x"+currentX);
+//console.debug(slime);
 var multi = 4;
     if (cursors.left.isDown)
  {
-
-
-     player.setVelocityX(-32*multi);
-
+   player.setVelocityX(-32*multi);
      player.setVelocityY(0);
      playerRight = 0;
        playerUp = -1;
-
    }
 
 else if (cursors.right.isDown)
@@ -276,18 +265,24 @@ else if (cursors.down.isDown)
     	console.log('Key Pressed');
          if(player.x < slime.x || player.x > slime.x)
          {
-         	DestroyBlock(this.player,this.slime);
+         	DestroyBlock(player,slime);
          }
     }
   //  console.debug(currentBlockName);
     slime.children.iterate(function (child)
     {
+
       if(child.name == currentBlockName)
       {
+      //  console.debug(child.name);
          test(child);
 
-      }
+
+       }
+
     });
+
+
 //console.debug(playerUp);
 
 }
@@ -295,15 +290,16 @@ else if (cursors.down.isDown)
 //block movement
 function blockPush(player , slime)
 {
+
 currentBlockName = slime.name;
-  //  slime.setImmovable(false);
+
 //test(slime);
 }
 //Kill Function
 function killEnemy(enemy, slime)
 {
  enemy.disableBody(true, true);
-  //enemy.destory();
+//  enemy.destory();
 
      score += 10;
     scoreText.setText('Score: ' + score);
@@ -317,84 +313,32 @@ function DestroyBlock(player, slime)
 //stop the block after hitting a blocks
 function stopBlock(slime, slime )
 {
-  slime.setImmovable(true);
+// if(slime.name == currentBlockName)
+//   console.debug('hi');
+
 }
-// function portalShift(slime, portal)
-// {
-//
-//   if(portal.name == 'redPortal1' && isRed !=true  )
-//   {
-//
-//     slime.x = 108;
-//     slime.y = 108;
-//
-//     isRed = true;
-//
-//   }
-//   else if(portal.name == 'redPortal2' && isRed !=true  && isBlue !=true)
-//   {
-//     slime.x = 400;
-//     slime.y = 400;
-// isRed = true;
-//
-//   }
-//    if(portal.name == 'bluePortal1' && isBlue !=true)
-//    {
-//
-//      slime.x = 100;
-//      slime.y = 500;
-//      isBlue =true
-//    }
-//    else if(portal.name == 'bluePortal2' && isBlue !=true)
-//     {
-//
-//       slime.x = 400;
-//       slime.y = 600;
-//          isBlue =true
-//     }
-//
-//
-//      if(isRight == 1)
-//       {
-//         slime.setVelocityX(160);
-//         slime.setVelocityY(0);
-//         isRight = -1;
-//       }
-//       else if(isRight==0){
-//         slime.setVelocityX(-160);
-//         slime.setVelocityY(0);
-//         isRight = -1;
-//       }
-//     if(isUp==1){
-//         slime.setVelocityY(-160);
-//         slime.setVelocityX(0);
-//         isUp =-1;
-//     }
-//     else if(isUp==0){
-//         slime.setVelocityY(160);
-//         slime.setVelocityX(0);
-//         isUp =-1;
-//
-//     }
-// }
 
 function test(slime)
 {
 
-    // if(slime.name == currentBlockName)
-    // {
-
   if(playerRight == 1 &&isPressing == true)
-  {
+    {
 
+      // slime.setVelocityX(160);
+      // slime.setVelocityY(0);
+;
+slime.visible = false;
+block.visible = true;
       slime.setVelocityX(160);
-      slime.setVelocityY(0);
+       slime.setVelocityY(0);
       isRight = 1;
       isUp=-1
 
   }
   else if(playerRight == 0 && isPressing == true)
   {
+    slime.visible = false;
+    block.visible = true;
 
     slime.setVelocityX(-160);
     slime.setVelocityY(0);
@@ -406,22 +350,111 @@ function test(slime)
   {
 
     // slime.setActiveCollision();
+    slime.visible = false;
+    block.visible = true;
 
     slime.setVelocityY(160);
     slime.setVelocityX(0);
+
+
     isUp=  0;
     isRight = -1;
   }
   //up to down
   else if( playerUp ==0 && isPressing == true)
   {
+    slime.visible = false;
+    block.visible = true;
 
       slime.setVelocityY(-160);
       slime.setVelocityX(0);
+
       isUp=  1;
       isRight = -1;
-  }
+    }
+
+    block.x = slime.x;
+    block.y = slime.y;
+
+//slime.setImmovable(true);
+
+    //best feature in the game
+//currentBlockName = null;
   isPressing =false;
   isTouching = false;
-     //left to right
+
+
   }
+
+
+  //delete later
+  // this.anims.create({
+  //     key: 'turn',
+  //     frames: [ { key: 'dude', frame: 4 } ],
+  //     frameRate: 20
+  // });
+
+  // this.anims.create({
+  //     key: 'right',
+  //     frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
+  //     frameRate: 10,
+  //     repeat: -1
+  // })
+  // function portalShift(slime, portal)
+  // {
+  //
+  //   if(portal.name == 'redPortal1' && isRed !=true  )
+  //   {
+  //
+  //     slime.x = 108;
+  //     slime.y = 108;
+  //
+  //     isRed = true;
+  //
+  //   }
+  //   else if(portal.name == 'redPortal2' && isRed !=true  && isBlue !=true)
+  //   {
+  //     slime.x = 400;
+  //     slime.y = 400;
+  // isRed = true;
+  //
+  //   }
+  //    if(portal.name == 'bluePortal1' && isBlue !=true)
+  //    {
+  //
+  //      slime.x = 100;
+  //      slime.y = 500;
+  //      isBlue =true
+  //    }
+  //    else if(portal.name == 'bluePortal2' && isBlue !=true)
+  //     {
+  //
+  //       slime.x = 400;
+  //       slime.y = 600;
+  //          isBlue =true
+  //     }
+  //
+  //
+  //      if(isRight == 1)
+  //       {
+  //         slime.setVelocityX(160);
+  //         slime.setVelocityY(0);
+  //         isRight = -1;
+  //       }
+  //       else if(isRight==0){
+  //         slime.setVelocityX(-160);
+  //         slime.setVelocityY(0);
+  //         isRight = -1;
+  //       }
+  //     if(isUp==1){
+  //         slime.setVelocityY(-160);
+  //         slime.setVelocityX(0);
+  //         isUp =-1;
+  //     }
+  //     else if(isUp==0){
+  //         slime.setVelocityY(160);
+  //         slime.setVelocityX(0);
+  //         isUp =-1;
+  //
+  //     }
+  // }
