@@ -206,13 +206,7 @@ this.input.keyboard.on("keyup_X",  function(event)
 
 },this);
 
-// this.input.keyboard.on("keydown_UP",  function(event)
-// {
-//   player.setVelocityX(32*5);
-// console.debug("hi");
-//       player.setVelocityY(0);
-//
-// },this)
+
 
     }
 
@@ -310,11 +304,11 @@ function stopBlock(slime, slime )
 
 function test(slime)
 {
-  slime.setImmovable(false);
+
   if(playerRight == 1 && isPressing == true)
   {
 
-
+  slime.setImmovable(false);
       slime.setVelocityX(160);
        slime.setVelocityY(0);
       isRight = 1;
@@ -324,7 +318,7 @@ function test(slime)
   else if(playerRight == 0 && isPressing == true)
   {
   console.debug("bug");
-
+  slime.setImmovable(false);
     slime.setVelocityX(-160);
     slime.setVelocityY(0);
     isRight = 0;
@@ -336,7 +330,7 @@ function test(slime)
 
     // slime.setActiveCollision();
 
-
+  slime.setImmovable(false);
     slime.setVelocityY(160);
     slime.setVelocityX(0);
 
@@ -349,7 +343,7 @@ function test(slime)
   {
 
 
-
+  slime.setImmovable(false);
       slime.setVelocityY(-160);
       slime.setVelocityX(0);
 
@@ -357,22 +351,15 @@ function test(slime)
       isRight = -1;
     }
 
-  if(slime.body.velocity.x ==0)
+  if(slime.body.velocity.x ==0 && slime.body.velocity.y ==0)
   {
     console.debug("not moving");
     slime.setImmovable(true);
   }
-  else
-  {
-
+  else if (slime.body.velocity.x ==160 && slime.body.velocity.y ==0 )
     slime.setImmovable(false);
-  }
-  if(slime.body.velocity.y ==0)
-  {
 
-    slime.setImmovable(true);
-  }
-  else
+  else if(slime.body.velocity.y ==160 && slime.body.velocity.x ==0)
   {
     slime.setImmovable(false);
   }
