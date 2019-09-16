@@ -45,6 +45,10 @@ var config = {
     var name = 0;
     var blockCount=0;
     var currentBlockName;
+    var isTouching = false;
+    var temp;
+    var isMovingLeft;
+    var isMovingUp ;
 var path;
 var bounds;
 var graphics;
@@ -82,7 +86,7 @@ function create ()
 //block
   block = this.physics.add.sprite(X,Y,'block');
   block.visible = false;
-  
+//  block.setCollideWorldBounds(true);
 
         //Creating Slimes and blocks
       slime =this.physics.add.group();
@@ -108,7 +112,7 @@ for(i = 48; i <= 21*32; i+=32)
         {
         	slime.create(16+16*32,i,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
         }
-        if(i == 16 + 4*32||i == 16 + 5*32||i == 16 + 9*32||i == 16 + 10*32||i == 16 + 11*32||i == 16 + 12*32||i == 16 + 13*32)
+        if(i == 16 + 5*32||i == 16 + 9*32||i == 16 + 10*32||i == 16 + 11*32||i == 16 + 12*32||i == 16 + 13*32)
         {
         	slime.create(16+13*32,i,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
         }
@@ -175,20 +179,11 @@ for(i = 48; i <= 21*32; i+=32)
             cursors = this.input.keyboard.createCursorKeys();
             //portal
             portal = this.physics.add.staticGroup();
-
-            //redportal
-         //    portal.create(400,400,'redPortal').play('turnRed').setName('redPortal1');
-         //  portal.create(100,100,'redPortal').play('turnRed').setName('redPortal2');
-         //
-         //    //blueportal
-         // portal.create(400,600,'bluePortal').play('turnBlue').setName('bluePortal1');
-         //   portal.create(100,500,'bluePortal').play('turnBlue').setName('bluePortal2');
-
            //setting destroy button
                   this.keyA = this.input.keyboard.addKey('A');
             //key for pushing blocks
             this.keyX = this.input.keyboard.addKey('X');
-            //this.physics.add.collider(player, slime);
+
             //Collision with the player
         this.physics.add.collider(player, slime, blockPush, null, null);
         // this.isTocuhing = this.physics.add.collider(player, slime);
@@ -197,7 +192,8 @@ for(i = 48; i <= 21*32; i+=32)
         this.physics.add.collider(slime, slime);
       // this.physics.add.collider(player,enemy , killPlayer , null , null);
         this.physics.add.collider(enemy,player);
-       this.physics.add.collider(block , slime);
+        //this.physics.add.collider(block,slime);
+       this.physics.add.collider(slime , slime, stopBlock , null , null);
 
     // this.physics.add.collider(slime,portal , portalShift ,null , null);
 
@@ -210,7 +206,6 @@ this.input.keyboard.on("keyup_X",  function(event)
 
 
 },this);
-
 
 // this.input.keyboard.on("keydown_UP",  function(event)
 // {
@@ -274,14 +269,30 @@ else if (cursors.down.isDown)
 
       if(child.name == currentBlockName)
       {
-      //  console.debug(child.name);
+        temp = child;
          test(child);
-
-
        }
+       // if(Phaser.Geom.Intersects.RectangleToRectangle(this.temp.getBounds(), child.getBounds()))
+       // {
+       //    console.debug(temp);
+       // }
+    },this);
 
-    });
+    slime.getChildren().forEach(function (single){
 
+
+      if(temp != null)
+   {
+    // console.debug(temp.getBounds());
+
+     if(Phaser.Geom.Intersects.RectangleToRectangle(single.getBounds(),temp.getBounds()))
+     {
+       //temp.setImmovable(true);
+     }
+   }
+
+    //console.debug(this.temp.getBounds());
+    },this);
 
 //console.debug(playerUp);
 
@@ -313,9 +324,11 @@ function DestroyBlock(player, slime)
 //stop the block after hitting a blocks
 function stopBlock(slime, slime )
 {
+//   console.debug(slime.velocityX);
 // if(slime.name == currentBlockName)
-//   console.debug('hi');
-
+// {
+//
+// }
 }
 
 function test(slime)
@@ -324,11 +337,7 @@ function test(slime)
   if(playerRight == 1 &&isPressing == true)
     {
 
-      // slime.setVelocityX(160);
-      // slime.setVelocityY(0);
-;
-slime.visible = false;
-block.visible = true;
+      slime.setImmovable(false);
       slime.setVelocityX(160);
        slime.setVelocityY(0);
       isRight = 1;
@@ -337,9 +346,8 @@ block.visible = true;
   }
   else if(playerRight == 0 && isPressing == true)
   {
-    slime.visible = false;
-    block.visible = true;
 
+    slime.setImmovable(false);
     slime.setVelocityX(-160);
     slime.setVelocityY(0);
     isRight = 0;
@@ -350,9 +358,8 @@ block.visible = true;
   {
 
     // slime.setActiveCollision();
-    slime.visible = false;
-    block.visible = true;
 
+    slime.setImmovable(false);
     slime.setVelocityY(160);
     slime.setVelocityX(0);
 
@@ -363,9 +370,9 @@ block.visible = true;
   //up to down
   else if( playerUp ==0 && isPressing == true)
   {
-    slime.visible = false;
-    block.visible = true;
 
+
+      slime.setImmovable(false);
       slime.setVelocityY(-160);
       slime.setVelocityX(0);
 
@@ -373,18 +380,36 @@ block.visible = true;
       isRight = -1;
     }
 
-    block.x = slime.x;
-    block.y = slime.y;
+  if(slime.body.velocity.x ==0)
+  {
+    
+    slime.setImmovable(true);
+  }
+  else
+  {
+    i
+    slime.setImmovable(false);
+  }
+  if(slime.body.velocity.y ==0)
+  {
 
-//slime.setImmovable(true);
+    slime.setImmovable(true);
+  }
+  else
+  {
+
+    slime.setImmovable(false);
+  }
+
+
+
+
+//slime.setImmovable(false);
 
     //best feature in the game
 //currentBlockName = null;
   isPressing =false;
-  isTouching = false;
-
-
-  }
+}
 
 
   //delete later
