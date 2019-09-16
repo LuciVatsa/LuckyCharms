@@ -310,11 +310,11 @@ function stopBlock(slime, slime )
 
 function test(slime)
 {
+  slime.setImmovable(false);
+  if(playerRight == 1 && isPressing == true)
+  {
 
-  if(playerRight == 1 &&isPressing == true)
-    {
 
-      slime.setImmovable(false);
       slime.setVelocityX(160);
        slime.setVelocityY(0);
       isRight = 1;
@@ -323,8 +323,8 @@ function test(slime)
   }
   else if(playerRight == 0 && isPressing == true)
   {
+  console.debug("bug");
 
-    slime.setImmovable(false);
     slime.setVelocityX(-160);
     slime.setVelocityY(0);
     isRight = 0;
@@ -336,7 +336,7 @@ function test(slime)
 
     // slime.setActiveCollision();
 
-    slime.setImmovable(false);
+
     slime.setVelocityY(160);
     slime.setVelocityX(0);
 
@@ -349,7 +349,7 @@ function test(slime)
   {
 
 
-      slime.setImmovable(false);
+
       slime.setVelocityY(-160);
       slime.setVelocityX(0);
 
@@ -359,7 +359,7 @@ function test(slime)
 
   if(slime.body.velocity.x ==0)
   {
-
+    console.debug("not moving");
     slime.setImmovable(true);
   }
   else
