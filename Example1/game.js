@@ -47,8 +47,7 @@ var config = {
     var currentBlockName;
     var isTouching = false;
     var temp;
-    var isMovingLeft;
-    var isMovingUp ;
+;
 var path;
 var bounds;
 var graphics;
@@ -269,30 +268,12 @@ else if (cursors.down.isDown)
 
       if(child.name == currentBlockName)
       {
-        temp = child;
+
          test(child);
        }
-       // if(Phaser.Geom.Intersects.RectangleToRectangle(this.temp.getBounds(), child.getBounds()))
-       // {
-       //    console.debug(temp);
-       // }
+
     },this);
 
-    slime.getChildren().forEach(function (single){
-
-
-      if(temp != null)
-   {
-    // console.debug(temp.getBounds());
-
-     if(Phaser.Geom.Intersects.RectangleToRectangle(single.getBounds(),temp.getBounds()))
-     {
-       //temp.setImmovable(true);
-     }
-   }
-
-    //console.debug(this.temp.getBounds());
-    },this);
 
 //console.debug(playerUp);
 
@@ -324,11 +305,7 @@ function DestroyBlock(player, slime)
 //stop the block after hitting a blocks
 function stopBlock(slime, slime )
 {
-//   console.debug(slime.velocityX);
-// if(slime.name == currentBlockName)
-// {
-//
-// }
+
 }
 
 function test(slime)
@@ -382,12 +359,12 @@ function test(slime)
 
   if(slime.body.velocity.x ==0)
   {
-    
+
     slime.setImmovable(true);
   }
   else
   {
-    i
+
     slime.setImmovable(false);
   }
   if(slime.body.velocity.y ==0)
@@ -397,7 +374,6 @@ function test(slime)
   }
   else
   {
-
     slime.setImmovable(false);
   }
 
