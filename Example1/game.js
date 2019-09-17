@@ -77,7 +77,9 @@ function create ()
 
         this.add.image(304,352,'sky');
         //enemy collision
-        enemy = this.physics.add.group();
+        enemy = this.physics.add.sprite(240,608, 'enemySkeleton');
+        enemy.setCollideWorldBounds(true);
+        enemy.setsize(32,32,true);
 
                 // playercollision
               //  player = this.physics.add.sprite(16,16,'player');
@@ -188,9 +190,9 @@ for(i = 48; i <= 21*32; i+=32)
     //     }
 
     // });
-        enemy= this.physics.add.group();
-        enemy.create(400,400,'enemy');
-        enemy.create(240,608 , 'enemy');
+        // enemy= this.physics.add.group();
+        // enemy.create(400,400,'enemy');
+        // enemy.create(240,608 , 'enemy');
 
 
 
@@ -305,37 +307,102 @@ function update ()
 var multi = 4;
     if (cursors.left.isDown)
  {
-   player.setVelocityX(-32*multi);
-     player.setVelocityY(0);
-     player.anims.play('turnLeftPlayer', true);
-     playerRight = 0;
-       playerUp = -1;
+ 	var check = Math.round(Math.random() * 2)-1;
+    player.setVelocityX(-32*multi);
+    player.setVelocityY(0);
+    enemy.setVelocityX(-32*check);
+    enemy.setVelocityY(0);
+    player.anims.play('turnLeftPlayer', true);
+    if(check>0)
+    {
+    	enemy.anims.play('turnLeftSkeleton', true);
+    }
+    else 
+    	if(check==0)
+    	{
+    		enemy.anims.play('idleSkeleton');
+    	}
+    	else
+    	{
+    		enemy.anims.play('turnRightSkeleton', true);
+    	}
+    playerRight = 0;
+    playerUp = -1;
    }
 
 else if (cursors.right.isDown)
  {
-     player.setVelocityX(32*multi);
-      player.setVelocityY(0);
+ 	var check = Math.round(Math.random() * 2)-1;
+ 	enemy.setVelocityX(32*check);
+    enemy.setVelocityY(0);
+    player.setVelocityX(32*multi);
+    player.setVelocityY(0);
    player.anims.play('turnRightPlayer', true);
+   if(check<0)
+    {
+    	enemy.anims.play('turnLeftSkeleton', true);
+    }
+    else 
+    	if(check==0)
+    	{
+    		enemy.anims.play('idleSkeleton');
+    	}
+    	else
+    	{
+    		enemy.anims.play('turnRightSkeleton', true);
+    	}
       playerRight = 1;
           playerUp = -1;
  }
 
  else if (cursors.up.isDown)
  {
-     player.setVelocityY(-32*multi);
-     player.setVelocityX(0);
-     player.anims.play('turnUpPlayer', true);
-     playerRight = -1;
-     playerUp = 0;
+ 	var check = Math.round(Math.random() * 2)-1;
+    player.setVelocityY(-32*multi);
+    player.setVelocityX(0);
+    enemy.setVelocityY(-32*check);
+    enemy.setVelocityX(0);
+    player.anims.play('turnUpPlayer', true);
+    if(check<0)
+    {
+    	enemy.anims.play('turnUpSkeleton', true);
+    }
+    else 
+    	if(check==0)
+    	{
+    		enemy.anims.play('idleSkeleton');
+    	}
+    	else
+    	{
+    		enemy.anims.play('turnDownSkeleton', true);
+    	}
+    playerRight = -1;
+    playerUp = 0;
  }
 else if (cursors.down.isDown)
  {
-     player.setVelocityY(32*multi);
-     player.setVelocityX(0);
-     player.anims.play('turnDownPlayer', true);
-     playerRight = -1;
-     playerUp = 1;
+ 	var check = Math.round(Math.random() * 2)-1;
+    player.setVelocityY(32*multi);
+    player.setVelocityX(0);
+    enemy.setVelocityY(32*check);
+    enemy.setVelocityX(0);
+    player.anims.play('turnDownPlayer', true);
+    if(check<0)
+    {
+    	enemy.anims.play('turnDownSkeleton', true);
+    }
+    else 
+    	if(check==0)
+    	{
+    		enemy.anims.play('idleSkeleton');
+    	}
+    	else
+    	{
+    		enemy.anims.play('turnUpSkeleton', true);
+    	}
+    playerRight = -1;
+    playerRight = -1;
+    playerUp = 1;
  }
     else{
             player.setVelocityX(0);
