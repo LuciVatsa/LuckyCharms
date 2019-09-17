@@ -78,6 +78,8 @@ function preload ()
        //spirte loading
       this.load.spritesheet('hazmat', 'Hazmat-A.png',{ frameWidth:38, frameHeight:38});
       this.load.spritesheet('enemyAnimation', 'Skeleton-A.png',{ frameWidth:38, frameHeight:38});
+      //color change blocks
+      this.load.spritesheet();
 
       //Audio sprites
       this.load.audio('backGroundAudio', 'backGroundAudio.mp3');
@@ -297,7 +299,19 @@ for(i = 48; i <= 21*32; i+=32)
             frameRate: 15,
             repeat: -1
         });
-
+//block change Animation
+this.anims.create({
+    key: 'turnBlockColorRed',
+    frames: [ { key: 'enemyAnimation', frame: 1 } ],
+    frameRate: 15,
+    repeat: -1
+});
+this.anims.create({
+    key: 'turnBlockColorGreen',
+    frames: [ { key: 'enemyAnimation', frame: 0 } ],
+    frameRate: 15,
+    repeat: -1
+});
 
             cursors = this.input.keyboard.createCursorKeys();
             //portal
