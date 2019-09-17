@@ -62,7 +62,8 @@ function preload ()
        this.load.image('enemy', 'enemySkeleton.png');
        //this.load.image('redPortal', 'Vortex-red.png');
        //spirte loading
-      this.load.spritesheet('hazmatLeft', 'Hazmat-S.png',{ frameWidth:96, frameHeight:64});
+      this.load.spritesheet('hazmat', 'Hazmat-A.png',{ frameWidth:38, frameHeight:38});
+      //this.load.spritesheet();
 
      //this.load.spritesheet('bluePortal', 'Vortex-Blue.png',{ frameWidth:96, frameHeight:64});
       //player loading
@@ -73,13 +74,13 @@ function create ()
     {
     	//19 width boxes, 22 height boxes
 
-        this.add.image(304,400,'sky');
+        this.add.image(304,352,'sky');
         //enemy collision
         enemy = this.physics.add.group();
 
                 // playercollision
               //  player = this.physics.add.sprite(16,16,'player');
-               player = this.physics.add.sprite(16,16,'hazmatLeft');
+               player = this.physics.add.sprite(16,16,'hazmat');
                 //player.setBounce(0.1);
                 player.setCollideWorldBounds(true);
 
@@ -162,20 +163,37 @@ for(i = 48; i <= 21*32; i+=32)
        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
        //animation for redPortal
         this.anims.create({
-            key: 'turnRight',
-            frames: this.anims.generateFrameNumbers('hazmatLeft', { start: 1, end: 8 }),
+            key: 'turnRightPlayer',
+            frames: this.anims.generateFrameNumbers('hazmat', { start: 1, end: 5 }),
             frameRate: 15,
             repeat: -1
         });
         //animation for bluePortal
         this.anims.create({
-            key: 'turnLeft',
-            frames: this.anims.generateFrameNumbers('bluePortal', { start: 1, end: 8 }),
+         key: 'idlePlayer',
+         frames: [ { key: 'hazmat', frame: 13 } ],
+         frameRate: 20
+     });
+        this.anims.create({
+            key: 'turnLeftPlayer',
+            frames: this.anims.generateFrameNumbers('hazmat', { start: 6, end: 10 }),
+            frameRate: 15,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'turnUpPlayer',
+            frames: this.anims.generateFrameNumbers('hazmat', { start: 12, end: 17}),
+            frameRate: 15,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'turnDownPlayer',
+            frames: this.anims.generateFrameNumbers('hazmat', { start: 18, end: 23 }),
             frameRate: 15,
             repeat: -1
         });
 
-      ;
+
             cursors = this.input.keyboard.createCursorKeys();
             //portal
             portal = this.physics.add.staticGroup();
@@ -219,7 +237,7 @@ var multi = 4;
  {
    player.setVelocityX(-32*multi);
      player.setVelocityY(0);
-
+     player.anims.play('turnLeftPlayer', true);
      playerRight = 0;
        playerUp = -1;
    }
@@ -228,7 +246,7 @@ else if (cursors.right.isDown)
  {
      player.setVelocityX(32*multi);
       player.setVelocityY(0);
-
+   player.anims.play('turnRightPlayer', true);
       playerRight = 1;
           playerUp = -1;
  }
@@ -237,6 +255,7 @@ else if (cursors.right.isDown)
  {
      player.setVelocityY(-32*multi);
      player.setVelocityX(0);
+     player.anims.play('turnDownPlayer', true);
      playerRight = -1;
      playerUp = 0;
  }
@@ -244,12 +263,14 @@ else if (cursors.down.isDown)
  {
      player.setVelocityY(32*multi);
      player.setVelocityX(0);
+     player.anims.play('turnDownPlayer', true);
      playerRight = -1;
      playerUp = 1;
  }
     else{
             player.setVelocityX(0);
               player.setVelocityY(0);
+              player.anims.play('idlePlayer');
         }
     if(this.keyA.isDown)
     {
