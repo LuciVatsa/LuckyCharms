@@ -166,7 +166,7 @@ for(i = 48; i <= 21*32; i+=32)
        //animation for redPortal
         this.anims.create({
             key: 'turnRightPlayer',
-            frames: this.anims.generateFrameNumbers('hazmat', { start: 1, end: 5 }),
+            frames: this.anims.generateFrameNumbers('hazmat', { start: 0, end: 5 }),
             frameRate: 15,
             repeat: -1
         });
@@ -178,7 +178,7 @@ for(i = 48; i <= 21*32; i+=32)
      });
         this.anims.create({
             key: 'turnLeftPlayer',
-            frames: this.anims.generateFrameNumbers('hazmat', { start: 6, end: 10 }),
+            frames: this.anims.generateFrameNumbers('hazmat', { start: 6, end: 11 }),
             frameRate: 15,
             repeat: -1
         });
@@ -196,7 +196,7 @@ for(i = 48; i <= 21*32; i+=32)
         });
         this.anims.create({
             key: 'turnRightPlayer',
-            frames: this.anims.generateFrameNumbers('hazmat', { start: 1, end: 5 }),
+            frames: this.anims.generateFrameNumbers('hazmat', { start: 1, end: 6 }),
             frameRate: 15,
             repeat: -1
         });
@@ -213,13 +213,13 @@ for(i = 48; i <= 21*32; i+=32)
      });
         this.anims.create({
             key: 'turnLeftSkeleton',
-            frames: this.anims.generateFrameNumbers('enemyAnimation', { start: 6, end: 10 }),
+            frames: this.anims.generateFrameNumbers('enemyAnimation', { start: 6, end: 12 }),
             frameRate: 15,
             repeat: -1
         });
         this.anims.create({
             key: 'turnUpSkeleton',
-            frames: this.anims.generateFrameNumbers('enemyAnimation', { start: 12, end: 17}),
+            frames: this.anims.generateFrameNumbers('enemyAnimation', { start: 13, end: 18}),
             frameRate: 15,
             repeat: -1
         });
@@ -292,7 +292,7 @@ else if (cursors.right.isDown)
  {
      player.setVelocityY(-32*multi);
      player.setVelocityX(0);
-     player.anims.play('turnDownPlayer', true);
+     player.anims.play('turnUpPlayer', true);
      playerRight = -1;
      playerUp = 0;
  }
