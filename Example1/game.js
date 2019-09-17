@@ -245,8 +245,8 @@ for(i = 48; i <= 21*32; i+=32)
         this.physics.add.overlap(enemy, slime, killEnemy, null , this);//adding colliders to game objects
 
         this.physics.add.collider(slime, slime);
-      // this.physics.add.collider(player,enemy , killPlayer , null , null);
-        this.physics.add.collider(enemy,player);
+      this.physics.add.collider(player,enemy , killPlayer , null , this);
+        //this.physics.add.collider(enemy,player);
         //this.physics.add.collider(block,slime);
        this.physics.add.collider(slime , slime, stopBlock , null , null);
 
@@ -427,83 +427,20 @@ function test(slime)
 
 
 
-
-//slime.setImmovable(false);
-
     //best feature in the game
 //currentBlockName = null;
   isPressing =false;
 }
 
 
-  //delete later
-  // this.anims.create({
-  //     key: 'turn',
-  //     frames: [ { key: 'dude', frame: 4 } ],
-  //     frameRate: 20
-  // });
+function killPlayer(player,enemy)
+{
+  this.physics.pause();
 
-  // this.anims.create({
-  //     key: 'right',
-  //     frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
-  //     frameRate: 10,
-  //     repeat: -1
-  // })
-  // function portalShift(slime, portal)
-  // {
-  //
-  //   if(portal.name == 'redPortal1' && isRed !=true  )
-  //   {
-  //
-  //     slime.x = 108;
-  //     slime.y = 108;
-  //
-  //     isRed = true;
-  //
-  //   }
-  //   else if(portal.name == 'redPortal2' && isRed !=true  && isBlue !=true)
-  //   {
-  //     slime.x = 400;
-  //     slime.y = 400;
-  // isRed = true;
-  //
-  //   }
-  //    if(portal.name == 'bluePortal1' && isBlue !=true)
-  //    {
-  //
-  //      slime.x = 100;
-  //      slime.y = 500;
-  //      isBlue =true
-  //    }
-  //    else if(portal.name == 'bluePortal2' && isBlue !=true)
-  //     {
-  //
-  //       slime.x = 400;
-  //       slime.y = 600;
-  //          isBlue =true
-  //     }
-  //
-  //
-  //      if(isRight == 1)
-  //       {
-  //         slime.setVelocityX(160);
-  //         slime.setVelocityY(0);
-  //         isRight = -1;
-  //       }
-  //       else if(isRight==0){
-  //         slime.setVelocityX(-160);
-  //         slime.setVelocityY(0);
-  //         isRight = -1;
-  //       }
-  //     if(isUp==1){
-  //         slime.setVelocityY(-160);
-  //         slime.setVelocityX(0);
-  //         isUp =-1;
-  //     }
-  //     else if(isUp==0){
-  //         slime.setVelocityY(160);
-  //         slime.setVelocityX(0);
-  //         isUp =-1;
-  //
-  //     }
-  // }
+    player.setTint(0xff0000);
+
+    player.anims.play('turn');
+
+    gameOver = true;
+  console.debug("end game now ");
+}
