@@ -84,6 +84,7 @@ function create ()
                player = this.physics.add.sprite(16,16,'hazmat');
                 //player.setBounce(0.1);
                 player.setCollideWorldBounds(true);
+                player.setSize(32,32 ,true);
 
 //block
   block = this.physics.add.sprite(X,Y,'block');
