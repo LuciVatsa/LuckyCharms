@@ -670,5 +670,5 @@ function killPlayer(player,enemy)
     player.anims.play('turn');
 
 this.scene.start('GameOver');
-    console.debug(this.scene.isActive(endgame));
+  //  console.debug(this.scene.isActive(endgame));
 }

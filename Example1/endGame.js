@@ -27,8 +27,7 @@ var GameOver = new Phaser.Class({
     update: function()
     {
 
-      if(this.keyX.isDown)
-       this.scene.start(main);
+      
     },
 
   });
