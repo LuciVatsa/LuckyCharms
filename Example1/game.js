@@ -4,6 +4,7 @@ var config = {
         type: Phaser.AUTO,
         width: 608,
         height: 704,
+        key: 'main',
         physics: {
             default: 'arcade',
 
@@ -52,12 +53,12 @@ var config = {
     var name = 0;
     var blockCount=0;
     var currentBlockName;
-    var isTouching = false;
+    var isTouching;
     var temp;
     var bgMusic;
     var slimePush;
     var monsterDeath;
-    var endgame;
+
 
 var path;
 var bounds;
@@ -110,7 +111,6 @@ game.scene.add('endGame', GameOver);
         enemy.setSize(32,32,true);
 
                 // playercollision
-              //  player = this.physics.add.sprite(16,16,'player');
                player = this.physics.add.sprite(16,16,'hazmat');
                 //player.setBounce(0.1);
                 player.setCollideWorldBounds(true);
@@ -450,7 +450,7 @@ else if (cursors.down.isDown)
 
     },this);
 
-
+console.debug("check");
 //console.debug(playerUp);
 
 }
@@ -460,7 +460,6 @@ function blockPush(player , slime)
 {
 
 currentBlockName = slime.name;
-
 //test(slime);
 }
 //Kill Function
@@ -572,6 +571,6 @@ function killPlayer(player,enemy)
 
     player.anims.play('turn');
 
-this.scene.switch('GameOver');
-    console.debug(this.scene.isActive('endGame'));
+this.scene.start('GameOver');
+    console.debug(this.scene.isActive(endgame));
 }
