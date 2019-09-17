@@ -1,28 +1,34 @@
+var GameOver = new Phaser.Class({
+    Extends:Phaser.Scene,
+    initialize: function BootScene(){
+        Phaser.Scene.call(this,{
+            key:'GameOver',
+            active:false
+        })
+    },
 
-var config = {
-        type: Phaser.AUTO,
-        width: 608,
-        height: 704,
-        physics: {
-            default: 'arcade',
+    init:function(){
+      console.debug("works");
+      this.load.image('GameOver','GameOver.png');
+    },
 
-            arcade: {
-                gravity: { y: 0},
-                debug: true
-            }
-          },
-          audio: {
-      disableWebAudio: true
-  },
-        scene: {
-            preload: preload,
-            create: create,
-            update: update
+    preload : function()
+    {
+    var keyX;
+      var main ;
+    },
+    create: function() {
+      this.add.image(304,352,'GameOver');
+        console.debug("hi");
+        this.keyX = this.input.keyboard.addKey('ENTER');
+        main = this.scene.get('main');
 
-        }
-    };
+    },
+    update: function()
+    {
 
-function create ()
-{
-  this.add.text(20,20, "Game over...");
-}
+      if(this.keyX.isDown)
+       this.scene.start(main);
+    },
+
+  });

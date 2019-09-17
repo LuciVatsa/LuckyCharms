@@ -1,8 +1,10 @@
 
+
 var config = {
         type: Phaser.AUTO,
         width: 608,
         height: 704,
+        key: 'main',
         physics: {
             default: 'arcade',
 
@@ -20,7 +22,9 @@ var config = {
             update: update
 
         }
+
     };
+
 
 
     var player;
@@ -49,39 +53,48 @@ var config = {
     var name = 0;
     var blockCount=0;
     var currentBlockName;
-    var isTouching = false;
+    var isTouching;
     var temp;
     var bgMusic;
     var slimePush;
     var monsterDeath;
-;
+
+
 var path;
 var bounds;
 var graphics;
 	 var game = new Phaser.Game(config);
+
 function preload ()
 {
 
 
        this.load.image('sky','background.png');
-       this.load.image('slime', 'slime.png');
+       //this.load.image('slime', 'slime.png');
        this.load.image('block', 'trail.png');
        this.load.image('enemy', 'enemySkeleton.png');
+       this.load.image('GameOver','GameOver.png');
        //this.load.image('redPortal', 'Vortex-red.png');
        //spirte loading
       this.load.spritesheet('hazmat', 'Hazmat-A.png',{ frameWidth:38, frameHeight:38});
       this.load.spritesheet('enemyAnimation', 'Skeleton-A.png',{ frameWidth:38, frameHeight:38});
+      //color change blocks
+      this.load.spritesheet('slime', 'slime.png',{ frameWidth:32, frameHeight:32}) ;
 
       //Audio sprites
       this.load.audio('backGroundAudio', 'backGroundAudio.mp3');
       this.load.audio('deathMonster', 'deathMonster.mp3');
       this.load.audio('slimePush', 'slimePush.mp3');
+
+
 }
 
 function create ()
     {
     	//19 width boxes, 22 height boxes
 
+game.scene.add('endGame', GameOver);
+//endgame.isvisible = false;
         this.add.image(304,352,'sky');
         //enemy collision
 
@@ -92,14 +105,8 @@ function create ()
         //audio
         //death audio
         monsterDeath = this.sound.add('deathMonster');
-        //
+        //pushing audio
         slimePush = this.sound.add('slimePush');
-
-
-
-
-
-
 
         enemy = this.physics.add.sprite(240,608, 'enemySkeleton');
         enemy.setCollideWorldBounds(true);
@@ -112,15 +119,13 @@ function create ()
         enemy2.setSize(32,32,true);
 
                 // playercollision
-              //  player = this.physics.add.sprite(16,16,'player');
                player = this.physics.add.sprite(16,16,'hazmat');
                 //player.setBounce(0.1);
                 player.setCollideWorldBounds(true);
                 player.setSize(32,32 ,true);
 
 //block
-  block = this.physics.add.sprite(X,Y,'block');
-  block.visible = false;
+
 //  block.setCollideWorldBounds(true);
 
         //Creating Slimes and blocks
@@ -300,7 +305,19 @@ for(i = 48; i <= 21*32; i+=32)
             frameRate: 15,
             repeat: -1
         });
-
+//block change Animation
+this.anims.create({
+    key: 'turnBlockColorRed',
+    frames: [ { key: 'slime', frame: 1 } ],
+    frameRate: 15,
+    repeat: -1
+});
+this.anims.create({
+    key: 'turnBlockColorGreen',
+    frames: [ { key: 'slime', frame: 0 } ],
+    frameRate: 15,
+    repeat: -1
+});
 
             cursors = this.input.keyboard.createCursorKeys();
             //portal
@@ -327,7 +344,7 @@ for(i = 48; i <= 21*32; i+=32)
 
     // this.physics.add.collider(slime,portal , portalShift ,null , null);
 
-
+//endGame=this.add.image(304,352,'GameOver');
 
 this.input.keyboard.on("keyup_X",  function(event)
 {
@@ -346,13 +363,13 @@ function update ()
 {
 //console.debug(slime);
  check++;
- // 
+ //
  // {
  // 	enemy.setVelocityY(0);
 	// enemy.setVelocityX(-96);
  //  enemy.anims.play('turnLeftSkeleton', true);
  // }
- // else 
+ // else
  // if(check>=240&&check<360)
  // {
  // 	  enemy.setVelocityY(0);
@@ -454,9 +471,9 @@ function update ()
   check=0;
  }
 
- 
- 
- 
+
+
+
 
  var multi = 4;
  if (cursors.left.isDown)
@@ -513,13 +530,16 @@ function update ()
 
       if(child.name == currentBlockName)
       {
-
+        child.setTint(0xff0000);
          test(child);
        }
-
+       else
+       {
+         child.setTint(0xffffff);
+       }
     },this);
 
-
+console.debug("check");
 //console.debug(playerUp);
 
 }
@@ -529,21 +549,22 @@ function blockPush(player , slime)
 {
 
 currentBlockName = slime.name;
-
 //test(slime);
 }
 //Kill Function
 function killEnemy(enemy, slime)
 {
 
-  monsterDeath.play();
-
- //enemy.disableBody(true, true);
-
+//  monsterDeath.play();
+if(slime.name == currentBlockName)
+{
+ enemy.disableBody(true, true);
+ score += 10;
+scoreText.setText('Score: ' + score);
+}
 //  enemy.destory();
 
-     score += 10;
-    scoreText.setText('Score: ' + score);
+
 }
 
 // Destroy Blocks
@@ -567,6 +588,7 @@ function test(slime)
       slime.setVelocityX(160);
        slime.setVelocityY(0);
        slimePush.play();
+      //slime.anims.play('turnBlockColorRed');
       isRight = 1;
       isUp=-1
 
@@ -578,6 +600,7 @@ function test(slime)
     slime.setVelocityX(-160);
     slime.setVelocityY(0);
     slimePush.play();
+    //slime.anims.play('turnBlockColorRed',true);
     isRight = 0;
     isUp=-1;
   }
@@ -590,6 +613,7 @@ function test(slime)
   slime.setImmovable(false);
     slime.setVelocityY(160);
     slime.setVelocityX(0);
+    //slime.anims.play('turnBlockColorRed',true);
     slimePush.play();
 
 
@@ -604,6 +628,7 @@ function test(slime)
   slime.setImmovable(false);
       slime.setVelocityY(-160);
       slime.setVelocityX(0);
+      //slime.anims.play('turnBlockColorRed',true);
       slimePush.play();
 
       isUp=  1;
@@ -612,15 +637,20 @@ function test(slime)
 
   if(slime.body.velocity.x ==0 && slime.body.velocity.y ==0)
   {
-
+    slime.setTint(0xffffff);
     slime.setImmovable(true);
   }
   else if (slime.body.velocity.x ==160 && slime.body.velocity.y ==0 )
+  {
+
     slime.setImmovable(false);
 
+}
   else if(slime.body.velocity.y ==160 && slime.body.velocity.x ==0)
   {
+
     slime.setImmovable(false);
+
   }
 
 
@@ -639,7 +669,6 @@ function killPlayer(player,enemy)
 
     player.anims.play('turn');
 
-    gameOver = true;
-  //  this.scene.start(endGame);
-  console.debug("end game now ");
+this.scene.start('GameOver');
+    console.debug(this.scene.isActive(endgame));
 }
