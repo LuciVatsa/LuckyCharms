@@ -307,7 +307,7 @@ for(i = 48; i <= 21*32; i+=32)
             //Collision with the player
         this.physics.add.collider(player, slime, blockPush, null, null);
         // this.isTocuhing = this.physics.add.collider(player, slime);
-        this.physics.add.overlap(enemy, slime, killEnemy, null , this);//adding colliders to game objects
+        this.physics.add.collider(enemy, slime, killEnemy, null , this);//adding colliders to game objects
 
         this.physics.add.collider(slime, slime);
       this.physics.add.collider(player,enemy , killPlayer , null , this);
@@ -335,106 +335,120 @@ this.input.keyboard.on("keyup_X",  function(event)
 function update ()
 {
 //console.debug(slime);
-
-var multi = 4;
- if (cursors.left.isDown)
+ check++;
+ // 
+ // {
+ // 	enemy.setVelocityY(0);
+	// enemy.setVelocityX(-96);
+ //  enemy.anims.play('turnLeftSkeleton', true);
+ // }
+ // else 
+ // if(check>=240&&check<360)
+ // {
+ // 	  enemy.setVelocityY(0);
+	//   enemy.setVelocityX(96);
+ //    enemy.anims.play('turnRightSkeleton', true);
+ // }
+ // else if(check>=360&&check<480)
+ // {
+ // 	  enemy.setVelocityY(96);
+	//   enemy.setVelocityX(0);
+ //    enemy.anims.play('turnUpSkeleton', true);
+ // }
+ // else if(check>=480&&check<600)
+ // {
+ // 	  enemy.setVelocityY(-96);
+	//   enemy.setVelocityX(0);
+ //    enemy.anims.play('turnDownSkeleton', true);
+ // }
+ // else if(check>=600)
+ // {
+ //  check = 0;
+ // }
+ // else
+ // {
+ // 	  enemy.setVelocityY(0);
+	//   enemy.setVelocityX(0);
+ //    enemy.anims.play('idleSkeleton');
+ // }
+ if(enemy.x > player.x&&check>=1*60&&check<2*60)
  {
- 	check++;
- 	player.setVelocityX(-32*multi);
-    player.setVelocityY(0);
-    
-    enemy.setVelocityY(0);
-    player.anims.play('turnLeftPlayer', true);
-    if(check%50!=0)
-    {
-    	enemy.setVelocityX(-64);
-    	enemy.anims.play('turnLeftSkeleton', true);
-
-    }
-    else 
-      	{
-      		enemy.setVelocityX(64);
-    		enemy.anims.play('turnRightSkeleton');
-    	}
-    playerRight = 0;
-    playerUp = -1;
-   }
-
-else if (cursors.right.isDown)
+  enemy.setVelocityX(-64);
+  enemy.anims.play('turnLeftSkeleton', true);
+ }
+ if(enemy.y > player.y&&check>=2*60&&check<3*60)
  {
- 	check++;
-    enemy.setVelocityY(0);
-    player.setVelocityX(32*multi);
-    player.setVelocityY(0);
-   player.anims.play('turnRightPlayer', true);
-   if(check%50!=0)
-    {
-    	enemy.setVelocityX(-64);
-    	enemy.anims.play('turnLeftSkeleton', true);
-    }
-    else 
-    	{
-    		enemy.setVelocityX(64*check);
-    		enemy.anims.play('turnRightSkeleton', true);
-    	}
-      playerRight = 1;
-          playerUp = -1;
+  enemy.setVelocityY(-64);
+  enemy.anims.play('turnUpSkeleton', true);
+ }
+ if(enemy.x<player.x && check>=3*60&&check<4*60)
+ {
+  enemy.setVelocityX(64);
+  enemy.anims.play('turnRightSkeleton',true);
+ }
+ if(enemy.y<player.y && check>=4*60&&check<5*60)
+ {
+  enemy.setVelocityY(64);
+  enemy.anims.play('turnDownSkeleton', true);
+ }
+ if(check>5*60)
+ {
+  check=0;
  }
 
+ 
+ 
+ 
+
+ var multi = 4;
+ if (cursors.left.isDown)
+ {
+	player.setVelocityX(-32*multi);
+    player.setVelocityY(0);
+    player.anims.play('turnLeftPlayer', true);
+    playerRight = 0;
+    playerUp = -1;
+ }
+ else if (cursors.right.isDown)
+ {
+    player.setVelocityX(32*multi);
+    player.setVelocityY(0);
+    player.anims.play('turnRightPlayer', true);
+    playerRight = 1;
+    playerUp = -1;
+ }
  else if (cursors.up.isDown)
  {
- 	check++; 
+
     player.setVelocityY(-32*multi);
     player.setVelocityX(0);
-    enemy.setVelocityX(0);
     player.anims.play('turnUpPlayer', true);
-    if(check%50!=0)
-    {
-    	enemy.setVelocityY(64);
-    	enemy.anims.play('turnUpSkeleton', true);
-    }
-    else 
-    	{
-    		enemy.setVelocityY(-64);
-    		enemy.anims.play('turnDownSkeleton', true);
-    	}
     playerRight = -1;
     playerUp = 0;
  }
-else if (cursors.down.isDown)
+ else if (cursors.down.isDown)
  {
- 	check++; 
     player.setVelocityY(32*multi);
     player.setVelocityX(0);
-    enemy.setVelocityX(0);
     player.anims.play('turnDownPlayer', true);
-    if(check%50!=0)
-    {
-    	enemy.setVelocityY(-64);
-    	enemy.anims.play('turnDownSkeleton', true);
-    }
-    else 
-    	{
-    		enemy.setVelocityY(64);
-    		enemy.anims.play('turnUpSkeleton', true);
-    	}
     playerRight = -1;
     playerRight = -1;
     playerUp = 1;
  }
-    else{
-            player.setVelocityX(0);
-              player.setVelocityY(0);
-              player.anims.play('idlePlayer');
-        }
-    if(this.keyA.isDown)
-    {
-    	console.log('Key Pressed');
-         if(player.x < slime.x || player.x > slime.x)
-         {
-         	DestroyBlock(player,slime);
-         }
-    }
+ else
+ {
+        player.setVelocityX(0);
+        player.setVelocityY(0);
+        player.anims.play('idlePlayer');
+  }
+  if(this.keyA.isDown)
+  {
+   	console.log('Key Pressed');
+    if(player.x < slime.x || player.x > slime.x)
+   {
+       	DestroyBlock(player,slime);
+   }
+}
   //  console.debug(currentBlockName);
     slime.children.iterate(function (child)
     {
