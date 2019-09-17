@@ -64,7 +64,7 @@ function preload ()
        //spirte loading
       this.load.spritesheet('hazmatLeft', 'Hazmat-S.png',{ frameWidth:96, frameHeight:64});
 
-      /this.load.spritesheet('bluePortal', 'Vortex-Blue.png',{ frameWidth:96, frameHeight:64});
+     //this.load.spritesheet('bluePortal', 'Vortex-Blue.png',{ frameWidth:96, frameHeight:64});
       //player loading
      this.load.image('player', 'Hazmat.png');
 }
@@ -78,7 +78,8 @@ function create ()
         enemy = this.physics.add.group();
 
                 // playercollision
-                player = this.physics.add.sprite(16,16,'player');
+              //  player = this.physics.add.sprite(16,16,'player');
+               player = this.physics.add.sprite(16,16,'hazmatLeft');
                 //player.setBounce(0.1);
                 player.setCollideWorldBounds(true);
 
@@ -227,6 +228,7 @@ else if (cursors.right.isDown)
  {
      player.setVelocityX(32*multi);
       player.setVelocityY(0);
+
       playerRight = 1;
           playerUp = -1;
  }
