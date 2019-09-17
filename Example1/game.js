@@ -28,6 +28,7 @@ var config = {
     var block;
     var cursors;
     var key;
+    var check=0;
     var score = 0;
     var scoreText;
     var enemy;
@@ -83,7 +84,7 @@ function create ()
 
         this.add.image(304,352,'sky');
         //enemy collision
-        enemy = this.physics.add.group();
+
         //audio
     bgMusic = this.sound.add('backGroundAudio');
       bgMusic.loop = true;
@@ -100,6 +101,9 @@ function create ()
 
 
 
+        enemy = this.physics.add.sprite(240,608, 'enemySkeleton');
+        enemy.setCollideWorldBounds(true);
+        enemy.setSize(32,32,true);
 
                 // playercollision
               //  player = this.physics.add.sprite(16,16,'player');
@@ -177,9 +181,42 @@ for(i = 48; i <= 21*32; i+=32)
     	}
 
     }
-        enemy= this.physics.add.group();
-        enemy.create(400,400,'enemy');
-        enemy.create(240,608 , 'enemy');
+
+    // var points = [];
+
+    // points.push(new Phaser.Math.Vector2(16+11*32, 16+8*32));
+    // points.push(new Phaser.Math.Vector2(16+12*32, 16+12*32));
+    // points.push(new Phaser.Math.Vector2(16+14*32, 16+17*32));
+    // points.push(new Phaser.Math.Vector2(16+17*32, 16+6*32));
+    // points.push(new Phaser.Math.Vector2(16+1*32, 16+3*32));
+
+    // var curve = new Phaser.Curves.Spline(points);
+
+    // var playerFollow = this.add.follower(curve, 50, 400, 'enemy');
+
+    // playerFollow.startFollow({
+    //     duration: 6000,
+    //     yoyo: true,
+    //     repeat: -1,
+    //     rotateToPath: true,
+    //     startAt: 0.5
+    // });
+
+    // this.input.on('pointerdown', function () {
+
+    //     if (playerFollow.isFollowing())
+    //     {
+    //         playerFollow.pauseFollow();
+    //     }
+    //     else
+    //     {
+    //         playerFollow.resumeFollow();
+    //     }
+
+    // });
+        // enemy= this.physics.add.group();
+        // enemy.create(400,400,'enemy');
+        // enemy.create(240,608 , 'enemy');
 
 
 
@@ -251,6 +288,12 @@ for(i = 48; i <= 21*32; i+=32)
             frameRate: 15,
             repeat: -1
         });
+        this.anims.create({
+            key: 'turnRightSkeleton',
+            frames: this.anims.generateFrameNumbers('enemyAnimation', { start: 1, end: 6 }),
+            frameRate: 15,
+            repeat: -1
+        });
 
 
             cursors = this.input.keyboard.createCursorKeys();
@@ -286,7 +329,7 @@ this.input.keyboard.on("keyup_X",  function(event)
 
 
 
-    }
+}
 
 
 function update ()
@@ -294,39 +337,90 @@ function update ()
 //console.debug(slime);
 
 var multi = 4;
-    if (cursors.left.isDown)
+ if (cursors.left.isDown)
  {
-   player.setVelocityX(-32*multi);
-     player.setVelocityY(0);
-     player.anims.play('turnLeftPlayer', true);
-     playerRight = 0;
-       playerUp = -1;
+ 	check++;
+ 	player.setVelocityX(-32*multi);
+    player.setVelocityY(0);
+    
+    enemy.setVelocityY(0);
+    player.anims.play('turnLeftPlayer', true);
+    if(check%50!=0)
+    {
+    	enemy.setVelocityX(-64);
+    	enemy.anims.play('turnLeftSkeleton', true);
+
+    }
+    else 
+      	{
+      		enemy.setVelocityX(64);
+    		enemy.anims.play('turnRightSkeleton');
+    	}
+    playerRight = 0;
+    playerUp = -1;
    }
 
 else if (cursors.right.isDown)
  {
-     player.setVelocityX(32*multi);
-      player.setVelocityY(0);
+ 	check++;
+    enemy.setVelocityY(0);
+    player.setVelocityX(32*multi);
+    player.setVelocityY(0);
    player.anims.play('turnRightPlayer', true);
+   if(check%50!=0)
+    {
+    	enemy.setVelocityX(-64);
+    	enemy.anims.play('turnLeftSkeleton', true);
+    }
+    else 
+    	{
+    		enemy.setVelocityX(64*check);
+    		enemy.anims.play('turnRightSkeleton', true);
+    	}
       playerRight = 1;
           playerUp = -1;
  }
 
  else if (cursors.up.isDown)
  {
-     player.setVelocityY(-32*multi);
-     player.setVelocityX(0);
-     player.anims.play('turnUpPlayer', true);
-     playerRight = -1;
-     playerUp = 0;
+ 	check++; 
+    player.setVelocityY(-32*multi);
+    player.setVelocityX(0);
+    enemy.setVelocityX(0);
+    player.anims.play('turnUpPlayer', true);
+    if(check%50!=0)
+    {
+    	enemy.setVelocityY(64);
+    	enemy.anims.play('turnUpSkeleton', true);
+    }
+    else 
+    	{
+    		enemy.setVelocityY(-64);
+    		enemy.anims.play('turnDownSkeleton', true);
+    	}
+    playerRight = -1;
+    playerUp = 0;
  }
 else if (cursors.down.isDown)
  {
-     player.setVelocityY(32*multi);
-     player.setVelocityX(0);
-     player.anims.play('turnDownPlayer', true);
-     playerRight = -1;
-     playerUp = 1;
+ 	check++; 
+    player.setVelocityY(32*multi);
+    player.setVelocityX(0);
+    enemy.setVelocityX(0);
+    player.anims.play('turnDownPlayer', true);
+    if(check%50!=0)
+    {
+    	enemy.setVelocityY(-64);
+    	enemy.anims.play('turnDownSkeleton', true);
+    }
+    else 
+    	{
+    		enemy.setVelocityY(64);
+    		enemy.anims.play('turnUpSkeleton', true);
+    	}
+    playerRight = -1;
+    playerRight = -1;
+    playerUp = 1;
  }
     else{
             player.setVelocityX(0);
@@ -369,8 +463,11 @@ currentBlockName = slime.name;
 //Kill Function
 function killEnemy(enemy, slime)
 {
+
   monsterDeath.play();
- enemy.disableBody(true, true);
+
+ //enemy.disableBody(true, true);
+
 //  enemy.destory();
 
      score += 10;
