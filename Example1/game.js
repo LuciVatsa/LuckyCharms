@@ -63,12 +63,12 @@ function preload ()
        //this.load.image('redPortal', 'Vortex-red.png');
        //spirte loading
       this.load.spritesheet('hazmat', 'Hazmat-A.png',{ frameWidth:38, frameHeight:38});
-      this.load.spritesheet('enemy', 'Skeleton-A.png',{ frameWidth:38, frameHeight:38});
+      this.load.spritesheet('enemyAnimation', 'Skeleton-A.png',{ frameWidth:38, frameHeight:38});
       //this.load.spritesheet();
 
      //this.load.spritesheet('bluePortal', 'Vortex-Blue.png',{ frameWidth:96, frameHeight:64});
       //player loading
-     this.load.image('player', 'Hazmat.png');
+     //this.load.image('player', 'Hazmat.png');
 }
 
 function create ()
@@ -208,24 +208,24 @@ for(i = 48; i <= 21*32; i+=32)
         //animation for enemySkeleton
         this.anims.create({
          key: 'idleSkeleton',
-         frames: [ { key: 'enemy', frame: 13 } ],
+         frames: [ { key: 'enemyAnimation', frame: 13 } ],
          frameRate: 20
      });
         this.anims.create({
             key: 'turnLeftSkeleton',
-            frames: this.anims.generateFrameNumbers('enemy', { start: 6, end: 10 }),
+            frames: this.anims.generateFrameNumbers('enemyAnimation', { start: 6, end: 10 }),
             frameRate: 15,
             repeat: -1
         });
         this.anims.create({
             key: 'turnUpSkeleton',
-            frames: this.anims.generateFrameNumbers('enemy', { start: 12, end: 17}),
+            frames: this.anims.generateFrameNumbers('enemyAnimation', { start: 12, end: 17}),
             frameRate: 15,
             repeat: -1
         });
         this.anims.create({
             key: 'turnDownSkeleton',
-            frames: this.anims.generateFrameNumbers('enemy', { start: 18, end: 23 }),
+            frames: this.anims.generateFrameNumbers('enemyAnimation', { start: 18, end: 23 }),
             frameRate: 15,
             repeat: -1
         });
