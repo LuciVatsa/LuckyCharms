@@ -7,14 +7,16 @@ var GameOver = new Phaser.Class({
         })
     },
     init:function(){
-      console.debug("hi");
+      console.debug("works");
+      this.load.image('GameOver','GameOver.png');
     },
     preload : function()
     {
-       this.load.image('GameOver','GameOver.png');
+
     },
     create: function() {
       this.add.image(304,352,'GameOver');
         console.debug("hi");
-    }
+    },
+
   });

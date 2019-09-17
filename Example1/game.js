@@ -1,4 +1,5 @@
 
+
 var config = {
         type: Phaser.AUTO,
         width: 608,
@@ -101,14 +102,8 @@ game.scene.add('endGame', GameOver);
         //audio
         //death audio
         monsterDeath = this.sound.add('deathMonster');
-        //
+        //pushing audio
         slimePush = this.sound.add('slimePush');
-
-
-
-
-
-
 
         enemy = this.physics.add.sprite(240,608, 'enemySkeleton');
         enemy.setCollideWorldBounds(true);
@@ -315,7 +310,7 @@ for(i = 48; i <= 21*32; i+=32)
             //Collision with the player
         this.physics.add.collider(player, slime, blockPush, null, null);
         // this.isTocuhing = this.physics.add.collider(player, slime);
-        this.physics.add.overlap(enemy, slime, killEnemy, null , this);//adding colliders to game objects
+        this.physics.add.collider(enemy, slime, killEnemy, null , this);//adding colliders to game objects
 
         this.physics.add.collider(slime, slime);
       this.physics.add.collider(player,enemy , killPlayer , null , this);
@@ -472,14 +467,16 @@ currentBlockName = slime.name;
 function killEnemy(enemy, slime)
 {
 
-  monsterDeath.play();
-
- //enemy.disableBody(true, true);
-
+//  monsterDeath.play();
+if(slime.name == currentBlockName)
+{
+ enemy.disableBody(true, true);
+ score += 10;
+scoreText.setText('Score: ' + score);
+}
 //  enemy.destory();
 
-     score += 10;
-    scoreText.setText('Score: ' + score);
+
 }
 
 // Destroy Blocks
@@ -569,13 +566,12 @@ function test(slime)
 
 function killPlayer(player,enemy)
 {
-  // this.physics.pause();
-  //
-  //   player.setTint(0xff0000);
-  //
-  //   player.anims.play('turn');
+  this.physics.pause();
 
+    player.setTint(0xff0000);
 
-    this.scene.start('endGame');
+    player.anims.play('turn');
+
+this.scene.switch('GameOver');
     console.debug(this.scene.isActive('endGame'));
 }
