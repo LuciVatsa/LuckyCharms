@@ -10,7 +10,10 @@ var config = {
                 gravity: { y: 0},
                 debug: true
             }
-        },
+          },
+          audio: {
+      disableWebAudio: true
+  },
         scene: {
             preload: preload,
             create: create,
@@ -47,6 +50,9 @@ var config = {
     var currentBlockName;
     var isTouching = false;
     var temp;
+    var bgMusic;
+    var slimePush;
+    var monsterDeath;
 ;
 var path;
 var bounds;
@@ -64,11 +70,11 @@ function preload ()
        //spirte loading
       this.load.spritesheet('hazmat', 'Hazmat-A.png',{ frameWidth:38, frameHeight:38});
       this.load.spritesheet('enemyAnimation', 'Skeleton-A.png',{ frameWidth:38, frameHeight:38});
-      //this.load.spritesheet();
 
-     //this.load.spritesheet('bluePortal', 'Vortex-Blue.png',{ frameWidth:96, frameHeight:64});
-      //player loading
-     //this.load.image('player', 'Hazmat.png');
+      //Audio sprites
+      this.load.audio('backGroundAudio', 'backGroundAudio.mp3');
+      this.load.audio('deathMonster', 'deathMonster.mp3');
+      this.load.audio('slimePush', 'slimePush.mp3');
 }
 
 function create ()
@@ -78,6 +84,22 @@ function create ()
         this.add.image(304,352,'sky');
         //enemy collision
         enemy = this.physics.add.group();
+        //audio
+    bgMusic = this.sound.add('backGroundAudio');
+      bgMusic.loop = true;
+        bgMusic.play();
+        //audio
+        //death audio
+        monsterDeath = this.sound.add('deathMonster');
+        //
+        slimePush = this.sound.add('slimePush');
+
+
+
+
+
+
+
 
                 // playercollision
               //  player = this.physics.add.sprite(16,16,'player');
@@ -266,9 +288,11 @@ this.input.keyboard.on("keyup_X",  function(event)
 
     }
 
+
 function update ()
 {
 //console.debug(slime);
+
 var multi = 4;
     if (cursors.left.isDown)
  {
@@ -345,6 +369,7 @@ currentBlockName = slime.name;
 //Kill Function
 function killEnemy(enemy, slime)
 {
+  monsterDeath.play();
  enemy.disableBody(true, true);
 //  enemy.destory();
 
@@ -372,16 +397,18 @@ function test(slime)
   slime.setImmovable(false);
       slime.setVelocityX(160);
        slime.setVelocityY(0);
+       slimePush.play();
       isRight = 1;
       isUp=-1
 
   }
   else if(playerRight == 0 && isPressing == true)
   {
-  console.debug("bug");
+
   slime.setImmovable(false);
     slime.setVelocityX(-160);
     slime.setVelocityY(0);
+    slimePush.play();
     isRight = 0;
     isUp=-1;
   }
@@ -394,6 +421,7 @@ function test(slime)
   slime.setImmovable(false);
     slime.setVelocityY(160);
     slime.setVelocityX(0);
+    slimePush.play();
 
 
     isUp=  0;
@@ -407,6 +435,7 @@ function test(slime)
   slime.setImmovable(false);
       slime.setVelocityY(-160);
       slime.setVelocityX(0);
+      slimePush.play();
 
       isUp=  1;
       isRight = -1;
@@ -442,5 +471,6 @@ function killPlayer(player,enemy)
     player.anims.play('turn');
 
     gameOver = true;
+  //  this.scene.start(endGame);
   console.debug("end game now ");
 }
