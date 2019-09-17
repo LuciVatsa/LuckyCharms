@@ -62,11 +62,11 @@ function preload ()
        this.load.image('enemy', 'enemySkeleton.png');
        //this.load.image('redPortal', 'Vortex-red.png');
        //spirte loading
-      this.load.spritesheet('redPortal', 'Vortex-Red.png',{ frameWidth:96, frameHeight:64});
+      this.load.spritesheet('hazmatLeft', 'Hazmat-S.png',{ frameWidth:96, frameHeight:64});
 
-      this.load.spritesheet('bluePortal', 'Vortex-Blue.png',{ frameWidth:96, frameHeight:64});
+      /this.load.spritesheet('bluePortal', 'Vortex-Blue.png',{ frameWidth:96, frameHeight:64});
       //player loading
-     this.load.image('player', 'Player.png');
+     this.load.image('player', 'Hazmat.png');
 }
 
 function create ()
@@ -161,14 +161,14 @@ for(i = 48; i <= 21*32; i+=32)
        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
        //animation for redPortal
         this.anims.create({
-            key: 'turnRed',
-            frames: this.anims.generateFrameNumbers('redPortal', { start: 1, end: 8 }),
+            key: 'turnRight',
+            frames: this.anims.generateFrameNumbers('hazmatLeft', { start: 1, end: 8 }),
             frameRate: 15,
             repeat: -1
         });
         //animation for bluePortal
         this.anims.create({
-            key: 'turnBlue',
+            key: 'turnLeft',
             frames: this.anims.generateFrameNumbers('bluePortal', { start: 1, end: 8 }),
             frameRate: 15,
             repeat: -1
@@ -218,6 +218,7 @@ var multi = 4;
  {
    player.setVelocityX(-32*multi);
      player.setVelocityY(0);
+
      playerRight = 0;
        playerUp = -1;
    }
@@ -353,7 +354,7 @@ function test(slime)
 
   if(slime.body.velocity.x ==0 && slime.body.velocity.y ==0)
   {
-    console.debug("not moving");
+
     slime.setImmovable(true);
   }
   else if (slime.body.velocity.x ==160 && slime.body.velocity.y ==0 )
