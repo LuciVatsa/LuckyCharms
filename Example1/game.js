@@ -25,6 +25,7 @@ var config = {
     var block;
     var cursors;
     var key;
+    var check=0;
     var score = 0;
     var scoreText;
     var enemy;
@@ -79,7 +80,7 @@ function create ()
         //enemy collision
         enemy = this.physics.add.sprite(240,608, 'enemySkeleton');
         enemy.setCollideWorldBounds(true);
-        enemy.setsize(32,32,true);
+        enemy.setSize(32,32,true);
 
                 // playercollision
               //  player = this.physics.add.sprite(16,16,'player');
@@ -264,6 +265,12 @@ for(i = 48; i <= 21*32; i+=32)
             frameRate: 15,
             repeat: -1
         });
+        this.anims.create({
+            key: 'turnRightSkeleton',
+            frames: this.anims.generateFrameNumbers('enemyAnimation', { start: 1, end: 6 }),
+            frameRate: 15,
+            repeat: -1
+        });
 
 
             cursors = this.input.keyboard.createCursorKeys();
@@ -305,26 +312,24 @@ function update ()
 {
 //console.debug(slime);
 var multi = 4;
-    if (cursors.left.isDown)
+ if (cursors.left.isDown)
  {
- 	var check = Math.round(Math.random() * 2)-1;
-    player.setVelocityX(-32*multi);
+ 	check++;
+ 	player.setVelocityX(-32*multi);
     player.setVelocityY(0);
-    enemy.setVelocityX(-32*check);
+    
     enemy.setVelocityY(0);
     player.anims.play('turnLeftPlayer', true);
-    if(check>0)
+    if(check%50!=0)
     {
+    	enemy.setVelocityX(-64);
     	enemy.anims.play('turnLeftSkeleton', true);
+
     }
     else 
-    	if(check==0)
-    	{
-    		enemy.anims.play('idleSkeleton');
-    	}
-    	else
-    	{
-    		enemy.anims.play('turnRightSkeleton', true);
+      	{
+      		enemy.setVelocityX(64);
+    		enemy.anims.play('turnRightSkeleton');
     	}
     playerRight = 0;
     playerUp = -1;
@@ -332,23 +337,19 @@ var multi = 4;
 
 else if (cursors.right.isDown)
  {
- 	var check = Math.round(Math.random() * 2)-1;
- 	enemy.setVelocityX(32*check);
+ 	check++;
     enemy.setVelocityY(0);
     player.setVelocityX(32*multi);
     player.setVelocityY(0);
    player.anims.play('turnRightPlayer', true);
-   if(check<0)
+   if(check%50!=0)
     {
+    	enemy.setVelocityX(-64);
     	enemy.anims.play('turnLeftSkeleton', true);
     }
     else 
-    	if(check==0)
     	{
-    		enemy.anims.play('idleSkeleton');
-    	}
-    	else
-    	{
+    		enemy.setVelocityX(64*check);
     		enemy.anims.play('turnRightSkeleton', true);
     	}
       playerRight = 1;
@@ -357,23 +358,19 @@ else if (cursors.right.isDown)
 
  else if (cursors.up.isDown)
  {
- 	var check = Math.round(Math.random() * 2)-1;
+ 	check++; 
     player.setVelocityY(-32*multi);
     player.setVelocityX(0);
-    enemy.setVelocityY(-32*check);
     enemy.setVelocityX(0);
     player.anims.play('turnUpPlayer', true);
-    if(check<0)
+    if(check%50!=0)
     {
+    	enemy.setVelocityY(64);
     	enemy.anims.play('turnUpSkeleton', true);
     }
     else 
-    	if(check==0)
     	{
-    		enemy.anims.play('idleSkeleton');
-    	}
-    	else
-    	{
+    		enemy.setVelocityY(-64);
     		enemy.anims.play('turnDownSkeleton', true);
     	}
     playerRight = -1;
@@ -381,23 +378,19 @@ else if (cursors.right.isDown)
  }
 else if (cursors.down.isDown)
  {
- 	var check = Math.round(Math.random() * 2)-1;
+ 	check++; 
     player.setVelocityY(32*multi);
     player.setVelocityX(0);
-    enemy.setVelocityY(32*check);
     enemy.setVelocityX(0);
     player.anims.play('turnDownPlayer', true);
-    if(check<0)
+    if(check%50!=0)
     {
+    	enemy.setVelocityY(-64);
     	enemy.anims.play('turnDownSkeleton', true);
     }
     else 
-    	if(check==0)
     	{
-    		enemy.anims.play('idleSkeleton');
-    	}
-    	else
-    	{
+    		enemy.setVelocityY(64);
     		enemy.anims.play('turnUpSkeleton', true);
     	}
     playerRight = -1;
@@ -445,7 +438,7 @@ currentBlockName = slime.name;
 //Kill Function
 function killEnemy(enemy, slime)
 {
- enemy.disableBody(true, true);
+ //enemy.disableBody(true, true);
 //  enemy.destory();
 
      score += 10;
