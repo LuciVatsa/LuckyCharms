@@ -63,6 +63,7 @@ function preload ()
        //this.load.image('redPortal', 'Vortex-red.png');
        //spirte loading
       this.load.spritesheet('hazmat', 'Hazmat-A.png',{ frameWidth:38, frameHeight:38});
+      this.load.spritesheet('enemy', 'Skeleton-A.png',{ frameWidth:38, frameHeight:38});
       //this.load.spritesheet();
 
      //this.load.spritesheet('bluePortal', 'Vortex-Blue.png',{ frameWidth:96, frameHeight:64});
@@ -168,7 +169,7 @@ for(i = 48; i <= 21*32; i+=32)
             frameRate: 15,
             repeat: -1
         });
-        //animation for bluePortal
+        //Player Animation
         this.anims.create({
          key: 'idlePlayer',
          frames: [ { key: 'hazmat', frame: 13 } ],
@@ -189,6 +190,41 @@ for(i = 48; i <= 21*32; i+=32)
         this.anims.create({
             key: 'turnDownPlayer',
             frames: this.anims.generateFrameNumbers('hazmat', { start: 18, end: 23 }),
+            frameRate: 15,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'turnRightPlayer',
+            frames: this.anims.generateFrameNumbers('hazmat', { start: 1, end: 5 }),
+            frameRate: 15,
+            repeat: -1
+        });
+        this.anims.create({
+         key: 'idlePlayer',
+         frames: [ { key: 'hazmat', frame: 13 } ],
+         frameRate: 20
+     });
+        //animation for enemySkeleton
+        this.anims.create({
+         key: 'idleSkeleton',
+         frames: [ { key: 'enemy', frame: 13 } ],
+         frameRate: 20
+     });
+        this.anims.create({
+            key: 'turnLeftSkeleton',
+            frames: this.anims.generateFrameNumbers('enemy', { start: 6, end: 10 }),
+            frameRate: 15,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'turnUpSkeleton',
+            frames: this.anims.generateFrameNumbers('enemy', { start: 12, end: 17}),
+            frameRate: 15,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'turnDownSkeleton',
+            frames: this.anims.generateFrameNumbers('enemy', { start: 18, end: 23 }),
             frameRate: 15,
             repeat: -1
         });
