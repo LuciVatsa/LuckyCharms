@@ -20,6 +20,7 @@ var config = {
             update: update
 
         }
+
     };
 
 
@@ -58,10 +59,11 @@ var path;
 var bounds;
 var graphics;
 	 var game = new Phaser.Game(config);
+
 function preload ()
 {
 
-
+        this.scene.add('endGame' , GameOver);
        this.load.image('sky','background.png');
        this.load.image('slime', 'slime.png');
        this.load.image('block', 'trail.png');
@@ -75,6 +77,8 @@ function preload ()
       this.load.audio('backGroundAudio', 'backGroundAudio.mp3');
       this.load.audio('deathMonster', 'deathMonster.mp3');
       this.load.audio('slimePush', 'slimePush.mp3');
+
+
 }
 
 function create ()
@@ -95,6 +99,7 @@ function create ()
         slimePush = this.sound.add('slimePush');
 
 
+        //load Scene
 
 
 
@@ -471,6 +476,6 @@ function killPlayer(player,enemy)
     player.anims.play('turn');
 
     gameOver = true;
-  //  this.scene.start(endGame);
+    this.scene.start('endGame');
   console.debug("end game now ");
 }
