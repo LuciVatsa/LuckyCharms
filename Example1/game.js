@@ -24,6 +24,7 @@ var config = {
     };
 
 
+
     var player;
     var slime;
     var block;
@@ -54,7 +55,8 @@ var config = {
     var bgMusic;
     var slimePush;
     var monsterDeath;
-;
+    var endgame;
+
 var path;
 var bounds;
 var graphics;
@@ -63,11 +65,12 @@ var graphics;
 function preload ()
 {
 
-        this.scene.add('endGame' , GameOver);
+
        this.load.image('sky','background.png');
        this.load.image('slime', 'slime.png');
        this.load.image('block', 'trail.png');
        this.load.image('enemy', 'enemySkeleton.png');
+       this.load.image('GameOver','GameOver.png');
        //this.load.image('redPortal', 'Vortex-red.png');
        //spirte loading
       this.load.spritesheet('hazmat', 'Hazmat-A.png',{ frameWidth:38, frameHeight:38});
@@ -85,6 +88,8 @@ function create ()
     {
     	//19 width boxes, 22 height boxes
 
+game.scene.add('endGame', GameOver);
+//endgame.isvisible = false;
         this.add.image(304,352,'sky');
         //enemy collision
         enemy = this.physics.add.group();
@@ -97,16 +102,7 @@ function create ()
         monsterDeath = this.sound.add('deathMonster');
         //
         slimePush = this.sound.add('slimePush');
-
-
-        //load Scene
-
-
-
-
-
-
-                // playercollision
+              // playercollision
               //  player = this.physics.add.sprite(16,16,'player');
                player = this.physics.add.sprite(16,16,'hazmat');
                 //player.setBounce(0.1);
@@ -114,8 +110,7 @@ function create ()
                 player.setSize(32,32 ,true);
 
 //block
-  block = this.physics.add.sprite(X,Y,'block');
-  block.visible = false;
+
 //  block.setCollideWorldBounds(true);
 
         //Creating Slimes and blocks
@@ -279,7 +274,7 @@ for(i = 48; i <= 21*32; i+=32)
 
     // this.physics.add.collider(slime,portal , portalShift ,null , null);
 
-
+//endGame=this.add.image(304,352,'GameOver');
 
 this.input.keyboard.on("keyup_X",  function(event)
 {
@@ -469,13 +464,13 @@ function test(slime)
 
 function killPlayer(player,enemy)
 {
-  this.physics.pause();
+  // this.physics.pause();
+  //
+  //   player.setTint(0xff0000);
+  //
+  //   player.anims.play('turn');
 
-    player.setTint(0xff0000);
 
-    player.anims.play('turn');
-
-    gameOver = true;
     this.scene.start('endGame');
-  console.debug("end game now ");
+    console.debug(this.scene.isActive('endGame'));
 }
