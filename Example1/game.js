@@ -70,7 +70,7 @@ function preload ()
 
 
        this.load.image('sky','background.png');
-       this.load.image('slime', 'slime.png');
+       //this.load.image('slime', 'slime.png');
        this.load.image('block', 'trail.png');
        this.load.image('enemy', 'enemySkeleton.png');
        this.load.image('GameOver','GameOver.png');
@@ -79,7 +79,7 @@ function preload ()
       this.load.spritesheet('hazmat', 'Hazmat-A.png',{ frameWidth:38, frameHeight:38});
       this.load.spritesheet('enemyAnimation', 'Skeleton-A.png',{ frameWidth:38, frameHeight:38});
       //color change blocks
-      this.load.spritesheet();
+      this.load.spritesheet('slime', 'slime.png',{ frameWidth:32, frameHeight:32}) ;
 
       //Audio sprites
       this.load.audio('backGroundAudio', 'backGroundAudio.mp3');
@@ -302,13 +302,13 @@ for(i = 48; i <= 21*32; i+=32)
 //block change Animation
 this.anims.create({
     key: 'turnBlockColorRed',
-    frames: [ { key: 'enemyAnimation', frame: 1 } ],
+    frames: [ { key: 'slime', frame: 1 } ],
     frameRate: 15,
     repeat: -1
 });
 this.anims.create({
     key: 'turnBlockColorGreen',
-    frames: [ { key: 'enemyAnimation', frame: 0 } ],
+    frames: [ { key: 'slime', frame: 0 } ],
     frameRate: 15,
     repeat: -1
 });
@@ -458,10 +458,13 @@ else if (cursors.down.isDown)
 
       if(child.name == currentBlockName)
       {
-
+        child.setTint(0xff0000);
          test(child);
        }
-
+       else
+       {
+         child.setTint(0xffffff);
+       }
     },this);
 
 console.debug("check");
@@ -513,6 +516,7 @@ function test(slime)
       slime.setVelocityX(160);
        slime.setVelocityY(0);
        slimePush.play();
+      //slime.anims.play('turnBlockColorRed');
       isRight = 1;
       isUp=-1
 
@@ -524,6 +528,7 @@ function test(slime)
     slime.setVelocityX(-160);
     slime.setVelocityY(0);
     slimePush.play();
+    //slime.anims.play('turnBlockColorRed',true);
     isRight = 0;
     isUp=-1;
   }
@@ -536,6 +541,7 @@ function test(slime)
   slime.setImmovable(false);
     slime.setVelocityY(160);
     slime.setVelocityX(0);
+    //slime.anims.play('turnBlockColorRed',true);
     slimePush.play();
 
 
@@ -550,6 +556,7 @@ function test(slime)
   slime.setImmovable(false);
       slime.setVelocityY(-160);
       slime.setVelocityX(0);
+      //slime.anims.play('turnBlockColorRed',true);
       slimePush.play();
 
       isUp=  1;
@@ -558,15 +565,20 @@ function test(slime)
 
   if(slime.body.velocity.x ==0 && slime.body.velocity.y ==0)
   {
-
+    slime.setTint(0xffffff);
     slime.setImmovable(true);
   }
   else if (slime.body.velocity.x ==160 && slime.body.velocity.y ==0 )
+  {
+
     slime.setImmovable(false);
 
+}
   else if(slime.body.velocity.y ==160 && slime.body.velocity.x ==0)
   {
+
     slime.setImmovable(false);
+
   }
 
 
