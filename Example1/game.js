@@ -183,13 +183,13 @@ for(i = 48; i <= 21*32; i+=32)
             repeat: -1
         });
         this.anims.create({
-            key: 'turnUpPlayer',
+            key: 'turnDownPlayer',
             frames: this.anims.generateFrameNumbers('hazmat', { start: 12, end: 17}),
             frameRate: 15,
             repeat: -1
         });
         this.anims.create({
-            key: 'turnDownPlayer',
+            key: 'turnUpPlayer',
             frames: this.anims.generateFrameNumbers('hazmat', { start: 18, end: 23 }),
             frameRate: 15,
             repeat: -1
