@@ -148,6 +148,39 @@ for(i = 48; i <= 21*32; i+=32)
     	}
 
     }
+
+    // var points = [];
+
+    // points.push(new Phaser.Math.Vector2(16+11*32, 16+8*32));
+    // points.push(new Phaser.Math.Vector2(16+12*32, 16+12*32));
+    // points.push(new Phaser.Math.Vector2(16+14*32, 16+17*32));
+    // points.push(new Phaser.Math.Vector2(16+17*32, 16+6*32));
+    // points.push(new Phaser.Math.Vector2(16+1*32, 16+3*32));
+
+    // var curve = new Phaser.Curves.Spline(points);
+
+    // var playerFollow = this.add.follower(curve, 50, 400, 'enemy');
+
+    // playerFollow.startFollow({
+    //     duration: 6000,
+    //     yoyo: true,
+    //     repeat: -1,
+    //     rotateToPath: true,
+    //     startAt: 0.5
+    // });
+
+    // this.input.on('pointerdown', function () {
+
+    //     if (playerFollow.isFollowing())
+    //     {
+    //         playerFollow.pauseFollow();
+    //     }
+    //     else
+    //     {
+    //         playerFollow.resumeFollow();
+    //     }
+
+    // });
         enemy= this.physics.add.group();
         enemy.create(400,400,'enemy');
         enemy.create(240,608 , 'enemy');
@@ -220,7 +253,7 @@ this.input.keyboard.on("keyup_X",  function(event)
 //
 // },this)
 
-    }
+}
 
 function update ()
 {
