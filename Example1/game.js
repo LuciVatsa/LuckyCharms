@@ -104,6 +104,12 @@ function create ()
         enemy = this.physics.add.sprite(240,608, 'enemySkeleton');
         enemy.setCollideWorldBounds(true);
         enemy.setSize(32,32,true);
+        enemy1 = this.physics.add.sprite(400,400, 'enemySkeleton');
+        enemy1.setCollideWorldBounds(true);
+        enemy1.setSize(32,32,true);
+        enemy2 = this.physics.add.sprite(592,48, 'enemySkeleton');
+        enemy2.setCollideWorldBounds(true);
+        enemy2.setSize(32,32,true);
 
                 // playercollision
               //  player = this.physics.add.sprite(16,16,'player');
@@ -307,10 +313,14 @@ for(i = 48; i <= 21*32; i+=32)
             //Collision with the player
         this.physics.add.collider(player, slime, blockPush, null, null);
         // this.isTocuhing = this.physics.add.collider(player, slime);
-        this.physics.add.collider(enemy, slime, killEnemy, null , this);//adding colliders to game objects
-
+        this.physics.add.collider(enemy, slime, killEnemy, null , this);
+        //adding colliders to game objects
+        this.physics.add.collider(enemy2, slime, killEnemy, null , this);
+        this.physics.add.collider(enemy1, slime, killEnemy, null , this);
         this.physics.add.collider(slime, slime);
       this.physics.add.collider(player,enemy , killPlayer , null , this);
+      this.physics.add.collider(player,enemy1 , killPlayer , null , this);
+      this.physics.add.collider(player,enemy2 , killPlayer , null , this);
         //this.physics.add.collider(enemy,player);
         //this.physics.add.collider(block,slime);
        this.physics.add.collider(slime , slime, stopBlock , null , null);
@@ -390,6 +400,54 @@ function update ()
  {
   enemy.setVelocityY(64);
   enemy.anims.play('turnDownSkeleton', true);
+ }
+ if(check>5*60)
+ {
+  check=0;
+ }
+ if(enemy1.x > player.x&&check>=1*60&&check<2*60)
+ {
+  enemy1.setVelocityX(-64);
+  enemy1.anims.play('turnLeftSkeleton', true);
+ }
+ if(enemy1.y > player.y&&check>=2*60&&check<3*60)
+ {
+  enemy1.setVelocityY(-64);
+  enemy1.anims.play('turnUpSkeleton', true);
+ }
+ if(enemy1.x<player.x && check>=3*60&&check<4*60)
+ {
+  enemy1.setVelocityX(64);
+  enemy1.anims.play('turnRightSkeleton',true);
+ }
+ if(enemy1.y<player.y && check>=4*60&&check<5*60)
+ {
+  enemy1.setVelocityY(64);
+  enemy1.anims.play('turnDownSkeleton', true);
+ }
+ if(check>5*60)
+ {
+  check=0;
+ }
+ if(enemy2.x > player.x&&check>=1*60&&check<2*60)
+ {
+  enemy2.setVelocityX(-64);
+  enemy2.anims.play('turnLeftSkeleton', true);
+ }
+ if(enemy2.y > player.y&&check>=2*60&&check<3*60)
+ {
+  enemy2.setVelocityY(-64);
+  enemy2.anims.play('turnUpSkeleton', true);
+ }
+ if(enemy2.x<player.x && check>=3*60&&check<4*60)
+ {
+  enemy2.setVelocityX(64);
+  enemy2.anims.play('turnRightSkeleton',true);
+ }
+ if(enemy2.y<player.y && check>=4*60&&check<5*60)
+ {
+  enemy2.setVelocityY(64);
+  enemy2.anims.play('turnDownSkeleton', true);
  }
  if(check>5*60)
  {
