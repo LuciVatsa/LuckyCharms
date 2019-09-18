@@ -449,10 +449,11 @@ function update ()
   if(this.keyA.isDown)
   {
    	console.log('Key Pressed');
-    if(player.x < slime.x || player.x > slime.x)
-   {
-       	DestroyBlock(player,slime);
-   }
+   	slime.destory(true);
+   //  if(player.x < slime.x || player.x > slime.x)
+   // {
+   //     	slime.disableBody(true,true);
+   // }
 }
   //  console.debug(currentBlockName);
     slime.children.iterate(function (child)
@@ -469,7 +470,7 @@ function update ()
        }
     },this);
 
-console.debug("check");
+// console.debug("check");
 //console.debug(playerUp);
 
 }
@@ -497,11 +498,7 @@ scoreText.setText('Score: ' + score);
 
 }
 
-// Destroy Blocks
-function  DestroyBlock(player, slime)
-{
-	slime.disableBody(true,true);
-}
+
 //stop the block after hitting a blocks
 function stopBlock(slime, slime )
 {
