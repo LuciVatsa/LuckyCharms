@@ -52,18 +52,19 @@ var config = {
     var isPressing = false;
     var name = 0;
     var blockCount=0;
-    var currentBlockName;
+    var currentBlockName = null;
     var isTouching =false;
     var temp;
     var bgMusic;
     var slimePush;
     var monsterDeath;
-  var timeScale ;
+    var timeScale ;
     var health =100;
-
-var path;
-var bounds;
-var graphics;
+    var spacebar;
+    var multi = 4;
+    var path;
+    var bounds;
+    var graphics;
 	 var game = new Phaser.Game(config);
 
 function preload ()
@@ -91,13 +92,13 @@ function preload ()
 }
 
 function create ()
-    {
+{
     	//19 width boxes, 22 height boxes
 
-game.scene.add('endGame', GameOver);
-//endgame.isvisible = false;
+      game.scene.add('endGame', GameOver);
+
         this.add.image(304,352,'sky');
-        //enemy collision
+
 
         //audio
     bgMusic = this.sound.add('backGroundAudio');
@@ -126,10 +127,8 @@ game.scene.add('endGame', GameOver);
                 player.setSize(25,25 ,true);
 
 //block
-
 //  block.setCollideWorldBounds(true);
-
-        //Creating Slimes and blocks
+  //Creating Slimes and blocks
       slime =this.physics.add.group();
 
 
@@ -194,47 +193,13 @@ for(i = 48; i <= 21*32; i+=32)
 
     }
 
-    // var points = [];
 
-    // points.push(new Phaser.Math.Vector2(16+11*32, 16+8*32));
-    // points.push(new Phaser.Math.Vector2(16+12*32, 16+12*32));
-    // points.push(new Phaser.Math.Vector2(16+14*32, 16+17*32));
-    // points.push(new Phaser.Math.Vector2(16+17*32, 16+6*32));
-    // points.push(new Phaser.Math.Vector2(16+1*32, 16+3*32));
-
-    // var curve = new Phaser.Curves.Spline(points);
-
-    // var playerFollow = this.add.follower(curve, 50, 400, 'enemy');
-
-    // playerFollow.startFollow({
-    //     duration: 6000,
-    //     yoyo: true,
-    //     repeat: -1,
-    //     rotateToPath: true,
-    //     startAt: 0.5
-    // });
-
-    // this.input.on('pointerdown', function () {
-
-    //     if (playerFollow.isFollowing())
-    //     {
-    //         playerFollow.pauseFollow();
-    //     }
-    //     else
-    //     {
-    //         playerFollow.resumeFollow();
-    //     }
-
-    // });
-        // enemy= this.physics.add.group();
-        // enemy.create(400,400,'enemy');
-        // enemy.create(240,608 , 'enemy');
 
 
 
         //player score text
        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
-       //animation for redPortal
+
         this.anims.create({
             key: 'turnRightPlayer',
             frames: this.anims.generateFrameNumbers('hazmat', { start: 0, end: 5 }),
@@ -306,14 +271,14 @@ for(i = 48; i <= 21*32; i+=32)
             frameRate: 15,
             repeat: -1
         });
-//block change Animation
-this.anims.create({
+        //block change Animation
+        this.anims.create({
     key: 'turnBlockColorRed',
     frames: [ { key: 'slime', frame: 1 } ],
     frameRate: 15,
     repeat: -1
 });
-this.anims.create({
+        this.anims.create({
     key: 'turnBlockColorGreen',
     frames: [ { key: 'slime', frame: 0 } ],
     frameRate: 15,
@@ -324,14 +289,14 @@ this.anims.create({
             //portal
             portal = this.physics.add.staticGroup();
            //setting destroy button
-                  this.keyA = this.input.keyboard.addKey('A');
+            this.keyA = this.input.keyboard.addKey('A');
             //key for pushing blocks
-            this.keyX = this.input.keyboard.addKey('X');
+          spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
             //Collision with the player
        this.physics.add.collider(player, slime, blockPush, null, null);
 
-        // this.isTocuhing = this.physics.add.collider(player, slime);
+
         this.physics.add.collider(enemy, slime, killEnemy, null , this);
         //adding colliders to game objects
         this.physics.add.collider(enemy2, slime, killEnemy, null , this);
@@ -340,21 +305,10 @@ this.anims.create({
       this.physics.add.collider(player,enemy , killPlayer , null , this);
       this.physics.add.collider(player,enemy1 , killPlayer , null , this);
       this.physics.add.collider(player,enemy2 , killPlayer , null , this);
-        //this.physics.add.collider(enemy,player);
-        //this.physics.add.collider(block,slime);
+
        this.physics.add.collider(slime , slime, stopBlock , null , null);
-//this.physics.add.collider(player, slime);
-    // this.physics.add.collider(slime,portal , portalShift ,null , null);
 
-//endGame=this.add.image(304,352,'GameOver');
 
-this.input.keyboard.on("keyup_X",  function(event)
-{
-
-    isPressing =!isPressing;
-console.debug(this.isTouching);
-
-},this);
 inGameTime = this.time.addEvent(
   {
     delay:1000,
@@ -363,12 +317,15 @@ inGameTime = this.time.addEvent(
     loop : true
   }
 );
+
 }
+
+
 function update (time , delta)
 {
 //console.debug(slime);
  check++;
-
+//enemy Ai
  if(enemy.x > player.x&&check>=1*60&&check<2*60)
  {
   enemy.setVelocityX(-64);
@@ -442,51 +399,12 @@ function update (time , delta)
   check=0;
  }
 
+//move player
+if(currentBlockName == null)
+ move(player);
 
-
-
-
- var multi = 4;
- if (cursors.left.isDown)
- {
-	player.setVelocityX(-32*multi);
-    player.setVelocityY(0);
-    player.anims.play('turnLeftPlayer', true);
-    playerRight = 0;
-    playerUp = -1;
- }
- else if (cursors.right.isDown)
- {
-    player.setVelocityX(32*multi);
-    player.setVelocityY(0);
-    player.anims.play('turnRightPlayer', true);
-    playerRight = 1;
-    playerUp = -1;
- }
- else if (cursors.up.isDown)
- {
-
-    player.setVelocityY(-32*multi);
-    player.setVelocityX(0);
-    player.anims.play('turnUpPlayer', true);
-    playerRight = -1;
-    playerUp = 0;
- }
- else if (cursors.down.isDown)
- {
-    player.setVelocityY(32*multi);
-    player.setVelocityX(0);
-    player.anims.play('turnDownPlayer', true);
-    playerRight = -1;
-    playerRight = -1;
-    playerUp = 1;
- }
- else
- {
-        player.setVelocityX(0);
-        player.setVelocityY(0);
-        player.anims.play('idlePlayer');
-  }
+ //monster movement;
+ //no idea about this function
   if(this.keyA.isDown)
   {
    	console.log('Key Pressed');
@@ -497,26 +415,53 @@ function update (time , delta)
 }
 
 
+  if (Phaser.Input.Keyboard.JustDown(spacebar) && isTouching == true)
+  {
+    isPressing = !isPressing;
+
+     //test(child);
+
+  }
+
+console.debug("is Space presed?"+isPressing);
+//go thro each slime block
     slime.children.iterate(function (child)
     {
       if (Phaser.Geom.Intersects.RectangleToRectangle(player.getBounds(), child.getBounds())) {
-          console.debug("Contact");
-          this.isTouching = true;
+          //console.debug("Contact");
+
        }
-       else
-       {
-         this.isTouching = false;
-       }
+
       if(child.name == currentBlockName)
       {
         child.setTint(0xff0000);
-         test(child);
+         //test(child);
+         if(isPressing == true)
+         {
+           move(player);
+           child.setImmovable(false);
+         }
+         else
+         {
+
+           player.setVelocityX (0);
+           player.setVelocityY(0);
+           player.anims.play('idlePlayer');
+         moveMonster(child);
        }
+      }
        else
        {
+
+
          child.setTint(0xffffff);
        }
     },this);
+
+
+
+
+
 
 
 // let inGameTime = Phaser.Math.Snap.To(this.time.now/1000, 1);
@@ -529,14 +474,15 @@ function update (time , delta)
 //block movement
 function blockPush(player , slime)
 {
-
+isTouching = true;
+if(isPressing == true)
 currentBlockName = slime.name;
+
 //test(slime);
 }
 //Kill Function
 function killEnemy(enemy, slime)
 {
-
 //  monsterDeath.play();
 if(slime.name == currentBlockName)
 {
@@ -545,8 +491,6 @@ if(slime.name == currentBlockName)
 scoreText.setText('Score: ' + score);
 }
 //  enemy.destory();
-
-
 }
 
 // Destroy Blocks
@@ -560,87 +504,178 @@ function stopBlock(slime, slime )
 
 }
 
-function test(slime)
+// function test(slime)
+// {
+//
+//   if(playerRight == 1 && isPressing == true)
+//   {
+//
+//   slime.setImmovable(false);
+//       slime.setVelocityX(160);
+//        slime.setVelocityY(0);
+//        slimePush.play();
+//       //slime.anims.play('turnBlockColorRed');
+//       isRight = 1;
+//       isUp=-1
+//
+//   }
+//   else if(playerRight == 0 && isPressing == true)
+//   {
+//
+//   slime.setImmovable(false);
+//     slime.setVelocityX(-160);
+//     slime.setVelocityY(0);
+//     slimePush.play();
+//     //slime.anims.play('turnBlockColorRed',true);
+//     isRight = 0;
+//     isUp=-1;
+//   }
+//   //  //down to top
+//   else if(playerUp ==1 &&isPressing == true)
+//   {
+//
+//     // slime.setActiveCollision();
+//
+//   slime.setImmovable(false);
+//     slime.setVelocityY(160);
+//     slime.setVelocityX(0);
+//     //slime.anims.play('turnBlockColorRed',true);
+//     slimePush.play();
+//
+//
+//     isUp=  0;
+//     isRight = -1;
+//   }
+//   //up to down
+//   else if( playerUp ==0 && isPressing == true)
+//   {
+//
+//
+//   slime.setImmovable(false);
+//       slime.setVelocityY(-160);
+//       slime.setVelocityX(0);
+//       //slime.anims.play('turnBlockColorRed',true);
+//       slimePush.play();
+//
+//       isUp=  1;
+//       isRight = -1;
+//     }
+//
+//   if(slime.body.velocity.x ==0 && slime.body.velocity.y ==0)
+//   {
+//     slime.setTint(0xffffff);
+//     slime.setImmovable(true);
+//   }
+//   else if (slime.body.velocity.x ==160 && slime.body.velocity.y ==0 )
+//   {
+//
+//     slime.setImmovable(false);
+//
+// }
+//   else if(slime.body.velocity.y ==160 && slime.body.velocity.x ==0)
+//   {
+//
+//     slime.setImmovable(false);
+//
+//   }
+//
+//
+//
+//     //best feature in the game
+// //currentBlockName = null;
+//   // isPressing =false;
+// }
+function move(player)
+{
+  //console.debug(player);
+  if (cursors.left.isDown)
+  {
+ 	player.setVelocityX(-32*multi);
+     player.setVelocityY(0);
+     player.anims.play('turnLeftPlayer', true);
+     playerRight = 0;
+     playerUp = -1;
+  }
+  else if (cursors.right.isDown)
+  {
+     player.setVelocityX(32*multi);
+     player.setVelocityY(0);
+     player.anims.play('turnRightPlayer', true);
+     playerRight = 1;
+     playerUp = -1;
+  }
+  else if (cursors.up.isDown)
+  {
+
+     player.setVelocityY(-32*multi);
+     player.setVelocityX(0);
+     player.anims.play('turnUpPlayer', true);
+     playerRight = -1;
+     playerUp = 0;
+  }
+  else if (cursors.down.isDown)
+  {
+     player.setVelocityY(32*multi);
+     player.setVelocityX(0);
+     player.anims.play('turnDownPlayer', true);
+     playerRight = -1;
+     playerRight = -1;
+     playerUp = 1;
+  }
+  else
+  {
+         player.setVelocityX(0);
+         player.setVelocityY(0);
+         player.anims.play('idlePlayer');
+   }
+}
+function moveMonster(slime)
+{
+  slime.setImmovable(false);
+  if (cursors.left.isDown)
+{
+slime.setVelocityX(-32*multi);
+   slime.setVelocityY(0);
+  // slime.anims.play('turnLeftPlayer', true);
+   playerRight = 0;
+   playerUp = -1;
+}
+else if (cursors.right.isDown)
+{
+   slime.setVelocityX(32*multi);
+   slime.setVelocityY(0);
+   //player.anims.play('turnRightPlayer', true);
+   playerRight = 1;
+   playerUp = -1;
+}
+else if (cursors.up.isDown)
 {
 
-  if(playerRight == 1 && isPressing == true)
-  {
-
-  slime.setImmovable(false);
-      slime.setVelocityX(160);
+   slime.setVelocityY(-32*multi);
+   slime.setVelocityX(0);
+   //player.anims.play('turnUpPlayer', true);
+   playerRight = -1;
+   playerUp = 0;
+}
+else if (cursors.down.isDown)
+{
+   slime.setVelocityY(32*multi);
+   slime.setVelocityX(0);
+   //player.anims.play('turnDownPlayer', true);
+   playerRight = -1;
+   playerRight = -1;
+   playerUp = 1;
+}
+else
+{
+       slime.setVelocityX(0);
        slime.setVelocityY(0);
-       slimePush.play();
-      //slime.anims.play('turnBlockColorRed');
-      isRight = 1;
-      isUp=-1
-
-  }
-  else if(playerRight == 0 && isPressing == true)
-  {
-
-  slime.setImmovable(false);
-    slime.setVelocityX(-160);
-    slime.setVelocityY(0);
-    slimePush.play();
-    //slime.anims.play('turnBlockColorRed',true);
-    isRight = 0;
-    isUp=-1;
-  }
-  //  //down to top
-  else if(playerUp ==1 &&isPressing == true)
-  {
-
-    // slime.setActiveCollision();
-
-  slime.setImmovable(false);
-    slime.setVelocityY(160);
-    slime.setVelocityX(0);
-    //slime.anims.play('turnBlockColorRed',true);
-    slimePush.play();
-
-
-    isUp=  0;
-    isRight = -1;
-  }
-  //up to down
-  else if( playerUp ==0 && isPressing == true)
-  {
-
-
-  slime.setImmovable(false);
-      slime.setVelocityY(-160);
-      slime.setVelocityX(0);
-      //slime.anims.play('turnBlockColorRed',true);
-      slimePush.play();
-
-      isUp=  1;
-      isRight = -1;
-    }
-
-  if(slime.body.velocity.x ==0 && slime.body.velocity.y ==0)
-  {
-    slime.setTint(0xffffff);
-    slime.setImmovable(true);
-  }
-  else if (slime.body.velocity.x ==160 && slime.body.velocity.y ==0 )
-  {
-
-    slime.setImmovable(false);
+      // player.anims.play('idlePlayer');
+ }
 
 }
-  else if(slime.body.velocity.y ==160 && slime.body.velocity.x ==0)
-  {
-
-    slime.setImmovable(false);
-
-  }
 
 
-
-    //best feature in the game
-//currentBlockName = null;
-  // isPressing =false;
-}
 
 
 function reduceHealth()
@@ -649,7 +684,7 @@ function reduceHealth()
 //  console.debug(health);
 
 }
-function killPlayer(player,enemy)
+function killPlayer(player)
 {
   this.physics.pause();
 
