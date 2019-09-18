@@ -136,7 +136,7 @@ game.scene.add('endGame', GameOver);
 
 for(i = 48; i <= 21*32; i+=32)
     {
-    	if(i != 16 + 15*32&&i != 16 + 14*32)
+    	if(i != 16 + 15*32&&i != 16 + 14*32&&i != 16 + 20*32)
     	{
     		slime.create(16+3*32,i,'slime').setCollideWorldBounds(true).setImmovable(true).setName('block' + blockCount++);
     	}
@@ -193,42 +193,7 @@ for(i = 48; i <= 21*32; i+=32)
 
     }
 
-    // var points = [];
-
-    // points.push(new Phaser.Math.Vector2(16+11*32, 16+8*32));
-    // points.push(new Phaser.Math.Vector2(16+12*32, 16+12*32));
-    // points.push(new Phaser.Math.Vector2(16+14*32, 16+17*32));
-    // points.push(new Phaser.Math.Vector2(16+17*32, 16+6*32));
-    // points.push(new Phaser.Math.Vector2(16+1*32, 16+3*32));
-
-    // var curve = new Phaser.Curves.Spline(points);
-
-    // var playerFollow = this.add.follower(curve, 50, 400, 'enemy');
-
-    // playerFollow.startFollow({
-    //     duration: 6000,
-    //     yoyo: true,
-    //     repeat: -1,
-    //     rotateToPath: true,
-    //     startAt: 0.5
-    // });
-
-    // this.input.on('pointerdown', function () {
-
-    //     if (playerFollow.isFollowing())
-    //     {
-    //         playerFollow.pauseFollow();
-    //     }
-    //     else
-    //     {
-    //         playerFollow.resumeFollow();
-    //     }
-
-    // });
-        // enemy= this.physics.add.group();
-        // enemy.create(400,400,'enemy');
-        // enemy.create(240,608 , 'enemy');
-
+    
 
 
         //player score text
@@ -361,120 +326,85 @@ this.input.keyboard.on("keyup_X",  function(event)
 
 function update ()
 {
-//console.debug(slime);
+
  check++;
- //
- // {
- // 	enemy.setVelocityY(0);
-	// enemy.setVelocityX(-96);
- //  enemy.anims.play('turnLeftSkeleton', true);
- // }
- // else
- // if(check>=240&&check<360)
- // {
- // 	  enemy.setVelocityY(0);
-	//   enemy.setVelocityX(96);
- //    enemy.anims.play('turnRightSkeleton', true);
- // }
- // else if(check>=360&&check<480)
- // {
- // 	  enemy.setVelocityY(96);
-	//   enemy.setVelocityX(0);
- //    enemy.anims.play('turnUpSkeleton', true);
- // }
- // else if(check>=480&&check<600)
- // {
- // 	  enemy.setVelocityY(-96);
-	//   enemy.setVelocityX(0);
- //    enemy.anims.play('turnDownSkeleton', true);
- // }
- // else if(check>=600)
- // {
- //  check = 0;
- // }
- // else
- // {
- // 	  enemy.setVelocityY(0);
-	//   enemy.setVelocityX(0);
- //    enemy.anims.play('idleSkeleton');
- // }
- if(enemy.x > player.x&&check>=1*60&&check<2*60)
+
+ if(enemy.x > player.x&&check>=0.25*60&&check<0.5*60)
  {
   enemy.setVelocityX(-64);
   enemy.anims.play('turnLeftSkeleton', true);
  }
- if(enemy.y > player.y&&check>=2*60&&check<3*60)
+ if(enemy.y > player.y&&check>=0.5*60&&check<0.75*60)
  {
   enemy.setVelocityY(-64);
   enemy.anims.play('turnUpSkeleton', true);
  }
- if(enemy.x<player.x && check>=3*60&&check<4*60)
+ if(enemy.x<player.x && check>=0.75*60&&check<1*60)
  {
   enemy.setVelocityX(64);
   enemy.anims.play('turnRightSkeleton',true);
  }
- if(enemy.y<player.y && check>=4*60&&check<5*60)
+ if(enemy.y<player.y && check>=1*60&&check<1.25*60)
  {
   enemy.setVelocityY(64);
   enemy.anims.play('turnDownSkeleton', true);
  }
- if(check>5*60)
+ if(check>=1.25*60)
  {
   check=0;
  }
- if(enemy1.x > player.x&&check>=1*60&&check<2*60)
+
+ if(enemy1.x > player.x&&check>=0.5*60&&check<1*60)
  {
   enemy1.setVelocityX(-64);
   enemy1.anims.play('turnLeftSkeleton', true);
  }
- if(enemy1.y > player.y&&check>=2*60&&check<3*60)
+ if(enemy1.y > player.y&&check>=1*60&&check<1.5*60)
  {
   enemy1.setVelocityY(-64);
   enemy1.anims.play('turnUpSkeleton', true);
  }
- if(enemy1.x<player.x && check>=3*60&&check<4*60)
+ if(enemy1.x<player.x && check>=1.5*60&&check<2*60)
  {
   enemy1.setVelocityX(64);
   enemy1.anims.play('turnRightSkeleton',true);
  }
- if(enemy1.y<player.y && check>=4*60&&check<5*60)
+ if(enemy1.y<player.y && check>=2*60&&check<2.5*60)
  {
   enemy1.setVelocityY(64);
   enemy1.anims.play('turnDownSkeleton', true);
  }
- if(check>5*60)
+ if(check>=2.5*60)
  {
   check=0;
  }
- if(enemy2.x > player.x&&check>=1*60&&check<2*60)
+
+
+ if(enemy2.x > player.x&&check>=0.25*60&&check<0.5*60)
  {
   enemy2.setVelocityX(-64);
   enemy2.anims.play('turnLeftSkeleton', true);
  }
- if(enemy2.y > player.y&&check>=2*60&&check<3*60)
+ if(enemy2.y > player.y&&check>=0.51*60&&check<0.75*60)
  {
   enemy2.setVelocityY(-64);
   enemy2.anims.play('turnUpSkeleton', true);
  }
- if(enemy2.x<player.x && check>=3*60&&check<4*60)
+ if(enemy2.x<player.x && check>=0.75*60&&check<1*60)
  {
   enemy2.setVelocityX(64);
   enemy2.anims.play('turnRightSkeleton',true);
  }
- if(enemy2.y<player.y && check>=4*60&&check<5*60)
+ if(enemy2.y<player.y && check>=1*60&&check<1.25*60)
  {
   enemy2.setVelocityY(64);
   enemy2.anims.play('turnDownSkeleton', true);
  }
- if(check>5*60)
+ if(check>=1.25*60)
  {
   check=0;
  }
-
-
-
-
-
+ 
  var multi = 4;
  if (cursors.left.isDown)
  {
@@ -568,9 +498,9 @@ scoreText.setText('Score: ' + score);
 }
 
 // Destroy Blocks
-function DestroyBlock(player, slime)
+function  DestroyBlock(player, slime)
 {
-	this.slime.disableBody(true,true);
+	slime.disableBody(true,true);
 }
 //stop the block after hitting a blocks
 function stopBlock(slime, slime )
