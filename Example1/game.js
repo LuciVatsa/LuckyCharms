@@ -49,7 +49,7 @@ var config = {
     var isRed = false;
     var isBlue = false;
     var staticslime;
-    var isPressing;
+    var isPressing = false;
     var name = 0;
     var blockCount=0;
     var currentBlockName;
@@ -329,7 +329,7 @@ this.anims.create({
             this.keyX = this.input.keyboard.addKey('X');
 
             //Collision with the player
-      //  this.physics.add.collider(player, slime, blockPush, null, null);
+       this.physics.add.collider(player, slime, blockPush, null, null);
 
         // this.isTocuhing = this.physics.add.collider(player, slime);
         this.physics.add.collider(enemy, slime, killEnemy, null , this);
@@ -343,7 +343,7 @@ this.anims.create({
         //this.physics.add.collider(enemy,player);
         //this.physics.add.collider(block,slime);
        this.physics.add.collider(slime , slime, stopBlock , null , null);
-this.physics.add.collider(player, slime);
+//this.physics.add.collider(player, slime);
     // this.physics.add.collider(slime,portal , portalShift ,null , null);
 
 //endGame=this.add.image(304,352,'GameOver');
@@ -351,8 +351,8 @@ this.physics.add.collider(player, slime);
 this.input.keyboard.on("keyup_X",  function(event)
 {
 
-    isPressing = true;
-
+    isPressing =!isPressing;
+console.debug(isTouching);
 
 },this);
 inGameTime = this.time.addEvent(
@@ -495,10 +495,18 @@ function update (time , delta)
        	DestroyBlock(player,slime);
    }
 }
-  //  console.debug(currentBlockName);
+
+
     slime.children.iterate(function (child)
     {
-
+      if (Phaser.Geom.Intersects.RectangleToRectangle(player.getBounds(), child.getBounds())) {
+          //console.debug("works");
+          isTouching = true;
+       }
+       else
+       {
+         isTouching = false;
+       }
       if(child.name == currentBlockName)
       {
         child.setTint(0xff0000);
@@ -510,7 +518,7 @@ function update (time , delta)
        }
     },this);
 
-console.debug("hi"+player.body.onCollide);
+
 // let inGameTime = Phaser.Math.Snap.To(this.time.now/1000, 1);
 // if(inGameTime == this.time.now/1000)
 //   console.debug(health);
@@ -638,7 +646,8 @@ function test(slime)
 function reduceHealth()
 {
   health =health - 1;
-  console.debug(health);
+//  console.debug(health);
+
 }
 function killPlayer(player,enemy)
 {
