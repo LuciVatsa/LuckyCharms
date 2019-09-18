@@ -53,7 +53,7 @@ var config = {
     var name = 0;
     var blockCount=0;
     var currentBlockName;
-    var isTouching;
+    var isTouching =false;
     var temp;
     var bgMusic;
     var slimePush;
@@ -352,7 +352,7 @@ this.input.keyboard.on("keyup_X",  function(event)
 {
 
     isPressing =!isPressing;
-console.debug(isTouching);
+console.debug(this.isTouching);
 
 },this);
 inGameTime = this.time.addEvent(
@@ -500,12 +500,12 @@ function update (time , delta)
     slime.children.iterate(function (child)
     {
       if (Phaser.Geom.Intersects.RectangleToRectangle(player.getBounds(), child.getBounds())) {
-          //console.debug("works");
-          isTouching = true;
+          console.debug("Contact");
+          this.isTouching = true;
        }
        else
        {
-         isTouching = false;
+         this.isTouching = false;
        }
       if(child.name == currentBlockName)
       {
