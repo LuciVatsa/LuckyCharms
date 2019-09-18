@@ -58,7 +58,8 @@ var config = {
     var bgMusic;
     var slimePush;
     var monsterDeath;
-
+  var timeScale ;
+    var health =100;
 
 var path;
 var bounds;
@@ -328,7 +329,8 @@ this.anims.create({
             this.keyX = this.input.keyboard.addKey('X');
 
             //Collision with the player
-        this.physics.add.collider(player, slime, blockPush, null, null);
+      //  this.physics.add.collider(player, slime, blockPush, null, null);
+
         // this.isTocuhing = this.physics.add.collider(player, slime);
         this.physics.add.collider(enemy, slime, killEnemy, null , this);
         //adding colliders to game objects
@@ -341,7 +343,7 @@ this.anims.create({
         //this.physics.add.collider(enemy,player);
         //this.physics.add.collider(block,slime);
        this.physics.add.collider(slime , slime, stopBlock , null , null);
-
+this.physics.add.collider(player, slime);
     // this.physics.add.collider(slime,portal , portalShift ,null , null);
 
 //endGame=this.add.image(304,352,'GameOver');
@@ -353,51 +355,20 @@ this.input.keyboard.on("keyup_X",  function(event)
 
 
 },this);
-
-
-
+inGameTime = this.time.addEvent(
+  {
+    delay:1000,
+    callback: reduceHealth,
+    callbackScope:this,
+    loop : true
+  }
+);
 }
-
-
-function update ()
+function update (time , delta)
 {
 //console.debug(slime);
  check++;
- //
- // {
- // 	enemy.setVelocityY(0);
-	// enemy.setVelocityX(-96);
- //  enemy.anims.play('turnLeftSkeleton', true);
- // }
- // else
- // if(check>=240&&check<360)
- // {
- // 	  enemy.setVelocityY(0);
-	//   enemy.setVelocityX(96);
- //    enemy.anims.play('turnRightSkeleton', true);
- // }
- // else if(check>=360&&check<480)
- // {
- // 	  enemy.setVelocityY(96);
-	//   enemy.setVelocityX(0);
- //    enemy.anims.play('turnUpSkeleton', true);
- // }
- // else if(check>=480&&check<600)
- // {
- // 	  enemy.setVelocityY(-96);
-	//   enemy.setVelocityX(0);
- //    enemy.anims.play('turnDownSkeleton', true);
- // }
- // else if(check>=600)
- // {
- //  check = 0;
- // }
- // else
- // {
- // 	  enemy.setVelocityY(0);
-	//   enemy.setVelocityX(0);
- //    enemy.anims.play('idleSkeleton');
- // }
+
  if(enemy.x > player.x&&check>=1*60&&check<2*60)
  {
   enemy.setVelocityX(-64);
@@ -460,7 +431,7 @@ function update ()
  {
   enemy2.setVelocityX(64);
   enemy2.anims.play('turnRightSkeleton',true);
- }
+}
  if(enemy2.y<player.y && check>=4*60&&check<5*60)
  {
   enemy2.setVelocityY(64);
@@ -539,7 +510,10 @@ function update ()
        }
     },this);
 
-console.debug("check");
+console.debug("hi"+player.body.onCollide);
+// let inGameTime = Phaser.Math.Snap.To(this.time.now/1000, 1);
+// if(inGameTime == this.time.now/1000)
+//   console.debug(health);
 //console.debug(playerUp);
 
 }
@@ -657,10 +631,15 @@ function test(slime)
 
     //best feature in the game
 //currentBlockName = null;
-  isPressing =false;
+  // isPressing =false;
 }
 
 
+function reduceHealth()
+{
+  health =health - 1;
+  console.debug(health);
+}
 function killPlayer(player,enemy)
 {
   this.physics.pause();
