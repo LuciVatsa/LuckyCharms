@@ -21,13 +21,16 @@ var GameOver = new Phaser.Class({
       this.add.image(304,352,'GameOver');
         console.debug("hi");
         this.keyX = this.input.keyboard.addKey('ENTER');
-        main = this.scene.get('main');
+
 
     },
     update: function()
     {
+          if(this.keyX.isDown)
+          {
+            console.debug("yes");
+          }
 
-      
     },
 
   });

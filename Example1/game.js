@@ -1,85 +1,66 @@
+var player;
+var slime;
+var block;
+var cursors;
+var timer = 0;
+var currEnemyX = 0;
+var currEnemyY = 0;
+var key;
+var check=0;
+var score = 0;
+var scoreText;
+var enemy;
+var keyA;
+var keyX;
+var X= 100;
+var Y= 500;
+var follower;
+var portal;
+var isRight =-1;
+var playerRight =-1;
+var playerUp= -1;
+var isUp = -1;
+var isRed = false;
+var isBlue = false;
+var staticslime;
+var isPressing = false;
+var name = 0;
+var blockCount=0;
+var currentBlockName = null;
+var isTouching =false;
+var temp;
+var bgMusic;
+var slimePush;
+var monsterDeath;
+var timeScale ;
+var health =100;
+var healthBarText;
+
+var healthBarGreen;
+var spacebar;
+var multi = 4;
+var path;
+var bounds;
+var graphics;
+var greenFlask;
+var sec = 1000;
+var healthBarRed;
+var StartGame = new Phaser.Class({
+    Extends:Phaser.Scene,
+    initialize: function BootScene(){
+        Phaser.Scene.call(this,{
+            key:'StartGame',
+            active:false
+        })
+    },
 
 
-var config = {
-        type: Phaser.AUTO,
-        parent: 'element',
-        width: 608,
-        height: 704,
-        key: 'main',
-        physics: {
-            default: 'arcade',
-
-            arcade: {
-                gravity: { y: 0},
-                debug: false
-            }
-          },
-          audio: {
-      disableWebAudio: true
-  },
-        scene: {
-            preload: preload,
-            create: create,
-            update: update
-
-  }
-};
 
 
-
-
-    var player;
-    var slime;
-    var block;
-    var cursors;
-    var timer = 0;
-    var currEnemyX = 0;
-    var currEnemyY = 0;
-    var key;
-    var check=0;
-    var score = 0;
-    var scoreText;
-    var enemy;
-    var keyA;
-    var keyX;
-    var X= 100;
-    var Y= 500;
-    var follower;
-    var portal;
-    var isRight =-1;
-    var playerRight =-1;
-    var playerUp= -1;
-    var isUp = -1;
-    var isRed = false;
-    var isBlue = false;
-    var staticslime;
-    var isPressing = false;
-    var name = 0;
-    var blockCount=0;
-    var currentBlockName = null;
-    var isTouching =false;
-    var temp;
-    var bgMusic;
-    var slimePush;
-    var monsterDeath;
-    var timeScale ;
-    var health =100;
-    var healthBarText;
-
-    var healthBarGreen;
-    var spacebar;
-    var multi = 4;
-    var path;
-    var bounds;
-    var graphics;
-    var greenFlask;
-    var sec = 1000;
-	 var game = new Phaser.Game(config);
-
-function preload ()
+preload:function  ()
 {
 
-  var healthBarRed;
+
        this.load.image('sky','background.png');
        //this.load.image('slime', 'slime.png');
        this.load.image('block', 'trail.png');
@@ -99,13 +80,13 @@ function preload ()
       this.load.audio('slimePush', 'slimePush.mp3');
       this.load.image('greenBar', 'TeleMeterGreen.png');
       this.load.image('redBar', 'TeleMeter.png');
-}
+},
 
-function create ()
+create : function ()
 {
     	//19 width boxes, 22 height boxes
 
-      game.scene.add('endGame', GameOver);
+
 
         this.add.image(304,352,'sky');
 greenFlask=this.physics.add.image(500,500, 'health');
@@ -340,10 +321,10 @@ inGameTime = this.time.addEvent(
   }
 );
 
-}
+},
 
 
-function update (time , delta)
+update :function (time , delta)
 {
 
  check++;
@@ -522,7 +503,7 @@ move(player);
            player.setVelocityY(0);
            player.anims.play('turnRed');
          moveMonster(child);
-           health = health - .05;
+           health = health - .13;
        }
       }
        else
@@ -538,11 +519,11 @@ move(player);
     },this);
     if(health <=0)
     {
-      killPlayer(player);
+      this.scene.start('GameOver');
     }
 
 }
-
+});
 //block movement
 function blockPush(player , slime)
 {

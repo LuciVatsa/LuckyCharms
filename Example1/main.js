@@ -1,4 +1,7 @@
-var config = {
+var main;
+window.onload = function()
+{
+const config = {
         type: Phaser.AUTO,
         parent: 'element',
         width: 608,
@@ -14,11 +17,12 @@ var config = {
           },
           audio: {
       disableWebAudio: true
+}
   },
-        scene: {
-            preload: preload,
-            create: create,
-            update: update
 
-  }
-};
+
+main = new Phaser.Game(config);
+main.scene.add('game', StartGame);
+main.scene.add('endGame', GameOver);
+main.scene.start('StartGame');
+}
