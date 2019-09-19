@@ -1,3 +1,69 @@
+<<<<<<< Updated upstream
+=======
+var player;
+var slime;
+var block;
+var cursors;
+var timer = 0;
+var currEnemyX = 0;
+var currEnemyY = 0;
+var key;
+var check=0;
+var score = 0;
+var scoreText;
+var enemy;
+var keyA;
+var keyX;
+var X= 100;
+var Y= 500;
+var follower;
+var portal;
+var isRight =-1;
+var playerRight =-1;
+var playerUp= -1;
+var isUp = -1;
+var isRed = false;
+var isBlue = false;
+var staticslime;
+var isPressing = false;
+var name = 0;
+var blockCount=0;
+var currentBlockName = null;
+var isTouching =false;
+var temp;
+var bgMusic;
+var slimePush;
+var monsterDeath;
+var timeScale ;
+var health =100;
+var healthBarText;
+
+var healthBarGreen;
+var spacebar;
+var multi = 4;
+var path;
+var bounds;
+var graphics;
+var greenFlask;
+var greenFlask2;
+var greenFlask3;
+var sec = 1000;
+var healthBarRed;
+var StartGame = new Phaser.Class({
+    Extends:Phaser.Scene,
+    initialize: function BootScene(){
+        Phaser.Scene.call(this,{
+            key:'StartGame',
+            active:false
+        })
+    },
+
+
+
+
+preload:function  ()
+{
+>>>>>>> Stashed changes
 
 
 var config = {
@@ -105,7 +171,15 @@ function create ()
       game.scene.add('endGame', GameOver);
 
         this.add.image(304,352,'sky');
-greenFlask=this.physics.add.image(500,500, 'health');
+
+        // greenFlask = this.physics.add.group();
+        // greenFlask.create(500,500,'health');
+        //   greenFlask.create(100,670,'health');
+        //     greenFlask.create(400,270,'health');
+        greenFlask =this.physics.add.image(500,500,'health').setScale(1.5);
+        greenFlask2  =this.physics.add.image(100,670,'health').setScale(1.5);
+      //  greenFlask3  =this.physics.add.image(400,270,'health').setScale(1.5);
+
   //Health bar
   {
     healthBarGreen = this.add.image(400,10,'greenBar');
@@ -208,7 +282,7 @@ for(i = 48; i <= 21*32; i+=32)
     }
 
         //player score text
-        healthBarText= this.add.text(300, 16, 'health: 100', { fontSize: '32px', fill: '#000' });
+        //healthBarText= this.add.text(300, 16, 'health: 100', { fontSize: '32px', fill: '#000' });
        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 //All Animation;
 {
@@ -324,7 +398,9 @@ for(i = 48; i <= 21*32; i+=32)
       this.physics.add.collider(player,enemy , killPlayer , null , this);
       this.physics.add.collider(player,enemy1 , killPlayer , null , this);
       this.physics.add.collider(player,enemy2 , killPlayer , null , this);
-      this.physics.add.collider(greenFlask,player, addHealth, null ,null);
+      this.physics.add.collider(greenFlask,player, addHealth, null ,this);
+      this.physics.add.collider(greenFlask2,player, addHealth, null ,this);
+    //  this.physics.add.collider(greenFlask3,player, addHealth, null ,this);
        this.physics.add.collider(slime , slime);
 
 }
@@ -433,6 +509,11 @@ move(player);
    {
        	DestroyBlock(player,slime);
    }
+}
+if(score == 60)
+{
+  this.scene.stop('StartGame');
+this.scene.start('WinGame');
 }
   if (Phaser.Input.Keyboard.JustDown(spacebar) )
   {
@@ -601,18 +682,31 @@ else
 }
 function addHealth(greenFlask)
 {
+
     greenFlask.disableBody(true,true);
+    health = health +20;
+}
+function addHealth(greenFlask2)
+{
+
+    greenFlask2.disableBody(true,true);
+    health = health +20;
+}
+function addHealth(greenFlask3)
+{
+
+    greenFlask3.disableBody(true,true);
     health = health +20;
 }
 function reduceHealth()
 {
   health =health - 2;
 //  console.debug(health);
-  healthBarText.setText('health ='+health);
+
 }
 function killPlayer(player)
 {
-  this.physics.pause();
+
 
     player.setTint(0xff0000);
 

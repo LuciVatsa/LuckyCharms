@@ -20,5 +20,15 @@ var config = {
             create: create,
             update: update
 
+<<<<<<< Updated upstream
   }
 };
+=======
+
+main = new Phaser.Game(config);
+main.scene.add('game', StartGame);
+main.scene.add('endGame', GameOver);
+main.scene.add('WinGame', WinGame);
+main.scene.start('StartGame');
+}
+>>>>>>> Stashed changes
