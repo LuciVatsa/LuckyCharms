@@ -328,6 +328,7 @@ update :function (time , delta)
 {
 
  check++;
+ timer++;
  healthBarRed.scaleX = health/100;
  healthBarRed.scaleY = 1;
 
@@ -415,14 +416,29 @@ move(player);
   //enemy ai to destroy blocks
   if(timer<4*60)
   {
-  	timer++;
+    console.debug('here 1');
   	currEnemyX=enemy.x;
   	currEnemyY=enemy.y;
   }
-  else if(timer >=4*60&&currEnemyX==enemy.x&&currEnemyY==enemy.y)
+  else if(timer >=4*60)
   {
-    console.debug('i wanna destroy this block says enemy') ;
+
+    console.debug('i was here');
+    if(currEnemyX==enemy.x||currEnemyY==enemy.y)
+    {
+      console.debug('here 3');
+      slime.children.iterate(function (child)
+        {
+          console.debug('here 4');
+          if (Phaser.Geom.Intersects.RectangleToRectangle(enemy.getBounds(), child.getBounds())) {
+              console.debug("Contact");
+              child.disableBody(true,true);
+           }},this);
+    }
+
+
   }
+
 
  var multi = 4;
  if (cursors.left.isDown)
