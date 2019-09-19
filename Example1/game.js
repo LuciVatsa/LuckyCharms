@@ -60,8 +60,9 @@ var config = {
     var monsterDeath;
     var timeScale ;
     var health =100;
-    var healthBarTextText;
-    var healthBar;
+    var healthBarText;
+
+    var healthBarGreen;
     var spacebar;
     var multi = 4;
     var path;
@@ -74,7 +75,7 @@ var config = {
 function preload ()
 {
 
-
+  var healthBarRed;
        this.load.image('sky','background.png');
        //this.load.image('slime', 'slime.png');
        this.load.image('block', 'trail.png');
@@ -92,8 +93,8 @@ function preload ()
       this.load.audio('backGroundAudio', 'backGroundAudio.mp3');
       this.load.audio('deathMonster', 'deathMonster.mp3');
       this.load.audio('slimePush', 'slimePush.mp3');
-
-
+      this.load.image('greenBar', 'TeleMeterGreen.png');
+      this.load.image('redBar', 'TeleMeter.png');
 }
 
 function create ()
@@ -104,7 +105,11 @@ function create ()
 
         this.add.image(304,352,'sky');
 greenFlask=this.physics.add.image(500,500, 'health');
-
+  //Health bar
+  {
+    healthBarGreen = this.add.image(400,10,'greenBar');
+    healthBarRed = this.add.image(400,10,'redBar');
+  }
         //audio
     bgMusic = this.sound.add('backGroundAudio');
       bgMusic.loop = true;
@@ -335,6 +340,8 @@ inGameTime = this.time.addEvent(
 
 function update (time , delta)
 {
+  healthBarRed.scaleX = health/100;
+
 //console.debug(slime);
  check++;
 //enemy Ai
@@ -467,6 +474,7 @@ move(player);
          child.setImmovable(true);
        }
     },this);
+
 }
 
 //block movement
