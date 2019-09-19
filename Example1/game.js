@@ -2,6 +2,7 @@
 
 var config = {
         type: Phaser.AUTO,
+        parent: 'element',
         width: 608,
         height: 704,
         key: 'main',
@@ -21,9 +22,9 @@ var config = {
             create: create,
             update: update
 
-        }
+  }
+};
 
-    };
 
 
 
@@ -109,6 +110,7 @@ greenFlask=this.physics.add.image(500,500, 'health');
   {
     healthBarGreen = this.add.image(400,10,'greenBar');
     healthBarRed = this.add.image(400,10,'redBar');
+    healthBarRed.fixedToCamera = true;
   }
         //audio
     bgMusic = this.sound.add('backGroundAudio');
@@ -341,6 +343,7 @@ inGameTime = this.time.addEvent(
 function update (time , delta)
 {
   healthBarRed.scaleX = health/100;
+  healthBarRed.scaleY = 1;
 
 //console.debug(slime);
  check++;
