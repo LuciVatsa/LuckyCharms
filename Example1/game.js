@@ -53,6 +53,8 @@ var path;
 var bounds;
 var graphics;
 var greenFlask;
+var greenFlask2;
+var greenFlask3;
 var sec = 1000;
 var healthBarRed;
 var StartGame = new Phaser.Class({
@@ -100,6 +102,8 @@ create : function ()
 
         this.add.image(304,352,'sky');
 greenFlask=this.physics.add.image(500,500, 'health');
+greenFlask2=this.physics.add.image(500,500, 'health');
+greenFlask3=this.physics.add.image(500,500, 'health');
   //Health bar
   {
     healthBarGreen = this.add.image(400,10,'greenBar');
@@ -529,7 +533,7 @@ move(player);
       // console.debug('here 3');
       slime.children.iterate(function (child)
         {
-         
+
           if (Phaser.Geom.Intersects.RectangleToRectangle(enemy.getBounds(), child.getBounds())) {
               // console.debug("Contact");
               child.disableBody(true,true);
@@ -651,7 +655,7 @@ move(player);
   }
   else if(timer >=2*60)
   {
-    
+
 
     // console.debug('i was here');
     if(currEnemyX5==enemy5.x||currEnemyY5==enemy5.y)
@@ -669,7 +673,7 @@ move(player);
 
   }
 
-  
+
 
 
 
@@ -722,6 +726,11 @@ move(player);
    // {
    //     	slime.disableBody(true,true);
    // }
+}
+if(score == 60)
+{
+  this.scene.stop('StartGame');
+this.scene.start('WinGame');
 }
   if (Phaser.Input.Keyboard.JustDown(spacebar) )
   {
@@ -894,6 +903,24 @@ function reduceHealth()
   health =health - 2;
 //  console.debug(health);
   healthBarText.setText('health ='+health);
+}
+function addHealth(greenFlask)
+{
+
+    greenFlask.disableBody(true,true);
+    health = health +20;
+}
+function addHealth(greenFlask2)
+{
+
+    greenFlask2.disableBody(true,true);
+    health = health +20;
+}
+function addHealth(greenFlask3)
+{
+
+    greenFlask3.disableBody(true,true);
+    health = health +20;
 }
 function killPlayer(player)
 {
