@@ -31,6 +31,9 @@ var config = {
     var slime;
     var block;
     var cursors;
+    var timer = 0;
+    var currEnemyX = 0;
+    var currEnemyY = 0;
     var key;
     var check=0;
     var score = 0;
@@ -404,6 +407,18 @@ function update ()
  {
   check=0;
  }
+
+  //enemy ai to destroy blocks
+  if(timer<4*60)
+  {
+  	timer++;
+  	currEnemyX=enemy.x;
+  	currEnemyY=enemy.y;
+  }
+  else if(timer >=4*60&&currEnemyX==enemy.x&&currEnemyY==enemy.y)
+  {
+    console.debug('i wanna destroy this block says enemy') ; 
+  }
  
  var multi = 4;
  if (cursors.left.isDown)
