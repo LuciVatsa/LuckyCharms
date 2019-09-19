@@ -57,6 +57,7 @@ var greenFlask2;
 var greenFlask3;
 var sec = 1000;
 var healthBarRed;
+var blast;
 var StartGame = new Phaser.Class({
     Extends:Phaser.Scene,
     initialize: function BootScene(){
@@ -73,7 +74,7 @@ preload:function  ()
 {
 
 
-       this.load.image('sky','background.png');
+       this.load.image('sky','backGround.png');
        //this.load.image('slime', 'slime.png');
        this.load.image('block', 'trail.png');
        this.load.image('enemy', 'enemySkeleton.png');
@@ -83,6 +84,7 @@ preload:function  ()
        //spirte loading
       this.load.spritesheet('hazmat', 'playerRed.png',{ frameWidth:32, frameHeight:32});
       this.load.spritesheet('enemyAnimation', 'Skeleton-A.png',{ frameWidth:38, frameHeight:38});
+      this.load.spritesheet('blast', 'SlimeBreak.png',{ frameWidth:64, frameHeight:64});
       //color change blocks
       this.load.spritesheet('slime', 'slime.png',{ frameWidth:32, frameHeight:32}) ;
 
@@ -92,6 +94,7 @@ preload:function  ()
       this.load.audio('slimePush', 'slimePush.mp3');
       this.load.image('greenBar', 'TeleMeterGreen.png');
       this.load.image('redBar', 'TeleMeter.png');
+
 },
 
 create : function ()
@@ -102,8 +105,8 @@ create : function ()
 
         this.add.image(304,352,'sky');
 greenFlask=this.physics.add.image(500,500, 'health');
-greenFlask2=this.physics.add.image(500,500, 'health');
-greenFlask3=this.physics.add.image(500,500, 'health');
+greenFlask2=this.physics.add.image(300,500, 'health');
+greenFlask3=this.physics.add.image(200,270, 'health');
   //Health bar
   {
     healthBarGreen = this.add.image(400,10,'greenBar');
@@ -215,7 +218,7 @@ for(i = 48; i <= 21*32; i+=32)
     }
 
         //player score text
-        healthBarText= this.add.text(300, 16, 'health: 100', { fontSize: '32px', fill: '#000' });
+      //  healthBarText= this.add.text(300, 16, 'health: 100', { fontSize: '32px', fill: '#000' });
        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 //All Animation;
 {
@@ -308,6 +311,12 @@ for(i = 48; i <= 21*32; i+=32)
     frameRate: 15,
     repeat: -1
 });
+this.anims.create({
+    key: 'blockDestory',
+    frames: this.anims.generateFrameNumbers('blast', { start: 0, end: 3 }),
+    frameRate: 15,
+    repeat: -1
+});
 }
 //all physics setColliders
 {
@@ -338,6 +347,8 @@ for(i = 48; i <= 21*32; i+=32)
       this.physics.add.collider(player,enemy2 , killPlayer , null , this);
       this.physics.add.collider(player,enemy , killPlayer , null , this);
       this.physics.add.collider(greenFlask,player, addHealth, null ,null);
+      this.physics.add.collider(greenFlask2,player, addHealth, null ,null);
+      this.physics.add.collider(greenFlask3,player, addHealth, null ,null);
        this.physics.add.collider(slime , slime);
 
 }
@@ -536,7 +547,9 @@ move(player);
 
           if (Phaser.Geom.Intersects.RectangleToRectangle(enemy.getBounds(), child.getBounds())) {
               // console.debug("Contact");
+            child.anims.play('blockDestory', true);
               child.disableBody(true,true);
+
            }},this);
     }
 
@@ -561,7 +574,9 @@ move(player);
           console.debug('here 4');
           if (Phaser.Geom.Intersects.RectangleToRectangle(enemy1.getBounds(), child.getBounds())) {
               // console.debug("Contact");
+                child.anims.play('blockDestory', true);
               child.disableBody(true,true);
+
            }},this);
     }
 
@@ -587,7 +602,9 @@ move(player);
           console.debug('here 4');
           if (Phaser.Geom.Intersects.RectangleToRectangle(enemy2.getBounds(), child.getBounds())) {
               // console.debug("Contact");
+                child.anims.play('blockDestory', true);
               child.disableBody(true,true);
+
            }},this);
     }
 
@@ -614,7 +631,9 @@ move(player);
           console.debug('here 4');
           if (Phaser.Geom.Intersects.RectangleToRectangle(enemy3.getBounds(), child.getBounds())) {
               // console.debug("Contact");
+              child.anims.play('blockDestory', true);
               child.disableBody(true,true);
+
            }},this);
     }
 
@@ -640,7 +659,9 @@ move(player);
           console.debug('here 4');
           if (Phaser.Geom.Intersects.RectangleToRectangle(enemy4.getBounds(), child.getBounds())) {
               // console.debug("Contact");
+              child.anims.play('blockDestory', true);
               child.disableBody(true,true);
+
            }},this);
     }
 
@@ -666,7 +687,9 @@ move(player);
           console.debug('here 4');
           if (Phaser.Geom.Intersects.RectangleToRectangle(enemy5.getBounds(), child.getBounds())) {
               // console.debug("Contact");
+              child.anims.play('blockDestory', true);
               child.disableBody(true,true);
+
            }},this);
     }
 
@@ -902,7 +925,7 @@ function reduceHealth()
 {
   health =health - 2;
 //  console.debug(health);
-  healthBarText.setText('health ='+health);
+  //healthBarText.setText('health ='+health);
 }
 function addHealth(greenFlask)
 {
