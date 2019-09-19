@@ -5,6 +5,16 @@ var cursors;
 var timer = 0;
 var currEnemyX = 0;
 var currEnemyY = 0;
+var currEnemyX1 = 0;
+var currEnemyY1 = 0;
+var currEnemyX2 = 0;
+var currEnemyY2 = 0;
+var currEnemyX3 = 0;
+var currEnemyY3 = 0;
+var currEnemyX4 = 0;
+var currEnemyY4 = 0;
+var currEnemyX5 = 0;
+var currEnemyY5 = 0;
 var key;
 var check=0;
 var score = 0;
@@ -116,6 +126,15 @@ greenFlask=this.physics.add.image(500,500, 'health');
         enemy2 = this.physics.add.sprite(592,48, 'enemySkeleton');
         enemy2.setCollideWorldBounds(true);
         enemy2.setSize(32,32,true);
+        enemy3 = this.physics.add.sprite(16+5*32,16+5*32, 'enemySkeleton');
+        enemy3.setCollideWorldBounds(true);
+        enemy3.setSize(32,32,true);
+        enemy4 = this.physics.add.sprite(16+1*32,16+18*32, 'enemySkeleton');
+        enemy4.setCollideWorldBounds(true);
+        enemy4.setSize(32,32,true);
+        enemy5 = this.physics.add.sprite(16+20*32,16+17*32, 'enemySkeleton');
+        enemy5.setCollideWorldBounds(true);
+        enemy5.setSize(32,32,true);
 }
                 // playercollision
                player = this.physics.add.sprite(16,16,'hazmat');
@@ -304,10 +323,16 @@ for(i = 48; i <= 21*32; i+=32)
         //adding colliders to game objects
         this.physics.add.collider(enemy2, slime, killEnemy, null , this);
         this.physics.add.collider(enemy1, slime, killEnemy, null , this);
+        this.physics.add.collider(enemy3, slime, killEnemy, null , this);
+        this.physics.add.collider(enemy4, slime, killEnemy, null , this);
+        this.physics.add.collider(enemy5, slime, killEnemy, null , this);
         this.physics.add.collider(slime, slime);
-      this.physics.add.collider(player,enemy , killPlayer , null , this);
+      this.physics.add.collider(player,enemy3 , killPlayer , null , this);
+      this.physics.add.collider(player,enemy4 , killPlayer , null , this);
+      this.physics.add.collider(player,enemy5 , killPlayer , null , this);
       this.physics.add.collider(player,enemy1 , killPlayer , null , this);
       this.physics.add.collider(player,enemy2 , killPlayer , null , this);
+      this.physics.add.collider(player,enemy , killPlayer , null , this);
       this.physics.add.collider(greenFlask,player, addHealth, null ,null);
        this.physics.add.collider(slime , slime);
 
@@ -336,22 +361,22 @@ update :function (time , delta)
 
  if(enemy.x > player.x&&check>=0.25*60&&check<0.5*60)
  {
-  enemy.setVelocityX(-64);
+  enemy.setVelocityX(-96);
   enemy.anims.play('turnLeftSkeleton', true);
  }
  if(enemy.y > player.y&&check>=0.5*60&&check<0.75*60)
  {
-  enemy.setVelocityY(-64);
+  enemy.setVelocityY(-96);
   enemy.anims.play('turnUpSkeleton', true);
  }
  if(enemy.x<player.x && check>=0.75*60&&check<1*60)
  {
-  enemy.setVelocityX(64);
+  enemy.setVelocityX(96);
   enemy.anims.play('turnRightSkeleton',true);
  }
  if(enemy.y<player.y && check>=1*60&&check<1.25*60)
  {
-  enemy.setVelocityY(64);
+  enemy.setVelocityY(96);
   enemy.anims.play('turnDownSkeleton', true);
  }
  if(check>=1.25*60)
@@ -361,22 +386,22 @@ update :function (time , delta)
 
  if(enemy1.x > player.x&&check>=0.5*60&&check<1*60)
  {
-  enemy1.setVelocityX(-64);
+  enemy1.setVelocityX(-96);
   enemy1.anims.play('turnLeftSkeleton', true);
  }
  if(enemy1.y > player.y&&check>=1*60&&check<1.5*60)
  {
-  enemy1.setVelocityY(-64);
+  enemy1.setVelocityY(-96);
   enemy1.anims.play('turnUpSkeleton', true);
  }
  if(enemy1.x<player.x && check>=1.5*60&&check<2*60)
  {
-  enemy1.setVelocityX(64);
+  enemy1.setVelocityX(96);
   enemy1.anims.play('turnRightSkeleton',true);
  }
  if(enemy1.y<player.y && check>=2*60&&check<2.5*60)
  {
-  enemy1.setVelocityY(64);
+  enemy1.setVelocityY(96);
   enemy1.anims.play('turnDownSkeleton', true);
  }
  if(check>=2.5*60)
@@ -387,23 +412,97 @@ update :function (time , delta)
 
  if(enemy2.x > player.x&&check>=0.25*60&&check<0.5*60)
  {
-  enemy2.setVelocityX(-64);
+  enemy2.setVelocityX(-96);
   enemy2.anims.play('turnLeftSkeleton', true);
  }
  if(enemy2.y > player.y&&check>=0.51*60&&check<0.75*60)
  {
-  enemy2.setVelocityY(-64);
+  enemy2.setVelocityY(-96);
   enemy2.anims.play('turnUpSkeleton', true);
  }
  if(enemy2.x<player.x && check>=0.75*60&&check<1*60)
  {
-  enemy2.setVelocityX(64);
+  enemy2.setVelocityX(96);
   enemy2.anims.play('turnRightSkeleton',true);
  }
  if(enemy2.y<player.y && check>=1*60&&check<1.25*60)
  {
-  enemy2.setVelocityY(64);
+  enemy2.setVelocityY(96);
   enemy2.anims.play('turnDownSkeleton', true);
+ }
+ if(check>=1.25*60)
+ {
+  check=0;
+ }
+  if(enemy3.x > player.x&&check>=0.25*60&&check<0.5*60)
+ {
+  enemy3.setVelocityX(-96);
+  enemy3.anims.play('turnLeftSkeleton', true);
+ }
+ if(enemy3.y > player.y&&check>=0.5*60&&check<0.75*60)
+ {
+  enemy3.setVelocityY(-96);
+  enemy3.anims.play('turnUpSkeleton', true);
+ }
+ if(enemy3.x<player.x && check>=0.75*60&&check<1*60)
+ {
+  enemy3.setVelocityX(96);
+  enemy3.anims.play('turnRightSkeleton',true);
+ }
+ if(enemy3.y<player.y && check>=1*60&&check<1.25*60)
+ {
+  enemy3.setVelocityY(96);
+  enemy3.anims.play('turnDownSkeleton', true);
+ }
+ if(check>=1.25*60)
+ {
+  check=0;
+ }
+
+  if(enemy4.x > player.x&&check>=0.25*60&&check<0.5*60)
+ {
+  enemy4.setVelocityX(-96);
+  enemy4.anims.play('turnLeftSkeleton', true);
+ }
+ if(enemy4.y > player.y&&check>=0.5*60&&check<0.75*60)
+ {
+  enemy4.setVelocityY(-96);
+  enemy4.anims.play('turnUpSkeleton', true);
+ }
+ if(enemy4.x<player.x && check>=0.75*60&&check<1*60)
+ {
+  enemy4.setVelocityX(96);
+  enemy4.anims.play('turnRightSkeleton',true);
+ }
+ if(enemy4.y<player.y && check>=1*60&&check<1.25*60)
+ {
+  enemy4.setVelocityY(96);
+  enemy4.anims.play('turnDownSkeleton', true);
+ }
+ if(check>=1.25*60)
+ {
+  check=0;
+ }
+
+  if(enemy5.x > player.x&&check>=0.25*60&&check<0.5*60)
+ {
+  enemy5.setVelocityX(-96);
+  enemy5.anims.play('turnLeftSkeleton', true);
+ }
+ if(enemy5.y > player.y&&check>=0.5*60&&check<0.75*60)
+ {
+  enemy5.setVelocityY(-96);
+  enemy5.anims.play('turnUpSkeleton', true);
+ }
+ if(enemy5.x<player.x && check>=0.75*60&&check<1*60)
+ {
+  enemy5.setVelocityX(96);
+  enemy5.anims.play('turnRightSkeleton',true);
+ }
+ if(enemy5.y<player.y && check>=1*60&&check<1.25*60)
+ {
+  enemy5.setVelocityY(96);
+  enemy5.anims.play('turnDownSkeleton', true);
  }
  if(check>=1.25*60)
  {
@@ -414,30 +513,164 @@ update :function (time , delta)
 move(player);
 
   //enemy ai to destroy blocks
-  if(timer<4*60)
+    if(timer<2*60)
   {
-    console.debug('here 1');
-  	currEnemyX=enemy.x;
-  	currEnemyY=enemy.y;
+    // console.debug('here 1');
+    currEnemyX=enemy.x;
+    currEnemyY=enemy.y;
   }
-  else if(timer >=4*60)
+  else if(timer >=2*60)
   {
+    //timer = 0;
 
-    console.debug('i was here');
+    // console.debug('i was here');
     if(currEnemyX==enemy.x||currEnemyY==enemy.y)
     {
-      console.debug('here 3');
+      // console.debug('here 3');
       slime.children.iterate(function (child)
         {
-          console.debug('here 4');
+         
           if (Phaser.Geom.Intersects.RectangleToRectangle(enemy.getBounds(), child.getBounds())) {
-              console.debug("Contact");
+              // console.debug("Contact");
               child.disableBody(true,true);
            }},this);
     }
 
 
   }
+  if(timer<2*60)
+  {
+    // console.debug('here 1');
+    currEnemyX1=enemy1.x;
+    currEnemyY1=enemy1.y;
+  }
+  else if(timer >=2*60)
+  {
+    //timer = 0;
+
+    // console.debug('i was here');
+    if(currEnemyX1==enemy1.x||currEnemyY1==enemy1.y)
+    {
+      // console.debug('here 3');
+      slime.children.iterate(function (child)
+        {
+          console.debug('here 4');
+          if (Phaser.Geom.Intersects.RectangleToRectangle(enemy1.getBounds(), child.getBounds())) {
+              // console.debug("Contact");
+              child.disableBody(true,true);
+           }},this);
+    }
+
+
+  }
+
+  if(timer<2*60)
+  {
+    // console.debug('here 1');
+    currEnemyX2=enemy2.x;
+    currEnemyY2=enemy2.y;
+  }
+  else if(timer >=2*60)
+  {
+
+    // console.debug('i was here');
+    if(currEnemyX2==enemy2.x||currEnemyY2==enemy2.y)
+    {
+      //timer = 0;
+      // console.debug('here 3');
+      slime.children.iterate(function (child)
+        {
+          console.debug('here 4');
+          if (Phaser.Geom.Intersects.RectangleToRectangle(enemy2.getBounds(), child.getBounds())) {
+              // console.debug("Contact");
+              child.disableBody(true,true);
+           }},this);
+    }
+
+
+  }
+
+  if(timer<2*60)
+  {
+
+    // console.debug('here 1');
+    currEnemyX3=enemy3.x;
+    currEnemyY3=enemy3.y;
+  }
+  else if(timer >=2*60)
+  {
+
+    // console.debug('i was here');
+    if(currEnemyX3==enemy3.x||currEnemyY3==enemy3.y)
+    {
+      //timer = 0;
+      // console.debug('here 3');
+      slime.children.iterate(function (child)
+        {
+          console.debug('here 4');
+          if (Phaser.Geom.Intersects.RectangleToRectangle(enemy3.getBounds(), child.getBounds())) {
+              // console.debug("Contact");
+              child.disableBody(true,true);
+           }},this);
+    }
+
+
+  }
+
+  if(timer<2*60)
+  {
+    // console.debug('here 1');
+    currEnemyX4=enemy4.x;
+    currEnemyY4=enemy4.y;
+  }
+  else if(timer >=2*60)
+  {
+
+    // console.debug('i was here');
+    if(currEnemyX4==enemy4.x||currEnemyY4==enemy4.y)
+    {
+      //timer = 0;
+      // console.debug('here 3');
+      slime.children.iterate(function (child)
+        {
+          console.debug('here 4');
+          if (Phaser.Geom.Intersects.RectangleToRectangle(enemy4.getBounds(), child.getBounds())) {
+              // console.debug("Contact");
+              child.disableBody(true,true);
+           }},this);
+    }
+
+
+  }
+
+  if(timer<2*60)
+  {
+    // console.debug('here 1');
+    currEnemyX5=enemy5.x;
+    currEnemyY5=enemy5.y;
+  }
+  else if(timer >=2*60)
+  {
+    
+
+    // console.debug('i was here');
+    if(currEnemyX5==enemy5.x||currEnemyY5==enemy5.y)
+    {
+      // console.debug('here 3');
+      slime.children.iterate(function (child)
+        {
+          console.debug('here 4');
+          if (Phaser.Geom.Intersects.RectangleToRectangle(enemy5.getBounds(), child.getBounds())) {
+              // console.debug("Contact");
+              child.disableBody(true,true);
+           }},this);
+    }
+
+
+  }
+
+  
+
 
 
  var multi = 4;
