@@ -463,7 +463,7 @@ move(player);
            player.setVelocityY(0);
            player.anims.play('turnRed');
          moveMonster(child);
-           health = health - .01;
+           health = health - .05;
        }
       }
        else
@@ -477,6 +477,10 @@ move(player);
          child.setImmovable(true);
        }
     },this);
+    if(health <=0)
+    {
+      killPlayer(player);
+    }
 
 }
 
@@ -602,7 +606,7 @@ function addHealth(greenFlask)
 }
 function reduceHealth()
 {
-  health =health - 1;
+  health =health - 2;
 //  console.debug(health);
   healthBarText.setText('health ='+health);
 }
