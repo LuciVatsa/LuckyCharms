@@ -9,7 +9,7 @@ var WinGame = new Phaser.Class({
 
     init:function(){
       console.debug("works");
-      this.load.image('GameOver','GameOver.png');
+      this.load.image('YouWin','YouWin.png');
     },
 
     preload : function()
