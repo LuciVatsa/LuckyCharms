@@ -273,25 +273,25 @@ for(i = 48; i <= 21*32; i+=32)
      });
         this.anims.create({
             key: 'turnLeftSkeleton',
-            frames: this.anims.generateFrameNumbers('enemyAnimation', { start: 6, end: 12 }),
+            frames: this.anims.generateFrameNumbers('enemyAnimation', { start: 6, end: 11 }),
             frameRate: 15,
             repeat: -1
         });
         this.anims.create({
             key: 'turnUpSkeleton',
-            frames: this.anims.generateFrameNumbers('enemyAnimation', { start: 13, end: 18}),
+            frames: this.anims.generateFrameNumbers('enemyAnimation', { start: 18, end: 23}),
             frameRate: 15,
             repeat: -1
         });
         this.anims.create({
             key: 'turnDownSkeleton',
-            frames: this.anims.generateFrameNumbers('enemyAnimation', { start: 18, end: 23 }),
+            frames: this.anims.generateFrameNumbers('enemyAnimation', { start: 12, end: 17 }),
             frameRate: 15,
             repeat: -1
         });
         this.anims.create({
             key: 'turnRightSkeleton',
-            frames: this.anims.generateFrameNumbers('enemyAnimation', { start: 1, end: 6 }),
+            frames: this.anims.generateFrameNumbers('enemyAnimation', { start: 0, end: 5 }),
             frameRate: 15,
             repeat: -1
         });
